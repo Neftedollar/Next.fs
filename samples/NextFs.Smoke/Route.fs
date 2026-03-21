@@ -25,6 +25,8 @@ let get (request: NextRequest, ctx: RouteHandlerContext<{| slug: string |}>) =
 let post (request: NextRequest) =
     async {
         let! payload = Async.AwaitPromise(request.json<obj>())
+        Cache.revalidateTagWithProfile "posts" RevalidateTagProfile.Max
+        Cache.revalidatePathType "/blog" RevalidatePathType.Page
         return ServerResponse.json payload
     }
     |> Async.StartAsPromise

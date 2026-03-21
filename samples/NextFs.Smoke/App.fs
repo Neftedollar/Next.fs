@@ -7,18 +7,38 @@ open NextFs
 
 let saveSearch (_formData: obj) =
     Directive.useServer()
+    Cache.updateTag "searches"
+    Cache.revalidatePath "/"
+    Cache.refresh()
     ()
+
+let loadNavigationLabels () =
+    Directive.useCache()
+    Cache.cacheLifeProfile CacheProfile.Hours
+    Cache.cacheTags [ "navigation"; "searches" ]
+
+    [|
+        "Home"
+        "Search"
+        "Docs"
+    |]
 
 [<ReactComponent>]
 let NavigationMenu() =
     let pathname = Navigation.usePathname()
+    let navigationLabels = loadNavigationLabels ()
 
     Html.nav [
         prop.className "navigation-menu"
         prop.children [
-            Link.create [
-                Link.href "/"
-                prop.text "Home"
+            Html.ul [
+                prop.children [
+                    for label in navigationLabels do
+                        Html.li [
+                            prop.key label
+                            prop.text label
+                        ]
+                ]
             ]
             Link.create [
                 Link.hrefObject (

@@ -41,6 +41,25 @@ type ImagePlaceholder =
     | [<CompiledName("empty")>] Empty
     | [<CompiledName("blur")>] Blur
 
+[<StringEnum; RequireQualifiedAccess>]
+type RevalidatePathType =
+    | [<CompiledName("page")>] Page
+    | [<CompiledName("layout")>] Layout
+
+[<StringEnum; RequireQualifiedAccess>]
+type CacheProfile =
+    | [<CompiledName("default")>] Default
+    | [<CompiledName("seconds")>] Seconds
+    | [<CompiledName("minutes")>] Minutes
+    | [<CompiledName("hours")>] Hours
+    | [<CompiledName("days")>] Days
+    | [<CompiledName("weeks")>] Weeks
+    | [<CompiledName("max")>] Max
+
+[<StringEnum; RequireQualifiedAccess>]
+type RevalidateTagProfile =
+    | [<CompiledName("max")>] Max
+
 type NavigationEvent =
     abstract preventDefault: unit -> unit
 
@@ -98,6 +117,15 @@ type DraftModeState =
 module Directive =
     [<Emit("'use server'", isStatement = true)>]
     let inline useServer () : unit = jsNative
+
+    [<Emit("'use cache'", isStatement = true)>]
+    let inline useCache () : unit = jsNative
+
+    [<Emit("'use cache: private'", isStatement = true)>]
+    let inline useCachePrivate () : unit = jsNative
+
+    [<Emit("'use cache: remote'", isStatement = true)>]
+    let inline useCacheRemote () : unit = jsNative
 
 type FormDataCollection =
     abstract append: name: string * value: obj -> unit
@@ -172,6 +200,19 @@ module NextResponseInit =
 
     let requestHeaders(value: HeadersCollection) : string * obj =
         "request" ==> createObj [ "headers" ==> value ]
+
+module CacheLife =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let stale(value: int) : string * obj =
+        "stale" ==> value
+
+    let revalidate(value: int) : string * obj =
+        "revalidate" ==> value
+
+    let expire(value: int) : string * obj =
+        "expire" ==> value
 
 module Link =
     [<ImportDefault("next/link")>]
@@ -373,6 +414,82 @@ module Navigation =
 
     let notFound() : unit =
         notFoundImport()
+
+module Cache =
+    [<Import("cacheLife", "next/cache")>]
+    let private cacheLifeProfileImport: CacheProfile -> unit = jsNative
+
+    [<Import("cacheLife", "next/cache")>]
+    let private cacheLifeProfileNameImport: string -> unit = jsNative
+
+    [<Import("cacheLife", "next/cache")>]
+    let private cacheLifeOptionsImport: obj -> unit = jsNative
+
+    [<Import("cacheTag", "next/cache")>]
+    let private cacheTagImport([<System.ParamArray>] tags: string array) : unit = jsNative
+
+    [<Import("refresh", "next/cache")>]
+    let private refreshImport: unit -> unit = jsNative
+
+    [<Import("revalidatePath", "next/cache")>]
+    let private revalidatePathImport: string -> unit = jsNative
+
+    [<Import("revalidatePath", "next/cache")>]
+    let private revalidatePathWithTypeImport: string * RevalidatePathType -> unit = jsNative
+
+    [<Import("revalidateTag", "next/cache")>]
+    let private revalidateTagImport: string -> unit = jsNative
+
+    [<Import("revalidateTag", "next/cache")>]
+    let private revalidateTagWithProfileImport: string * RevalidateTagProfile -> unit = jsNative
+
+    [<Import("revalidateTag", "next/cache")>]
+    let private revalidateTagWithCustomProfileImport: string * string -> unit = jsNative
+
+    [<Import("updateTag", "next/cache")>]
+    let private updateTagImport: string -> unit = jsNative
+
+    [<Import("unstable_noStore", "next/cache")>]
+    let private noStoreImport: unit -> unit = jsNative
+
+    let cacheLifeProfile(profile: CacheProfile) : unit =
+        cacheLifeProfileImport profile
+
+    let cacheLifeProfileName(profileName: string) : unit =
+        cacheLifeProfileNameImport profileName
+
+    let cacheLife(options: obj) : unit =
+        cacheLifeOptionsImport options
+
+    let cacheTag(tag: string) : unit =
+        cacheTagImport [| tag |]
+
+    let cacheTags(tags: seq<string>) : unit =
+        cacheTagImport (Seq.toArray tags)
+
+    let refresh() : unit =
+        refreshImport()
+
+    let revalidatePath(path: string) : unit =
+        revalidatePathImport path
+
+    let revalidatePathType(path: string) (pathType: RevalidatePathType) : unit =
+        revalidatePathWithTypeImport(path, pathType)
+
+    let revalidateTag(tag: string) : unit =
+        revalidateTagImport tag
+
+    let revalidateTagWithProfile(tag: string) (profile: RevalidateTagProfile) : unit =
+        revalidateTagWithProfileImport(tag, profile)
+
+    let revalidateTagWithCustomProfile(tag: string) (profileName: string) : unit =
+        revalidateTagWithCustomProfileImport(tag, profileName)
+
+    let updateTag(tag: string) : unit =
+        updateTagImport tag
+
+    let noStore() : unit =
+        noStoreImport()
 
 module Server =
     [<Import("headers", "next/headers")>]
