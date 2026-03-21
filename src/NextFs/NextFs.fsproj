@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>NextFs</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Authors>Roman Melnikov</Authors>
-    <Description>Fable bindings for Next.js App Router components, navigation APIs and server helpers.</Description>
+    <Description>Fable bindings for Next.js App Router components, navigation, cache, and server helpers.</Description>
     <PackageProjectUrl>https://github.com/Neftedollar/Next.fs</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
