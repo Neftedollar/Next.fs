@@ -68,10 +68,22 @@ To enable it locally:
 git config commit.template .gitmessage.txt
 ```
 
+## Local Tools
+
+The repository pins `femto` as a local .NET tool in [.config/dotnet-tools.json](/Users/roman/Documents/dev/Next_fs/.config/dotnet-tools.json).
+
+Restore local tools before running validation commands:
+
+```bash
+dotnet tool restore
+```
+
 ## Pull Requests
 
 Before opening a PR:
 
+- run `dotnet tool restore`
+- run `dotnet femto --validate src/NextFs/NextFs.fsproj`
 - run `dotnet build NextFs.slnx -v minimal`
 - run `dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts`
 - run `node tools/nextfs-entry.mjs samples/nextfs.entries.json`

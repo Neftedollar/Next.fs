@@ -32,6 +32,8 @@
   <PropertyGroup>
     <NpmDependencies>
       <NpmPackage Name="next" Version="&gt;= 15.0.0 &lt; 17.0.0" ResolutionStrategy="Max" />
+      <NpmPackage Name="react" Version="&gt;= 18.2.0 &lt; 20.0.0" ResolutionStrategy="Max" />
+      <NpmPackage Name="react-dom" Version="&gt;= 18.2.0 &lt; 20.0.0" ResolutionStrategy="Max" />
     </NpmDependencies>
   </PropertyGroup>
 

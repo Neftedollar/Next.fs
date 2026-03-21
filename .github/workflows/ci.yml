@@ -24,6 +24,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Restore local tools
+        run: dotnet tool restore
+
+      - name: Validate Femto metadata
+        run: dotnet femto --validate src/NextFs/NextFs.fsproj
+
       - name: Build solution
         run: dotnet build NextFs.slnx -v minimal
 

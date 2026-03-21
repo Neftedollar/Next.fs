@@ -33,11 +33,26 @@ The current package is aimed at Next.js 15/16 style App Router usage, including 
 dotnet add package NextFs
 ```
 
-Runtime dependencies are expected to come from the consuming Next.js app:
+Runtime dependencies still live in the consuming Next.js app:
 
 - `next`
 - `react`
 - `react-dom`
+
+`NextFs` also ships Femto metadata for those npm packages, so a Fable consumer can verify or resolve them with:
+
+```bash
+dotnet femto yourProject.fsproj
+dotnet femto --resolve yourProject.fsproj
+```
+
+This lets the binding package describe the required JavaScript dependencies instead of duplicating them manually in every consumer README.
+
+For repository development, the pinned local `femto` tool can be restored with:
+
+```bash
+dotnet tool restore
+```
 
 ## Example
 
@@ -189,6 +204,8 @@ For `'use server'` wrapper entries, only named exports are allowed. This matches
 ## Local Validation
 
 ```bash
+dotnet tool restore
+dotnet femto --validate src/NextFs/NextFs.fsproj
 dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
