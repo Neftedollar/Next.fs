@@ -57,7 +57,7 @@ examples/nextfs-starter/
 - `next.config.mjs` - enables `experimental.authInterrupts` and `experimental.globalNotFound`
 - `src/App/Layout.fs` - root layout plus `metadata` and `viewport` exports
 - `src/App/Page.fs` - client page component with an inline server action
-- `src/App/ClientCounter.fs` - client component boundary
+- `src/App/ClientCounter.fs` - client component boundary with App Router segment hooks
 - `src/App/Actions.fs` - standalone server action entry
 - `src/App/Api/Posts.fs` - route handler
 - `src/App/Error.fs` and `src/App/GlobalError.fs` - client error boundaries from F#
@@ -87,3 +87,5 @@ npm run dev
 The checked-in `app/**` and `proxy.js` files are generated wrappers. In a real project you regenerate them after each Fable build.
 
 The special-file entries in this starter intentionally demonstrate a broad App Router surface. `forbidden.js`, `unauthorized.js`, and `global-not-found.js` depend on experimental Next.js flags, so treat them as current-pattern examples rather than frozen APIs.
+
+For the code patterns behind these files, see [Server and client patterns](../../docs/server-client-patterns.md), [Directives and wrappers](../../docs/directives-wrappers.md), and [Special files](../../docs/special-files.md).

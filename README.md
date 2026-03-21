@@ -16,8 +16,9 @@ If you are evaluating the repository for the first time, use this path:
 1. read [Quickstart](docs/quickstart.md)
 2. inspect [the starter example](examples/nextfs-starter/README.md)
 3. learn the wrapper rules in [Directives and wrappers](docs/directives-wrappers.md)
-4. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
-5. use [API reference](docs/api-reference.md) as the lookup table
+4. use [Server and client patterns](docs/server-client-patterns.md) for route handlers, wrappers, and mixed App Router flows
+5. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
+6. use [API reference](docs/api-reference.md) as the lookup table
 
 ## What It Covers
 
@@ -26,19 +27,21 @@ If you are evaluating the repository for the first time, use this path:
 - App Router hooks and helpers from `next/navigation`
 - request helpers from `next/headers`
 - `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
+- `NextRequest` / `NextResponse` constructors and init builders
 - `proxy.js` config builders and `NextFetchEvent`
 - App Router special-file helpers and documented patterns for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js`, and `unauthorized.js`
 - cache invalidation and cache directives from `next/cache`
 - metadata, viewport, robots, sitemap, manifest, and image-metadata builders
 - `ImageResponse` bindings for Open Graph and icon generation
 - request/response cookie option builders
-- `useLinkStatus`, `useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
+- `useServerInsertedHTML`, `useLinkStatus`, `useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
+- `Image.getImageProps()` and action-mismatch detection for client-side server-action calls
 - inline `Directive.useServer()` and `Directive.useCache()` support
 - wrapper generation for file-level `'use client'` and `'use server'`
 
 ## Compatibility
 
-- `NextFs`: `0.5.x`
+- `NextFs`: `0.6.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -262,11 +265,18 @@ Beyond the baseline router/navigation APIs, `NextFs` now also includes:
 
 - `Link.useLinkStatus()`
 - `WebVitals.useReportWebVitals(...)`
+- `Navigation.useServerInsertedHTML(...)`
+- `Navigation.useSelectedLayoutSegmentFor(...)`
+- `Navigation.useSelectedLayoutSegmentsFor(...)`
+- `Navigation.unstableIsUnrecognizedActionError(...)`
 - `Navigation.forbidden()`
 - `Navigation.unauthorized()`
 - `Navigation.unstableRethrow(...)`
 - `Server.after(...)`
 - `Server.userAgent(...)`
+- `ServerRequest.createWithInit(...)`
+- `ServerResponse.createWithInit(...)`
+- `Image.getImageProps(...)`
 
 These helpers are compile-smoked in `samples/NextFs.Smoke`.
 
@@ -312,6 +322,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 ## Examples And Docs
 
 - [Quickstart](docs/quickstart.md)
+- [Server and client patterns](docs/server-client-patterns.md)
 - [API reference](docs/api-reference.md)
 - [Directives and wrappers](docs/directives-wrappers.md)
 - [Special files](docs/special-files.md)

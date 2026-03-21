@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0 - 2026-03-21
+
+- added `ServerRequest` constructors plus `NextRequestInit` and `NextConfig` builders for lower-level request interop
+- added `ServerResponse.create*` helpers and richer `NextRequest` / `NextResponse` body APIs
+- added `Navigation.useServerInsertedHTML`, `Navigation.useSelectedLayoutSegmentFor`, `Navigation.useSelectedLayoutSegmentsFor`, and `Navigation.unstableIsUnrecognizedActionError`
+- added `Image.getImageProps()` and a dedicated compile-smoke file for request/response and client/server helper flows
+- expanded wrapper-generator coverage for the remaining App Router special-file wrapper shapes
+- added `docs/server-client-patterns.md` and linked it from the main repository docs
+
 ## 0.5.0 - 2026-03-21
 
 - added helper types for App Router special files: `ErrorBoundaryProps`, `ErrorWithDigest`, `TemplateProps`, and `DefaultProps<'T>`

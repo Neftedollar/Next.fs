@@ -8,6 +8,13 @@ open NextFs
 [<ReactComponent>]
 let ClientCounter() =
     let router = Navigation.useRouter()
+    let segments = Navigation.useSelectedLayoutSegments()
+    let segmentSummary =
+        match segments with
+        | [||] -> "(root)"
+        | values -> System.String.Join("/", values)
+
+    ignore (Navigation.unstableIsUnrecognizedActionError (box (System.Exception "demo")))
 
     Html.section [
         prop.className "rounded-xl border border-slate-700 bg-slate-900 p-4 text-slate-100"
@@ -19,6 +26,10 @@ let ClientCounter() =
             Html.h2 [
                 prop.className "mt-2 text-lg font-semibold"
                 prop.text "Refresh the route from the client"
+            ]
+            Html.p [
+                prop.className "mt-2 text-sm text-slate-400"
+                prop.text $"Active segments: {segmentSummary}"
             ]
             Html.button [
                 prop.type'.button

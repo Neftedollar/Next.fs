@@ -167,6 +167,9 @@ type RequestCookie =
     abstract name: string
     abstract value: string
 
+type ImagePropsResult =
+    abstract props: obj
+
 type ResponseCookie =
     abstract name: string
     abstract value: string
@@ -328,6 +331,10 @@ type NextRequest =
     abstract method: string
     abstract nextUrl: NextUrl
     abstract url: string
+    abstract bodyUsed: bool
+    abstract clone: unit -> obj
+    abstract arrayBuffer: unit -> JS.Promise<obj>
+    abstract blob: unit -> JS.Promise<obj>
     abstract formData: unit -> JS.Promise<FormDataCollection>
     abstract json<'T>: unit -> JS.Promise<'T>
     abstract text: unit -> JS.Promise<string>
@@ -356,8 +363,29 @@ type NextResponse =
     abstract headers: HeadersCollection
     abstract status: int
     abstract statusText: string
+    abstract ok: bool
+    abstract redirected: bool
+    abstract url: string
+    abstract bodyUsed: bool
+    abstract clone: unit -> obj
+    abstract arrayBuffer: unit -> JS.Promise<obj>
+    abstract blob: unit -> JS.Promise<obj>
+    abstract formData: unit -> JS.Promise<FormDataCollection>
     abstract json<'T>: unit -> JS.Promise<'T>
     abstract text: unit -> JS.Promise<string>
+
+module NextConfig =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let basePath(value: string) : string * obj =
+        "basePath" ==> value
+
+    let i18n(value: obj) : string * obj =
+        "i18n" ==> value
+
+    let trailingSlash(value: bool) : string * obj =
+        "trailingSlash" ==> value
 
 module ResponseInit =
     let create(fields: (string * obj) list) : obj =
@@ -374,6 +402,37 @@ module ResponseInit =
 
     let headersObject(value: obj) : string * obj =
         "headers" ==> value
+
+    let nextConfig(value: obj) : string * obj =
+        "nextConfig" ==> value
+
+    let url(value: string) : string * obj =
+        "url" ==> value
+
+module NextRequestInit =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let method'(value: string) : string * obj =
+        "method" ==> value
+
+    let headers(value: HeadersCollection) : string * obj =
+        "headers" ==> value
+
+    let headersObject(value: obj) : string * obj =
+        "headers" ==> value
+
+    let body(value: obj) : string * obj =
+        "body" ==> value
+
+    let nextConfig(value: obj) : string * obj =
+        "nextConfig" ==> value
+
+    let signal(value: obj) : string * obj =
+        "signal" ==> value
+
+    let duplexHalf : string * obj =
+        "duplex" ==> "half"
 
 module NextResponseInit =
     let create(fields: (string * obj) list) : obj =
@@ -1087,6 +1146,9 @@ module Image =
     [<ImportDefault("next/image")>]
     let private componentImport: obj = jsNative
 
+    [<Import("getImageProps", "next/image")>]
+    let private getImagePropsImport: obj -> ImagePropsResult = jsNative
+
     let create(props: IReactProperty list) : ReactElement =
         ReactInterop.createElement componentImport props
 
@@ -1140,6 +1202,9 @@ module Image =
 
     let onError(handler: obj -> unit) : IReactProperty =
         Props.mkAttr "onError" handler
+
+    let getImageProps(options: obj) : ImagePropsResult =
+        getImagePropsImport options
 
 module Script =
     [<ImportDefault("next/script")>]
@@ -1218,8 +1283,17 @@ module Navigation =
     [<Import("useSelectedLayoutSegment", "next/navigation")>]
     let private useSelectedLayoutSegmentImport: unit -> string option = jsNative
 
+    [<Import("useSelectedLayoutSegment", "next/navigation")>]
+    let private useSelectedLayoutSegmentWithKeyImport: string -> string option = jsNative
+
     [<Import("useSelectedLayoutSegments", "next/navigation")>]
     let private useSelectedLayoutSegmentsImport: unit -> string array = jsNative
+
+    [<Import("useSelectedLayoutSegments", "next/navigation")>]
+    let private useSelectedLayoutSegmentsWithKeyImport: string -> string array = jsNative
+
+    [<Import("useServerInsertedHTML", "next/navigation")>]
+    let private useServerInsertedHTMLImport: (unit -> ReactElement) -> unit = jsNative
 
     [<Import("redirect", "next/navigation")>]
     let private redirectImport: string * RedirectType -> unit = jsNative
@@ -1239,6 +1313,9 @@ module Navigation =
     [<Import("unstable_rethrow", "next/navigation")>]
     let private unstableRethrowImport: obj -> unit = jsNative
 
+    [<Import("unstable_isUnrecognizedActionError", "next/navigation")>]
+    let private unstableIsUnrecognizedActionErrorImport: obj -> bool = jsNative
+
     let useRouter() : AppRouterInstance =
         useRouterImport()
 
@@ -1254,8 +1331,17 @@ module Navigation =
     let useSelectedLayoutSegment() : string option =
         useSelectedLayoutSegmentImport()
 
+    let useSelectedLayoutSegmentFor(parallelRouteKey: string) : string option =
+        useSelectedLayoutSegmentWithKeyImport parallelRouteKey
+
     let useSelectedLayoutSegments() : string array =
         useSelectedLayoutSegmentsImport()
+
+    let useSelectedLayoutSegmentsFor(parallelRouteKey: string) : string array =
+        useSelectedLayoutSegmentsWithKeyImport parallelRouteKey
+
+    let useServerInsertedHTML(render: unit -> ReactElement) : unit =
+        useServerInsertedHTMLImport render
 
     let redirect(path: string) : unit =
         redirectImport(path, RedirectType.Replace)
@@ -1277,6 +1363,31 @@ module Navigation =
 
     let unstableRethrow(error: obj) : unit =
         unstableRethrowImport error
+
+    let unstableIsUnrecognizedActionError(error: obj) : bool =
+        unstableIsUnrecognizedActionErrorImport error
+
+module ServerRequest =
+    [<Import("NextRequest", "next/server")>]
+    let private nextRequestImport: obj = jsNative
+
+    [<Emit("new $0($1)")>]
+    let private createImport(nextRequestType: obj, input: obj) : NextRequest = jsNative
+
+    [<Emit("new $0($1, $2)")>]
+    let private createWithInitImport(nextRequestType: obj, input: obj, init: obj) : NextRequest = jsNative
+
+    let create(url: string) : NextRequest =
+        createImport(nextRequestImport, box url)
+
+    let createFrom(input: obj) : NextRequest =
+        createImport(nextRequestImport, input)
+
+    let createWithInit(url: string) (init: obj) : NextRequest =
+        createWithInitImport(nextRequestImport, box url, init)
+
+    let createFromWithInit(input: obj) (init: obj) : NextRequest =
+        createWithInitImport(nextRequestImport, input, init)
 
 module Cache =
     [<Import("cacheLife", "next/cache")>]
@@ -1404,6 +1515,15 @@ module ServerResponse =
     [<Import("NextResponse", "next/server")>]
     let private nextResponseImport: obj = jsNative
 
+    [<Emit("new $0()")>]
+    let private createEmptyImport(nextResponse: obj) : NextResponse = jsNative
+
+    [<Emit("new $0($1)")>]
+    let private createImport(nextResponse: obj, body: obj) : NextResponse = jsNative
+
+    [<Emit("new $0($1, $2)")>]
+    let private createWithInitImport(nextResponse: obj, body: obj, init: obj) : NextResponse = jsNative
+
     [<Emit("$0.json($1)")>]
     let private jsonImport(nextResponse: obj, body: obj) : NextResponse = jsNative
 
@@ -1427,6 +1547,15 @@ module ServerResponse =
 
     [<Emit("$0.next($1)")>]
     let private nextWithInitImport(nextResponse: obj, init: obj) : NextResponse = jsNative
+
+    let create() : NextResponse =
+        createEmptyImport nextResponseImport
+
+    let createWithBody(body: obj) : NextResponse =
+        createImport(nextResponseImport, body)
+
+    let createWithInit(body: obj) (init: obj) : NextResponse =
+        createWithInitImport(nextResponseImport, body, init)
 
     let json<'T>(body: 'T) : NextResponse =
         jsonImport(nextResponseImport, box body)

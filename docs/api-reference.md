@@ -59,6 +59,7 @@ Bindings for `next/image`.
 Common members:
 
 - `Image.create`
+- `Image.getImageProps`
 - `Image.src`
 - `Image.alt`
 - `Image.width`
@@ -73,6 +74,10 @@ Common members:
 - `Image.blurDataUrl`
 - `Image.unoptimized`
 - `Image.overrideSrc`
+
+Related types:
+
+- `ImagePropsResult`
 
 ### `Script`
 
@@ -147,6 +152,13 @@ These map to the App Router special files:
 - `Navigation.forbidden()` -> `forbidden.js`
 - `Navigation.unauthorized()` -> `unauthorized.js`
 
+Additional helpers:
+
+- `Navigation.useSelectedLayoutSegmentFor`
+- `Navigation.useSelectedLayoutSegmentsFor`
+- `Navigation.useServerInsertedHTML`
+- `Navigation.unstableIsUnrecognizedActionError`
+
 ### `WebVitals`
 
 Bindings for `next/web-vitals`.
@@ -196,12 +208,31 @@ Related types:
 - `NextUrl`
 - `FormDataCollection`
 
+### `ServerRequest`
+
+Constructors for `NextRequest`.
+
+Common members:
+
+- `ServerRequest.create`
+- `ServerRequest.createFrom`
+- `ServerRequest.createWithInit`
+- `ServerRequest.createFromWithInit`
+
+Related helpers and types:
+
+- `NextRequestInit`
+- `NextConfig`
+
 ### `ServerResponse`
 
 Static helpers over `NextResponse`.
 
 Common members:
 
+- `ServerResponse.create`
+- `ServerResponse.createWithBody`
+- `ServerResponse.createWithInit`
 - `ServerResponse.json`
 - `ServerResponse.jsonWithInit`
 - `ServerResponse.redirect`
@@ -217,6 +248,14 @@ Related types:
 - `ResponseInit`
 - `NextResponseInit`
 - `ResponseCookieStore`
+
+`NextRequest` and `NextResponse` also expose common Web `Request` / `Response` members used in route handlers and proxy flows:
+
+- `clone`
+- `arrayBuffer`
+- `blob`
+- `formData`
+- `bodyUsed`
 
 ### `Proxy`
 

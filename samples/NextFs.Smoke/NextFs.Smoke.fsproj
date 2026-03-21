@@ -10,6 +10,7 @@
     <Compile Include="App.fs" />
     <Compile Include="Metadata.fs" />
     <Compile Include="Proxy.fs" />
+    <Compile Include="RequestResponse.fs" />
     <Compile Include="Route.fs" />
     <Compile Include="SpecialFiles.fs" />
   </ItemGroup>
