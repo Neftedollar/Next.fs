@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 - 2026-03-21
+
+- added metadata, viewport, robots, sitemap, manifest, and image-metadata builders
+- added `ImageResponse` bindings for Open Graph, icon, and metadata image generation flows
+- added `useLinkStatus`, `useReportWebVitals`, `after`, `userAgent`, `forbidden`, `unauthorized`, and `unstableRethrow`
+- expanded compile-smoke coverage for metadata files, special route files, and advanced App Router helpers
+- updated the starter example to export the root layout, metadata, and viewport from F#
+
 ## 0.2.0 - 2026-03-21
 
 - added `next/cache` bindings and inline cache directives
