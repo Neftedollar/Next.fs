@@ -8,7 +8,8 @@ out/
 artifacts/
 *.nupkg
 *.snupkg
-samples/app/
+samples/app/*
+!samples/app/README.md
 .idea/
 .vscode/
 TestResults/

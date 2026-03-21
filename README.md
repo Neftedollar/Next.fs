@@ -362,8 +362,26 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 - `tools/nextfs-entry.mjs` generates directive wrapper files
 - `tools/generate-google-font-bindings.mjs` regenerates the `GoogleFont` binding catalog from official Next.js type definitions
 
+## Samples vs Examples
+
+The repository uses `samples` and `examples` for different jobs:
+
+- `samples` are verification-oriented. They exist to compile, exercise binding shapes, and catch regressions quickly.
+- `examples` are usage-oriented. They are meant to look like real consumer projects someone could copy, inspect, or adapt.
+
+In practice:
+
+- `samples/NextFs.Smoke` is a compile-smoke project for the public API surface.
+- `samples/app` is generated wrapper output used as a small fixture for the wrapper tool.
+- `examples/nextfs-starter` is a runnable App Router starter that demonstrates the intended project layout.
+
 ## Examples And Docs
 
+- [Docs folder guide](docs/README.md)
+- [Examples folder guide](examples/README.md)
+- [Samples folder guide](samples/README.md)
+- [Tools folder guide](tools/README.md)
+- [Local tool manifest guide](.config/README.md)
 - [Quickstart](docs/quickstart.md)
 - [Starter app walkthrough](docs/starter-app-walkthrough.md)
 - [Data fetching and route config](docs/data-fetching-and-route-config.md)
