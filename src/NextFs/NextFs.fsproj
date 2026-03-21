@@ -6,9 +6,14 @@
     <Version>0.1.0</Version>
     <Authors>Roman Melnikov</Authors>
     <Description>Fable bindings for Next.js App Router components, navigation APIs and server helpers.</Description>
+    <PackageProjectUrl>https://github.com/Neftedollar/Next.fs</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>fable-javascript;nextjs;fable;fsharp;react</PackageTags>
+    <RepositoryUrl>https://github.com/Neftedollar/Next.fs</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <FablePackageType>binding</FablePackageType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>

@@ -1,6 +1,7 @@
 # NextFs
 
 [![CI](https://github.com/Neftedollar/Next.fs/actions/workflows/ci.yml/badge.svg)](https://github.com/Neftedollar/Next.fs/actions/workflows/ci.yml)
+[![NuGet Publish](https://github.com/Neftedollar/Next.fs/actions/workflows/publish-nuget.yml/badge.svg)](https://github.com/Neftedollar/Next.fs/actions/workflows/publish-nuget.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 `NextFs` is a Fable-first binding layer for building Next.js applications with F#.
@@ -191,6 +192,22 @@ dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
 ```
+
+## NuGet Publishing
+
+The repository includes [publish-nuget.yml](/Users/roman/Documents/dev/Next_fs/.github/workflows/publish-nuget.yml), which publishes `NextFs` to nuget.org on:
+
+- manual `workflow_dispatch`
+- git tag pushes matching `v*`
+
+It is configured for NuGet Trusted Publishing via GitHub OIDC, not a long-lived API key.
+
+Before the first publish, create a trusted publishing policy on nuget.org with:
+
+- Repository Owner: `Neftedollar`
+- Repository: `Next.fs`
+- Workflow File: `publish-nuget.yml`
+- Environment: `release`
 
 ## Roadmap
 
