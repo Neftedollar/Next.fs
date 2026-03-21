@@ -57,6 +57,8 @@ The main component helpers in the package are:
 
 If an entry module uses client-only hooks such as `Navigation.usePathname` or `Navigation.useRouter`, generate a `use client` wrapper for that file. See [Directives and wrappers](directives-wrappers.md).
 
+For `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js`, and `unauthorized.js`, use [Special files](special-files.md).
+
 ## 3. Handle server APIs asynchronously
 
 Server-side request APIs are promise-based in Next.js, so the F# bindings are also async:
@@ -162,6 +164,7 @@ If you want to see the intended shape of a real App Router project, use [the sta
 - F# source modules under `src/App/**`
 - a root-level `src/Proxy.fs` entry
 - generated wrapper files under `app/**`
+- special-file entries such as `error`, `loading`, `not-found`, `template`, and auth interrupts
 - a generated root `proxy.js`
 - a wrapper manifest
 - a buildable F# example project

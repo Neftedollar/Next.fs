@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0 - 2026-03-21
+
+- added helper types for App Router special files: `ErrorBoundaryProps`, `ErrorWithDigest`, `TemplateProps`, and `DefaultProps<'T>`
+- added compile-smoke coverage for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `forbidden.js`, `unauthorized.js`, `template.js`, and `default.js`
+- expanded the starter example with F#-driven special-file entries and `next.config.mjs` flags for `authInterrupts` and `globalNotFound`
+- added dedicated documentation for special-file conventions in `docs/special-files.md`
+- added wrapper-generator tests for special-file wrapper shapes
+
 ## 0.4.0 - 2026-03-21
 
 - added `next/font/local` bindings plus a generated `GoogleFont` catalog sourced from official Next.js type definitions

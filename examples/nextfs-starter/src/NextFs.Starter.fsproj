@@ -10,8 +10,17 @@
     <Compile Include="App/Actions.fs" />
     <Compile Include="App/ClientCounter.fs" />
     <Compile Include="App/Api/Posts.fs" />
+    <Compile Include="App/Default.fs" />
+    <Compile Include="App/Error.fs" />
+    <Compile Include="App/Forbidden.fs" />
+    <Compile Include="App/GlobalError.fs" />
+    <Compile Include="App/GlobalNotFound.fs" />
     <Compile Include="App/Layout.fs" />
+    <Compile Include="App/Loading.fs" />
+    <Compile Include="App/NotFound.fs" />
     <Compile Include="App/Page.fs" />
+    <Compile Include="App/Template.fs" />
+    <Compile Include="App/Unauthorized.fs" />
   </ItemGroup>
 
   <ItemGroup>

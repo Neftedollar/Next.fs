@@ -141,6 +141,12 @@ Related types:
 - `URLSearchParamsCollection`
 - `RedirectType`
 
+These map to the App Router special files:
+
+- `Navigation.notFound()` -> `not-found.js`
+- `Navigation.forbidden()` -> `forbidden.js`
+- `Navigation.unauthorized()` -> `unauthorized.js`
+
 ### `WebVitals`
 
 Bindings for `next/web-vitals`.
@@ -240,6 +246,22 @@ Related types:
 
 - `NextFetchEvent`
 - `RouteHasType`
+
+## Special Files
+
+Types intended for App Router special files:
+
+- `ErrorBoundaryProps`
+- `ErrorWithDigest`
+- `TemplateProps`
+- `DefaultProps<'T>`
+
+These are typically used with:
+
+- `error.js`
+- `global-error.js`
+- `template.js`
+- `default.js`
 
 ### Route handlers
 

@@ -16,7 +16,8 @@ If you are evaluating the repository for the first time, use this path:
 1. read [Quickstart](docs/quickstart.md)
 2. inspect [the starter example](examples/nextfs-starter/README.md)
 3. learn the wrapper rules in [Directives and wrappers](docs/directives-wrappers.md)
-4. use [API reference](docs/api-reference.md) as the lookup table
+4. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
+5. use [API reference](docs/api-reference.md) as the lookup table
 
 ## What It Covers
 
@@ -26,6 +27,7 @@ If you are evaluating the repository for the first time, use this path:
 - request helpers from `next/headers`
 - `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
 - `proxy.js` config builders and `NextFetchEvent`
+- App Router special-file helpers and documented patterns for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js`, and `unauthorized.js`
 - cache invalidation and cache directives from `next/cache`
 - metadata, viewport, robots, sitemap, manifest, and image-metadata builders
 - `ImageResponse` bindings for Open Graph and icon generation
@@ -36,7 +38,7 @@ If you are evaluating the repository for the first time, use this path:
 
 ## Compatibility
 
-- `NextFs`: `0.4.x`
+- `NextFs`: `0.5.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -268,6 +270,17 @@ Beyond the baseline router/navigation APIs, `NextFs` now also includes:
 
 These helpers are compile-smoked in `samples/NextFs.Smoke`.
 
+## Special Files
+
+The repository now also documents and demonstrates the App Router special-file flow from F#:
+
+- `error.js` and `global-error.js` via `ErrorBoundaryProps`
+- `template.js` via `TemplateProps`
+- `default.js` via `DefaultProps<'T>`
+- starter patterns for `loading.js`, `not-found.js`, `global-not-found.js`, `forbidden.js`, and `unauthorized.js`
+
+The dedicated guide is in [Special files](docs/special-files.md).
+
 ## App Router Directives And Wrappers
 
 Inline directives work for function-level cases:
@@ -301,6 +314,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 - [Quickstart](docs/quickstart.md)
 - [API reference](docs/api-reference.md)
 - [Directives and wrappers](docs/directives-wrappers.md)
+- [Special files](docs/special-files.md)
 - [Package design and limitations](docs/package-design-limitations.md)
 - [Starter example](examples/nextfs-starter/README.md)
 

@@ -254,6 +254,23 @@ type LayoutProps<'routeParams> =
     abstract ``params``: JS.Promise<'routeParams>
     abstract children: ReactElement
 
+type TemplateProps =
+    abstract children: ReactElement
+
+type DefaultProps<'routeParams> =
+    abstract ``params``: JS.Promise<'routeParams>
+
+type ErrorWithDigest =
+    abstract name: string option
+    abstract message: string
+    abstract stack: string option
+    abstract digest: string option
+
+type ErrorBoundaryProps =
+    abstract error: ErrorWithDigest
+    abstract ``unstable_retry``: unit -> unit
+    abstract reset: unit -> unit
+
 type ResolvingMetadata = JS.Promise<obj>
 type ResolvingViewport = JS.Promise<obj>
 

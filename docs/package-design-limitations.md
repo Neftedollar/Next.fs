@@ -58,6 +58,12 @@ The package also keeps most configuration values JavaScript-shaped on purpose:
 - `GoogleFont` is generated from official Next.js type declarations, but the option objects are still intentionally loose
 - this keeps the bindings maintainable as Next.js evolves, at the cost of not encoding every per-font constraint in the F# type system
 
+The same principle applies to special files:
+
+- `error.js`, `global-error.js`, `template.js`, and `default.js` have helper types
+- the repo documents supported patterns for `loading`, `not-found`, `global-not-found`, `forbidden`, and `unauthorized`
+- this is not a separate routing abstraction layer; root-level edge cases such as `global-error` and `global-not-found` still follow native Next.js rules
+
 The wrapper generator is also deliberately narrow:
 
 - it only understands file-level `"use client"` and `"use server"` directives

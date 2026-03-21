@@ -6,15 +6,63 @@
       "named": ["proxy", "config"]
     },
     {
+      "from": "./.fable/App.Default.js",
+      "to": "./app/default.js",
+      "default": true
+    },
+    {
+      "directive": "use client",
+      "from": "./.fable/App.Error.js",
+      "to": "./app/error.js",
+      "default": true
+    },
+    {
+      "directive": "use client",
+      "from": "./.fable/App.GlobalError.js",
+      "to": "./app/global-error.js",
+      "default": true
+    },
+    {
+      "from": "./.fable/App.GlobalNotFound.js",
+      "to": "./app/global-not-found.js",
+      "default": true,
+      "named": ["metadata"]
+    },
+    {
+      "from": "./.fable/App.Loading.js",
+      "to": "./app/loading.js",
+      "default": true
+    },
+    {
       "from": "./.fable/App.Layout.js",
       "to": "./app/layout.js",
       "default": true,
       "named": ["metadata", "viewport"]
     },
     {
+      "from": "./.fable/App.NotFound.js",
+      "to": "./app/not-found.js",
+      "default": true
+    },
+    {
       "directive": "use client",
       "from": "./.fable/App.Page.js",
       "to": "./app/page.js",
+      "default": true
+    },
+    {
+      "from": "./.fable/App.Template.js",
+      "to": "./app/template.js",
+      "default": true
+    },
+    {
+      "from": "./.fable/App.Forbidden.js",
+      "to": "./app/forbidden.js",
+      "default": true
+    },
+    {
+      "from": "./.fable/App.Unauthorized.js",
+      "to": "./app/unauthorized.js",
       "default": true
     },
     {

@@ -68,6 +68,9 @@ Common patterns:
 | server actions module | `"use server"` | `false` | `["createPost"]` | `app/actions.js` |
 | route handler | omitted | `false` | `["GET", "POST"]` | `app/api/posts/route.js` |
 | proxy entry | omitted | `false` | `["proxy", "config"]` | `proxy.js` |
+| segment error | `"use client"` | `true` | none | `app/error.js` |
+| global error | `"use client"` | `true` | none | `app/global-error.js` |
+| global not found | omitted | `true` | `["metadata"]` optional | `app/global-not-found.js` |
 
 Current rules enforced by the generator:
 
