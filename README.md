@@ -1,17 +1,26 @@
 # NextFs
 
-`NextFs` is a Fable-first binding layer for modern Next.js apps.
+`NextFs` is a Fable-first binding layer for building Next.js applications with F#.
 
-Current scope:
+Status: experimental, but already usable as a bootstrap layer for App Router projects.
 
-- Built-in Next.js components: `next/link`, `next/image`, `next/script`, `next/form`, `next/head`
+## What It Covers
+
+- Next.js components: `next/link`, `next/image`, `next/script`, `next/form`, `next/head`
 - App Router hooks and helpers from `next/navigation`
-- Server-side request APIs from `next/headers` and `next/server`
+- Async server request APIs from `next/headers` and `next/server`
 - `NextRequest` / `NextResponse` baseline for route handlers
-- Inline `'use server'` helper for server actions
-- A wrapper generator for file-level `'use client'` / `'use server'` entrypoints
+- Inline `Directive.useServer()` support for F# server actions
+- Wrapper generation for file-level `'use client'` / `'use server'` entry files
 
-The current package targets modern Next.js App Router usage on Next.js 15/16, including async `headers()` / `cookies()`.
+The current package is aimed at Next.js 15/16 style App Router usage, including async `headers()` and `cookies()`.
+
+## Repository Layout
+
+- `src/NextFs` contains the bindings package
+- `samples/NextFs.Smoke` contains a compile-smoke consumer project
+- `tools/nextfs-entry.mjs` generates thin Next.js wrapper files with file-level directives
+- `samples/nextfs.entries.json` shows the wrapper manifest format
 
 ## Install
 
@@ -19,7 +28,7 @@ The current package targets modern Next.js App Router usage on Next.js 15/16, in
 dotnet add package NextFs
 ```
 
-Native runtime dependencies are expected to come from your Next.js app:
+Runtime dependencies are expected to come from the consuming Next.js app:
 
 - `next`
 - `react`
@@ -31,7 +40,6 @@ Native runtime dependencies are expected to come from your Next.js app:
 module App.Page
 
 open Fable.Core
-open Fable.Core.JsInterop
 open Feliz
 open NextFs
 
@@ -46,14 +54,18 @@ let NavLink() =
 [<ExportDefault>]
 let Page() =
     Html.main [
-        Html.h1 "Hello from Fable + Next.js"
-        NavLink()
+        prop.children [
+            Html.h1 "Hello from Fable + Next.js"
+            NavLink()
+        ]
     ]
 ```
 
 Typed object `href` values can be built with `Href.create`:
 
 ```fsharp
+open Fable.Core.JsInterop
+
 Link.create [
     Link.hrefObject (
         Href.create [
@@ -65,7 +77,7 @@ Link.create [
 ]
 ```
 
-Server-side request data is exposed as async APIs, matching modern Next.js:
+Server-side request data is exposed as async APIs:
 
 ```fsharp
 module App.ServerPage
@@ -88,7 +100,7 @@ let Page() =
     |> Async.StartAsPromise
 ```
 
-Route handlers can use `NextRequest`, async `params`, and `NextResponse`:
+Route handlers can use `NextRequest`, async route params, and `NextResponse`:
 
 ```fsharp
 module App.Api.Posts
@@ -115,12 +127,11 @@ let get (request: NextRequest, ctx: RouteHandlerContext<{| slug: string |}>) =
     |> Async.StartAsPromise
 ```
 
-Inline server actions can now be expressed directly from F#:
+Inline server actions can emit `'use server'` from F#:
 
 ```fsharp
 let saveSearch (formData: obj) =
     Directive.useServer()
-    // mutate state here
     ()
 ```
 
@@ -128,9 +139,9 @@ let saveSearch (formData: obj) =
 
 Next.js requires `'use client'` and `'use server'` to appear at the top of the generated JavaScript file.
 
-Fable can emit `'use server'` inside a function body, but file-level directives still land after ESM imports in generated modules. For that reason, file-level entrypoints still need a thin wrapper.
+`Directive.useServer()` covers the inline function-level case. File-level directives are different: Fable-generated ESM imports appear before emitted statements, so client/server entry modules still need a thin wrapper file.
 
-The repository includes a small wrapper generator:
+The repository includes a wrapper generator:
 
 ```bash
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
@@ -162,18 +173,24 @@ Example config:
 }
 ```
 
-The generator creates thin JS entry files that re-export your Fable output with the correct file-level directive.
+For `'use server'` wrapper entries, only named exports are allowed. This matches Next.js expectations and avoids invalid export shapes.
 
-For `'use server'` entries, only named exports are allowed. This is deliberate: Next.js rejects `"use server"` files that export non-async values or broad `export *` re-exports.
+## Interop Notes
 
-## Important F# Interop Note
-
-When exporting functions that Next.js will call directly, use JavaScript-shaped signatures.
-
-- Route handlers should be uncurried: `let get (request, ctx) = ...`
+- Route handlers should be exported with JavaScript-shaped signatures: `let get (request, ctx) = ...`
 - Multi-argument server actions should also be uncurried: `let update (prevState, formData) = ...`
-- Use `[<CompiledName("GET")>]`, `[<CompiledName("POST")>]`, etc. for route handler exports
+- Use `[<CompiledName("GET")>]`, `[<CompiledName("POST")>]`, and similar attributes for route handler exports
 
-## Remaining Gap
+## Local Validation
 
-File-level directives are handled through generated wrappers, and inline `'use server'` is available from F#. The next step is automating wrapper generation in the consumer workflow so this no longer depends on a separate manual command/config step.
+```bash
+dotnet build NextFs.slnx -v minimal
+dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
+node tools/nextfs-entry.mjs samples/nextfs.entries.json
+```
+
+## Roadmap
+
+- automate wrapper generation in the consumer workflow
+- expand `next/server` coverage beyond the current `NextResponse` baseline
+- add stronger typing for metadata, route config, and server action conventions

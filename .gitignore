@@ -9,4 +9,8 @@ artifacts/
 *.nupkg
 *.snupkg
 samples/app/
+.idea/
+.vscode/
+TestResults/
+coverage/
 .DS_Store

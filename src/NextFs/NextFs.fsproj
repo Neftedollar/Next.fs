@@ -6,6 +6,7 @@
     <Version>0.1.0</Version>
     <Authors>roman</Authors>
     <Description>Fable bindings for Next.js App Router components, navigation APIs and server helpers.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>fable-javascript;nextjs;fable;fsharp;react</PackageTags>
     <FablePackageType>binding</FablePackageType>
