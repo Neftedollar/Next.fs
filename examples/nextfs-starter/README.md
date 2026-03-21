@@ -4,6 +4,7 @@ Minimal App Router starter showing the intended NextFs flow:
 
 - F# source lives under `src/App/**`
 - root-level F# entry points can live outside `App/**`, for example `src/Proxy.fs`
+- compiled Fable output lands in `.fable/**`
 - thin Next.js wrapper files live under `app/**`
 - `nextfs.entries.json` tells the wrapper generator where each JS entry should land
 - layout, metadata, viewport, `next/font`, route handlers, and `proxy.js` can all come from F#
@@ -83,17 +84,62 @@ examples/nextfs-starter/
 
 ## Local Flow
 
-Assume your Fable build emits JS into `.fable/` at the project root.
+Start from the repository root:
+
+```bash
+dotnet tool restore
+```
+
+Then switch to `examples/nextfs-starter` and install the JavaScript dependencies:
 
 ```bash
 npm install
-dotnet build src/NextFs.Starter.fsproj
-node ../../tools/nextfs-entry.mjs nextfs.entries.json
+```
+
+The shortest repeatable loop is:
+
+```bash
+npm run sync:app
 npm run dev
 ```
 
-The checked-in `app/**` and `proxy.js` files are generated wrappers. In a real project you regenerate them after each Fable build.
+For iterative work, keep Fable and Next.js in separate terminals:
+
+```bash
+npm run watch:fable
+npm run dev
+```
+
+Command boundaries:
+
+- `npm run build:fsharp` only verifies that the F# project compiles under .NET. It does not emit `.fable/**`.
+- `npm run build:fable` is the actual JavaScript emit step for Next.js entry modules.
+- `npm run gen:wrappers` regenerates the checked-in `app/**`, `proxy.js`, and instrumentation wrappers from `nextfs.entries.json`.
+
+The checked-in `app/**` and `proxy.js` files are generated wrappers. Regenerate them after each Fable emit, or let `watch:fable` do it for you.
+
+## Generated vs. Source Files
+
+Edit these files by hand:
+
+- `src/**`
+- `next.config.mjs`
+- `nextfs.entries.json`
+
+Do not edit these by hand:
+
+- `.fable/**`
+- `app/**`
+- `proxy.js`
+- `instrumentation.js`
+- `instrumentation-client.js`
+
+## Current Fable Note
+
+As of March 21, 2026, some environments still hit an upstream `dotnet fable` hang in Fable 4.29.x. The current upstream tracker is [fable-compiler/Fable#4326](https://github.com/fable-compiler/Fable/issues/4326).
+
+This starter still documents the intended pipeline and keeps the generated wrappers checked in, but the live Fable emit step may depend on the host shell and SDK setup until that upstream issue is fully resolved.
 
 The special-file entries in this starter intentionally demonstrate a broad App Router surface. `forbidden.js`, `unauthorized.js`, and `global-not-found.js` depend on experimental Next.js flags, so treat them as current-pattern examples rather than frozen APIs.
 
-For the code patterns behind these files, see [Server and client patterns](../../docs/server-client-patterns.md), [Directives and wrappers](../../docs/directives-wrappers.md), and [Special files](../../docs/special-files.md).
+For the code patterns behind these files, see [the starter walkthrough](../../docs/starter-app-walkthrough.md), [Server and client patterns](../../docs/server-client-patterns.md), [Directives and wrappers](../../docs/directives-wrappers.md), and [Special files](../../docs/special-files.md).

@@ -4,6 +4,9 @@
   "type": "module",
   "scripts": {
     "build:fsharp": "dotnet build src/NextFs.Starter.fsproj",
+    "build:fable": "dotnet fable src/NextFs.Starter.fsproj -o .fable -e .js",
+    "watch:fable": "dotnet fable watch src/NextFs.Starter.fsproj -o .fable -e .js --runWatch \"node ../../tools/nextfs-entry.mjs nextfs.entries.json\"",
+    "sync:app": "npm run build:fable && npm run gen:wrappers",
     "gen:wrappers": "node ../../tools/nextfs-entry.mjs nextfs.entries.json",
     "dev": "next dev",
     "build": "next build",

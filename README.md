@@ -14,11 +14,12 @@ The package stays close to native Next.js concepts instead of introducing a sepa
 If you are evaluating the repository for the first time, use this path:
 
 1. read [Quickstart](docs/quickstart.md)
-2. inspect [the starter example](examples/nextfs-starter/README.md)
-3. learn the wrapper rules in [Directives and wrappers](docs/directives-wrappers.md)
-4. use [Server and client patterns](docs/server-client-patterns.md) for route handlers, wrappers, and mixed App Router flows
-5. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
-6. use [API reference](docs/api-reference.md) as the lookup table
+2. read [Starter app walkthrough](docs/starter-app-walkthrough.md)
+3. inspect [the starter example](examples/nextfs-starter/README.md)
+4. learn the wrapper rules in [Directives and wrappers](docs/directives-wrappers.md)
+5. use [Server and client patterns](docs/server-client-patterns.md) for route handlers, wrappers, and mixed App Router flows
+6. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
+7. use [API reference](docs/api-reference.md) as the lookup table
 
 ## What It Covers
 
@@ -72,6 +73,8 @@ For repository work, restore local tools first:
 ```bash
 dotnet tool restore
 ```
+
+The repo-local tool manifest currently includes `femto` and `fable`.
 
 ## Quick Start
 
@@ -323,6 +326,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 ## Examples And Docs
 
 - [Quickstart](docs/quickstart.md)
+- [Starter app walkthrough](docs/starter-app-walkthrough.md)
 - [Server and client patterns](docs/server-client-patterns.md)
 - [Instrumentation](docs/instrumentation.md)
 - [API reference](docs/api-reference.md)
@@ -341,6 +345,7 @@ dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
 node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
+git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/proxy.js examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
 ```
 
 ## NuGet Publishing

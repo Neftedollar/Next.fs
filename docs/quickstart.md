@@ -163,14 +163,27 @@ let config =
 
 ## 7. Use the starter when you want a full folder layout
 
-If you want to see the intended shape of a real App Router project, use [the starter example](../examples/nextfs-starter/README.md). It includes:
+If you want to see the intended shape of a real App Router project, start with [Starter app walkthrough](starter-app-walkthrough.md) and then inspect [the starter example](../examples/nextfs-starter/README.md). It includes:
 
 - F# source modules under `src/App/**`
 - a root-level `src/Proxy.fs` entry
 - root-level instrumentation entries outside `app/**`
+- Fable output under `.fable/**`
 - generated wrapper files under `app/**`
 - special-file entries such as `error`, `loading`, `not-found`, `template`, and auth interrupts
 - a generated root `proxy.js`
 - a wrapper manifest
 - a reference F# example project
 - a root layout exported from F# with `metadata`, `viewport`, and `next/font` usage
+
+The practical loop is:
+
+```bash
+dotnet tool restore
+cd examples/nextfs-starter
+npm install
+npm run sync:app
+npm run dev
+```
+
+`build:fsharp` only checks .NET compilation. `build:fable` is the real JavaScript emit step.

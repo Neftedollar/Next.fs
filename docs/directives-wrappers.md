@@ -82,6 +82,33 @@ Current rules enforced by the generator:
 - each entry must export at least one symbol
 - generated output is deterministic and covered by `tests/nextfs-entry.test.mjs`
 
+## Starter Pipeline
+
+In the starter app, the file ownership boundary is:
+
+- `src/**`: handwritten F# source
+- `.fable/**`: generated JavaScript from Fable
+- `app/**`, `proxy.js`, `instrumentation.js`, `instrumentation-client.js`: generated Next.js entry wrappers
+
+The shortest intended loop is:
+
+```bash
+dotnet tool restore
+cd examples/nextfs-starter
+npm install
+npm run sync:app
+npm run dev
+```
+
+And for incremental work:
+
+```bash
+npm run watch:fable
+npm run dev
+```
+
+The wrapper generator never compiles F#. It only translates `nextfs.entries.json` into thin re-export files after Fable has already emitted `.fable/**`.
+
 ## Example config
 
 ```json
@@ -130,3 +157,5 @@ That example shows the three common cases:
 - a route-handler module that does not need a directive
 - a root-level `proxy.js` entry exported from F#
 - root instrumentation entries that can stay directive-free
+
+For a full project walkthrough, see [Starter app walkthrough](starter-app-walkthrough.md).

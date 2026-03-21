@@ -8,6 +8,13 @@
         "femto"
       ],
       "rollForward": false
+    },
+    "fable": {
+      "version": "4.29.0",
+      "commands": [
+        "fable"
+      ],
+      "rollForward": false
     }
   }
 }

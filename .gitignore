@@ -14,3 +14,4 @@ samples/app/
 TestResults/
 coverage/
 .DS_Store
+.dotnet/
