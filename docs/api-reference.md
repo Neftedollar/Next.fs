@@ -13,6 +13,7 @@ Bindings for `next/link`.
 Common members:
 
 - `Link.create`
+- `Link.useLinkStatus`
 - `Link.href`
 - `Link.hrefObject`
 - `Link.replace`
@@ -97,14 +98,32 @@ Common members:
 - `Navigation.redirectWith`
 - `Navigation.permanentRedirect`
 - `Navigation.notFound`
+- `Navigation.forbidden`
+- `Navigation.unauthorized`
+- `Navigation.unstableRethrow`
 
 Related types:
 
 - `AppRouterInstance`
+- `LinkStatus`
 - `NavigateOptions`
 - `PrefetchOptions`
 - `ReadonlyURLSearchParams`
 - `RedirectType`
+
+### `WebVitals`
+
+Bindings for `next/web-vitals`.
+
+Common members:
+
+- `WebVitals.useReportWebVitals`
+
+Related types:
+
+- `WebVitalMetric`
+- `WebVitalMetricRating`
+- `WebVitalNavigationType`
 
 ## Server
 
@@ -114,16 +133,25 @@ Bindings for `next/headers` and request-context helpers from `next/server`.
 
 Common members:
 
+- `Server.after`
+- `Server.afterAsync`
 - `Server.headers`
 - `Server.cookies`
 - `Server.draftMode`
 - `Server.connection`
+- `Server.userAgent`
 
 Related types:
 
 - `HeadersCollection`
 - `RequestCookieStore`
 - `DraftModeState`
+- `UserAgentInfo`
+- `UserAgentBrowser`
+- `UserAgentDevice`
+- `UserAgentEngine`
+- `UserAgentOperatingSystem`
+- `UserAgentCpu`
 - `NextRequest`
 - `NextUrl`
 - `FormDataCollection`
@@ -199,12 +227,115 @@ Related helpers and types:
 - `RevalidatePathType`
 - `RevalidateTagProfile`
 
+## Metadata And Special Files
+
+### `Metadata`
+
+Top-level metadata object builders for layout/page exports.
+
+Common members:
+
+- `Metadata.create`
+- `Metadata.title`
+- `Metadata.titleTemplate`
+- `Metadata.description`
+- `Metadata.applicationName`
+- `Metadata.generator`
+- `Metadata.keywords`
+- `Metadata.creator`
+- `Metadata.publisher`
+- `Metadata.metadataBase`
+- `Metadata.alternates`
+- `Metadata.openGraph`
+- `Metadata.twitter`
+- `Metadata.robots`
+- `Metadata.manifest`
+- `Metadata.icons`
+- `Metadata.verification`
+- `Metadata.other`
+
+Related helper modules:
+
+- `MetadataTitle`
+- `MetadataImage`
+- `MetadataAlternates`
+- `MetadataOpenGraph`
+- `MetadataTwitter`
+- `MetadataVerification`
+- `ThemeColor`
+- `Viewport`
+
+### `MetadataRoute`
+
+Builders for App Router metadata route files.
+
+Common submodules:
+
+- `MetadataRoute.RobotsRule`
+- `MetadataRoute.Robots`
+- `MetadataRoute.SitemapEntry`
+- `MetadataRoute.ManifestIcon`
+- `MetadataRoute.Manifest`
+
+Related types:
+
+- `MetadataRoute.SitemapChangeFrequency`
+
+### `ImageMetadata`
+
+Builders for `generateImageMetadata` results.
+
+Common members:
+
+- `ImageMetadata.create`
+- `ImageMetadata.id`
+- `ImageMetadata.alt`
+- `ImageMetadata.size`
+- `ImageMetadata.contentType`
+
+Related helpers:
+
+- `ImageMetadataSize`
+- `ImageGenerationProps<'routeParams, 'id>`
+
+### `ImageResponse`
+
+Bindings for `ImageResponse` from `next/og`.
+
+Common members:
+
+- `ImageResponse.create`
+- `ImageResponse.createWithOptions`
+
+Related helpers and types:
+
+- `ImageResponseOptions`
+- `ImageResponseFont`
+- `ImageResponseEmoji`
+- `ImageResponseFontStyle`
+
+### Page And Layout Props
+
+Utility interfaces for async App Router props:
+
+- `PageProps<'routeParams, 'searchParams>`
+- `LayoutProps<'routeParams>`
+- `ResolvingMetadata`
+- `ResolvingViewport`
+- `SitemapProps`
+
 ## Utility types
 
 - `Href.create`
 - `Href.pathname`
 - `Href.query`
 - `Href.hash`
+- `PreferredRegion.auto`
+- `PreferredRegion.globalRegion`
+- `PreferredRegion.home`
+- `PreferredRegion.region`
+- `PreferredRegion.regions`
+- `RouteRuntime`
 - `ScriptStrategy`
 - `ImageLoading`
 - `ImagePlaceholder`

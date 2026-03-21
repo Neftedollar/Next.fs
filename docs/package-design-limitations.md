@@ -8,11 +8,13 @@ The package mirrors the current Next.js App Router surface in a small set of mod
 
 - component helpers: `Link`, `Image`, `Script`, `Form`, `Head`
 - navigation helpers: `Navigation`
+- client reporting helpers: `WebVitals`
 - server helpers: `Server`
 - cache helpers: `Cache`, `CacheLife`
+- metadata helpers: `Metadata`, `MetadataOpenGraph`, `MetadataTwitter`, `Viewport`, `MetadataRoute`, `ImageResponse`, `ImageMetadata`
 - response helpers: `ServerResponse`, `ResponseInit`, `NextResponseInit`
 - request and route types: `NextRequest`, `NextResponse`, `RouteHandlerContext<'T>`
-- utility types: `Href`, `ScriptStrategy`, `RedirectType`, `ImageLoading`, `ImagePlaceholder`, `CacheProfile`, `RevalidatePathType`, `RevalidateTagProfile`
+- utility types: `Href`, `ScriptStrategy`, `RedirectType`, `ImageLoading`, `ImagePlaceholder`, `CacheProfile`, `RevalidatePathType`, `RevalidateTagProfile`, `RouteRuntime`
 
 The goal is to keep the F# API close to the underlying JavaScript API, so existing Next.js examples can usually be translated without inventing new concepts.
 

@@ -16,12 +16,15 @@ The package stays close to native Next.js concepts instead of introducing a sepa
 - request helpers from `next/headers`
 - `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
 - cache invalidation and cache directives from `next/cache`
+- metadata, viewport, robots, sitemap, manifest, and image-metadata builders
+- `ImageResponse` bindings for Open Graph and icon generation
+- `useLinkStatus`, `useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
 - inline `Directive.useServer()` and `Directive.useCache()` support
 - wrapper generation for file-level `'use client'` and `'use server'`
 
 ## Compatibility
 
-- `NextFs`: `0.2.x`
+- `NextFs`: `0.3.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -157,6 +160,73 @@ let saveSearch (_formData: obj) =
     Cache.refresh()
     ()
 ```
+
+## Metadata And Special Files
+
+`NextFs` now covers the parts of App Router you need to export from layouts and metadata files:
+
+- `Metadata`
+- `MetadataOpenGraph`
+- `MetadataTwitter`
+- `Viewport`
+- `MetadataRoute.Robots`
+- `MetadataRoute.SitemapEntry`
+- `MetadataRoute.Manifest`
+- `ImageMetadata`
+- `ImageResponse`
+
+Example:
+
+```fsharp
+let metadata =
+    Metadata.create [
+        Metadata.titleTemplate (
+            MetadataTitle.create [
+                MetadataTitle.defaultValue "NextFs"
+                MetadataTitle.template "%s | NextFs"
+            ]
+        )
+        Metadata.description "Next.js App Router bindings for F#."
+        Metadata.openGraph (
+            MetadataOpenGraph.create [
+                MetadataOpenGraph.title "NextFs"
+                MetadataOpenGraph.type' "website"
+            ]
+        )
+    ]
+
+let viewport =
+    Viewport.create [
+        Viewport.themeColor "#111827"
+        Viewport.colorScheme "dark light"
+    ]
+```
+
+For generated icon or Open Graph routes:
+
+```fsharp
+let generateImageMetadata() =
+    [|
+        ImageMetadata.create [
+            ImageMetadata.id "small"
+            ImageMetadata.contentType "image/png"
+        ]
+    |]
+```
+
+## More App Router Helpers
+
+Beyond the baseline router/navigation APIs, `NextFs` now also includes:
+
+- `Link.useLinkStatus()`
+- `WebVitals.useReportWebVitals(...)`
+- `Navigation.forbidden()`
+- `Navigation.unauthorized()`
+- `Navigation.unstableRethrow(...)`
+- `Server.after(...)`
+- `Server.userAgent(...)`
+
+These helpers are compile-smoked in `samples/NextFs.Smoke`.
 
 ## App Router Directives And Wrappers
 

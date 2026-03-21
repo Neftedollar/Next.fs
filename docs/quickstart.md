@@ -50,6 +50,7 @@ The main component helpers in the package are:
 - `Navigation.useRouter`, `Navigation.usePathname`, `Navigation.useSearchParams`, `Navigation.useParams`
 - `Server.headers`, `Server.cookies`, `Server.draftMode`, `Server.connection`
 - `Cache.cacheLifeProfile`, `Cache.cacheTag`, `Cache.revalidatePath`, `Cache.revalidateTag`, `Cache.updateTag`, `Cache.refresh`
+- `Metadata.create`, `Viewport.create`, `ImageResponse.createWithOptions`
 - `ServerResponse.json`, `ServerResponse.jsonWithInit`, `ServerResponse.redirect`, `ServerResponse.rewrite`, `ServerResponse.next`
 
 If an entry module uses client-only hooks such as `Navigation.usePathname` or `Navigation.useRouter`, generate a `use client` wrapper for that file. See [Directives and wrappers](directives-wrappers.md).
@@ -137,3 +138,4 @@ If you want to see the intended shape of a real App Router project, use [the sta
 - generated wrapper files under `app/**`
 - a wrapper manifest
 - a buildable F# example project
+- a root layout exported from F# with `metadata` and `viewport`
