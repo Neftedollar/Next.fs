@@ -5,27 +5,27 @@
 [![NuGet](https://img.shields.io/nuget/v/NextFs.svg)](https://www.nuget.org/packages/NextFs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-`NextFs` is a Fable-first binding layer for building Next.js applications with F#.
+`NextFs` is a thin Fable binding layer for writing Next.js App Router applications in F#.
 
-Status: experimental, but already usable as a bootstrap layer for App Router projects.
+The package stays close to native Next.js concepts instead of introducing a separate framework. If you already understand how a feature works in Next.js, the goal is that you can express the same shape in F# with minimal translation.
 
 ## What It Covers
 
-- Next.js components: `next/link`, `next/image`, `next/script`, `next/form`, `next/head`
+- `next/link`, `next/image`, `next/script`, `next/form`, `next/head`
 - App Router hooks and helpers from `next/navigation`
-- Async server request APIs from `next/headers` and `next/server`
-- `NextRequest` / `NextResponse` baseline for route handlers
-- Inline `Directive.useServer()` support for F# server actions
-- Wrapper generation for file-level `'use client'` / `'use server'` entry files
+- request helpers from `next/headers`
+- `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
+- cache invalidation and cache directives from `next/cache`
+- inline `Directive.useServer()` and `Directive.useCache()` support
+- wrapper generation for file-level `'use client'` and `'use server'`
 
-The current package is aimed at Next.js 15/16 style App Router usage, including async `headers()` and `cookies()`.
+## Compatibility
 
-## Repository Layout
-
-- `src/NextFs` contains the bindings package
-- `samples/NextFs.Smoke` contains a compile-smoke consumer project
-- `tools/nextfs-entry.mjs` generates thin Next.js wrapper files with file-level directives
-- `samples/nextfs.entries.json` shows the wrapper manifest format
+- `NextFs`: `0.2.x`
+- `next`: `>= 15.0.0 < 17.0.0`
+- `react`: `>= 18.2.0 < 20.0.0`
+- `react-dom`: `>= 18.2.0 < 20.0.0`
+- core Fable dependencies in this repo: `Fable.Core 4.5.0`, `Feliz 3.2.0`
 
 ## Install
 
@@ -33,28 +33,26 @@ The current package is aimed at Next.js 15/16 style App Router usage, including 
 dotnet add package NextFs
 ```
 
-Runtime dependencies still live in the consuming Next.js app:
+Your consuming Next.js app still provides the JavaScript runtime packages:
 
 - `next`
 - `react`
 - `react-dom`
 
-`NextFs` also ships Femto metadata for those npm packages, so a Fable consumer can verify or resolve them with:
+`NextFs` publishes Femto metadata for those packages, so a Fable consumer can check or resolve them with:
 
 ```bash
 dotnet femto yourProject.fsproj
 dotnet femto --resolve yourProject.fsproj
 ```
 
-This lets the binding package describe the required JavaScript dependencies instead of duplicating them manually in every consumer README.
-
-For repository development, the pinned local `femto` tool can be restored with:
+For repository work, restore local tools first:
 
 ```bash
 dotnet tool restore
 ```
 
-## Example
+## Quick Start
 
 ```fsharp
 module App.Page
@@ -67,7 +65,6 @@ open NextFs
 let NavLink() =
     Link.create [
         Link.href "/dashboard"
-        prop.className "nav-link"
         prop.text "Dashboard"
     ]
 
@@ -81,46 +78,7 @@ let Page() =
     ]
 ```
 
-Typed object `href` values can be built with `Href.create`:
-
-```fsharp
-open Fable.Core.JsInterop
-
-Link.create [
-    Link.hrefObject (
-        Href.create [
-            Href.pathname "/search"
-            Href.query (createObj [ "q" ==> "fable" ])
-        ]
-    )
-    prop.text "Search"
-]
-```
-
-Server-side request data is exposed as async APIs:
-
-```fsharp
-module App.ServerPage
-
-open Fable.Core
-open Feliz
-open NextFs
-
-[<ExportDefault>]
-let Page() =
-    async {
-        let! headers = Async.AwaitPromise(Server.headers())
-        let userAgent = headers.get("user-agent") |> Option.defaultValue "unknown"
-
-        return
-            Html.pre [
-                prop.text userAgent
-            ]
-    }
-    |> Async.StartAsPromise
-```
-
-Route handlers can use `NextRequest`, async route params, and `NextResponse`:
+Route handlers use JavaScript-shaped arguments and HTTP verb exports:
 
 ```fsharp
 module App.Api.Posts
@@ -147,96 +105,116 @@ let get (request: NextRequest, ctx: RouteHandlerContext<{| slug: string |}>) =
     |> Async.StartAsPromise
 ```
 
-Inline server actions can emit `'use server'` from F#:
+Server-side helpers follow the asynchronous shape of modern Next.js APIs:
 
 ```fsharp
-let saveSearch (formData: obj) =
+module App.ServerPage
+
+open Feliz
+open NextFs
+
+[<ExportDefault>]
+let Page() =
+    async {
+        let! headers = Async.AwaitPromise(Server.headers())
+        let userAgent = headers.get("user-agent") |> Option.defaultValue "unknown"
+
+        return Html.pre userAgent
+    }
+    |> Async.StartAsPromise
+```
+
+## Cache And Server Actions
+
+`NextFs` now includes a baseline `next/cache` surface for App Router workflows:
+
+- `Directive.useCache()`
+- `Directive.useCachePrivate()`
+- `Directive.useCacheRemote()`
+- `Cache.cacheLifeProfile`
+- `Cache.cacheLife`
+- `Cache.cacheTag` / `Cache.cacheTags`
+- `Cache.revalidatePath`
+- `Cache.revalidateTag`
+- `Cache.updateTag`
+- `Cache.refresh`
+- `Cache.noStore`
+
+Example:
+
+```fsharp
+let loadNavigationLabels () =
+    Directive.useCache()
+    Cache.cacheLifeProfile CacheProfile.Hours
+    Cache.cacheTags [ "navigation"; "searches" ]
+
+    [| "Home"; "Search"; "Docs" |]
+
+let saveSearch (_formData: obj) =
     Directive.useServer()
+    Cache.updateTag "searches"
+    Cache.revalidatePath "/"
+    Cache.refresh()
     ()
 ```
 
-## File Directives
+## App Router Directives And Wrappers
 
-Next.js requires `'use client'` and `'use server'` to appear at the top of the generated JavaScript file.
+Inline directives work for function-level cases:
 
-`Directive.useServer()` covers the inline function-level case. File-level directives are different: Fable-generated ESM imports appear before emitted statements, so client/server entry modules still need a thin wrapper file.
+- `Directive.useServer()`
+- `Directive.useCache()`
+- `Directive.useCachePrivate()`
+- `Directive.useCacheRemote()`
 
-The repository includes a wrapper generator:
+File-level `'use client'` and `'use server'` directives are different. Fable emits imports first, so App Router entry files still need thin wrapper modules when the directive must appear at the top of the generated JavaScript file.
+
+Generate them with:
 
 ```bash
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
 ```
 
-Example config:
+For `'use server'` wrappers, only named exports are allowed. The generator rejects default exports and `export *` for that case.
 
-```json
-{
-  "entries": [
-    {
-      "directive": "use client",
-      "from": "./.fable/App.Page.js",
-      "to": "./app/page.js",
-      "default": true
-    },
-    {
-      "directive": "use server",
-      "from": "./.fable/App.Actions.js",
-      "to": "./app/actions.js",
-      "named": ["createPost", "deletePost"]
-    },
-    {
-      "from": "./.fable/App.Api.Posts.js",
-      "to": "./app/api/posts/route.js",
-      "named": ["GET", "POST"]
-    }
-  ]
-}
-```
+## Repository Layout
 
-For `'use server'` wrapper entries, only named exports are allowed. This matches Next.js expectations and avoids invalid export shapes.
+- `src/NextFs` contains the bindings package
+- `samples/NextFs.Smoke` contains compile-smoke coverage of the package surface
+- `examples/nextfs-starter` contains a minimal end-to-end App Router starter
+- `tests/nextfs-entry.test.mjs` covers the wrapper generator
+- `tools/nextfs-entry.mjs` generates directive wrapper files
 
-## Interop Notes
+## Examples And Docs
 
-- Route handlers should be exported with JavaScript-shaped signatures: `let get (request, ctx) = ...`
-- Multi-argument server actions should also be uncurried: `let update (prevState, formData) = ...`
-- Use `[<CompiledName("GET")>]`, `[<CompiledName("POST")>]`, and similar attributes for route handler exports
+- [Quickstart](docs/quickstart.md)
+- [API reference](docs/api-reference.md)
+- [Directives and wrappers](docs/directives-wrappers.md)
+- [Package design and limitations](docs/package-design-limitations.md)
+- [Starter example](examples/nextfs-starter/README.md)
 
-## Local Validation
+## Validation
 
 ```bash
 dotnet tool restore
 dotnet femto --validate src/NextFs/NextFs.fsproj
+node --test tests/*.mjs
 dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
+node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
 ```
 
 ## NuGet Publishing
 
-The repository includes [publish-nuget.yml](/Users/roman/Documents/dev/Next_fs/.github/workflows/publish-nuget.yml), which publishes `NextFs` to nuget.org on:
+The repository includes `.github/workflows/publish-nuget.yml`, which publishes `NextFs` to nuget.org on manual dispatch or tag pushes matching `v*`.
 
-- manual `workflow_dispatch`
-- git tag pushes matching `v*`
+Publishing uses NuGet Trusted Publishing through GitHub OIDC rather than a long-lived API key.
 
-It is configured for NuGet Trusted Publishing via GitHub OIDC, not a long-lived API key.
-
-The package page is:
+Package page:
 
 - https://www.nuget.org/packages/NextFs
 
-Before the first publish, create a trusted publishing policy on nuget.org with:
-
-- Repository Owner: `Neftedollar`
-- Repository: `Next.fs`
-- Workflow File: `publish-nuget.yml`
-- Environment: `release`
-
-## Roadmap
-
-- automate wrapper generation in the consumer workflow
-- expand `next/server` coverage beyond the current `NextResponse` baseline
-- add stronger typing for metadata, route config, and server action conventions
-
 ## Contributing
 
-Contribution workflow and commit conventions are documented in [CONTRIBUTING.md](/Users/roman/Documents/dev/Next_fs/CONTRIBUTING.md).
+Contribution workflow and commit conventions are documented in [CONTRIBUTING.md](CONTRIBUTING.md).

@@ -1,0 +1,27 @@
+{
+  "entries": [
+    {
+      "directive": "use client",
+      "from": "./.fable/App.Page.js",
+      "to": "./app/page.js",
+      "default": true
+    },
+    {
+      "directive": "use client",
+      "from": "./.fable/App.ClientCounter.js",
+      "to": "./app/components/client-counter.js",
+      "default": true
+    },
+    {
+      "directive": "use server",
+      "from": "./.fable/App.Actions.js",
+      "to": "./app/actions.js",
+      "named": ["createPost"]
+    },
+    {
+      "from": "./.fable/App.Api.Posts.js",
+      "to": "./app/api/posts/route.js",
+      "named": ["GET", "POST"]
+    }
+  ]
+}

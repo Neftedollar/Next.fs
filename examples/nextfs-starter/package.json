@@ -1,0 +1,17 @@
+{
+  "name": "nextfs-starter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:fsharp": "dotnet build src/NextFs.Starter.fsproj",
+    "gen:wrappers": "node ../../tools/nextfs-entry.mjs nextfs.entries.json",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

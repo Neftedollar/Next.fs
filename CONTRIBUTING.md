@@ -84,9 +84,11 @@ Before opening a PR:
 
 - run `dotnet tool restore`
 - run `dotnet femto --validate src/NextFs/NextFs.fsproj`
+- run `node --test tests/*.mjs`
 - run `dotnet build NextFs.slnx -v minimal`
 - run `dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts`
 - run `node tools/nextfs-entry.mjs samples/nextfs.entries.json`
+- run `node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json`
 
 PRs should explain:
 
@@ -101,4 +103,5 @@ If a PR changes public bindings:
 
 - update `README.md` when the change affects how the library is used
 - update `samples/NextFs.Smoke`
+- update `examples/nextfs-starter` when the change affects the intended real-project shape
 - call out any intentional mismatch or limitation compared with native Next.js behavior

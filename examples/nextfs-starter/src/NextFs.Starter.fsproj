@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="App/Actions.fs" />
+    <Compile Include="App/ClientCounter.fs" />
+    <Compile Include="App/Api/Posts.fs" />
+    <Compile Include="App/Page.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\NextFs\NextFs.fsproj" />
+    <PackageReference Include="Fable.Core" Version="4.5.0" />
+    <PackageReference Include="Feliz" Version="3.2.0" />
+  </ItemGroup>
+
+</Project>

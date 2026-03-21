@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Run Node tests
+        run: node --test tests/*.mjs
+
       - name: Restore local tools
         run: dotnet tool restore
 
@@ -38,3 +41,6 @@ jobs:
 
       - name: Generate sample Next.js entry wrappers
         run: node tools/nextfs-entry.mjs samples/nextfs.entries.json
+
+      - name: Generate starter example Next.js entry wrappers
+        run: node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json

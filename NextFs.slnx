@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/examples/">
+    <Project Path="examples/nextfs-starter/src/NextFs.Starter.fsproj" />
+  </Folder>
   <Folder Name="/samples/">
     <Project Path="samples/NextFs.Smoke/NextFs.Smoke.fsproj" />
   </Folder>
