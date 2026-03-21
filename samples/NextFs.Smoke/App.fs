@@ -49,7 +49,7 @@ let loadNavigationLabels () =
 
 [<ReactComponent>]
 let NavigationMenu() =
-    let pathname = Navigation.usePathname()
+    let pathname = NavigationClient.usePathname()
     let navigationLabels = loadNavigationLabels ()
 
     Html.nav [

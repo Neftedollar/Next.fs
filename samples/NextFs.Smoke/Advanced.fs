@@ -31,7 +31,7 @@ let proxyLike (request: NextRequest) =
 
 [<ReactComponent>]
 let ClientInstrumentation() =
-    let status = Link.useLinkStatus()
+    let status = LinkClient.useLinkStatus()
 
     WebVitals.useReportWebVitals(fun metric ->
         ignore metric.name

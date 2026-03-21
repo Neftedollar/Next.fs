@@ -1,11 +1,8 @@
 module App.GlobalError
 
-open Fable.Core
 open Feliz
 open NextFs
 
-[<ExportDefault>]
-[<ReactComponent>]
 let GlobalError(props: ErrorBoundaryProps) =
     Html.html [
         prop.lang "en"

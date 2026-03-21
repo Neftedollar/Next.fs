@@ -6,7 +6,7 @@ The goal is not to hide Next.js. The goal is to express the same shapes through 
 
 ## Client entry with a wrapper
 
-If an entry module uses client hooks such as `Navigation.useRouter()` or `Navigation.usePathname()`, keep the F# file focused on the component and generate a thin wrapper with `'use client'`.
+If an entry module uses client hooks such as `NavigationClient.useRouter()` or `NavigationClient.usePathname()`, keep the F# file focused on the component and generate a thin wrapper with `'use client'`.
 
 ```fsharp
 module App.Page
@@ -18,7 +18,7 @@ open NextFs
 [<ExportDefault>]
 [<ReactComponent>]
 let Page() =
-    let pathname = Navigation.usePathname()
+    let pathname = NavigationClient.usePathname()
 
     Html.main [
         Html.h1 "Client page"
@@ -31,15 +31,15 @@ Wrapper entry:
 ```json
 {
   "directive": "use client",
-  "from": "./.fable/App.Page.js",
+  "from": "./.fable/App/Page.js",
   "to": "./app/page.js",
-  "default": true
+  "defaultFromNamed": "Page"
 }
 ```
 
 ## Inline server action
 
-Use `Directive.useServer()` inside the function body when the server action is defined inline inside a page, layout, or component module.
+Use `Directive.useServer()` inside the function body when the server action is defined inline inside a server component, layout, or dedicated server module.
 
 ```fsharp
 let savePost (formData: FormDataCollection) =
@@ -72,7 +72,7 @@ Wrapper entry:
 ```json
 {
   "directive": "use server",
-  "from": "./.fable/App.Actions.js",
+  "from": "./.fable/App/Actions.js",
   "to": "./app/actions.js",
   "named": ["createPost"]
 }
@@ -138,12 +138,12 @@ let response =
 
 ## Server-inserted HTML
 
-Use `Navigation.useServerInsertedHTML()` when you need the App Router server-inserted HTML hook, for example with CSS-in-JS registries.
+Use `NavigationClient.useServerInsertedHTML()` when you need the App Router server-inserted HTML hook, for example with CSS-in-JS registries.
 
 ```fsharp
 [<ReactComponent>]
 let StyleRegistry() =
-    Navigation.useServerInsertedHTML(fun () ->
+    NavigationClient.useServerInsertedHTML(fun () ->
         Html.style [
             prop.text ".nextfs-registry{display:block;}"
         ])
@@ -156,11 +156,11 @@ let StyleRegistry() =
 
 ## Action mismatch guard
 
-`Navigation.unstableIsUnrecognizedActionError()` is useful when a client action call fails because the browser is talking to a different deployment than the server.
+`NavigationClient.unstableIsUnrecognizedActionError()` is useful when a client action call fails because the browser is talking to a different deployment than the server.
 
 ```fsharp
 let isDeploymentMismatch(error: obj) =
-    Navigation.unstableIsUnrecognizedActionError error
+    NavigationClient.unstableIsUnrecognizedActionError error
 ```
 
 ## Selected layout segments
@@ -168,9 +168,9 @@ let isDeploymentMismatch(error: obj) =
 The App Router segment hooks are available with and without `parallelRouteKey`.
 
 ```fsharp
-let segment = Navigation.useSelectedLayoutSegment()
-let analyticsSegment = Navigation.useSelectedLayoutSegmentFor "analytics"
-let children = Navigation.useSelectedLayoutSegmentsFor "children"
+let segment = NavigationClient.useSelectedLayoutSegment()
+let analyticsSegment = NavigationClient.useSelectedLayoutSegmentFor "analytics"
+let children = NavigationClient.useSelectedLayoutSegmentsFor "children"
 ```
 
 ## Image props extraction

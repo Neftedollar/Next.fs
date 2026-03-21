@@ -1,24 +1,11 @@
 module App.Page
 
-open Fable.Core
 open Feliz
 open NextFs
 open App.ClientCounter
 
-let savePost (formData: FormDataCollection) =
-    Directive.useServer()
-
-    let title =
-        match formData.get("title") with
-        | Some (:? string as value) when not (System.String.IsNullOrWhiteSpace value) -> value.Trim()
-        | _ -> "Untitled"
-
-    let _ = title
-    ()
-
-[<ExportDefault>]
 let Page() =
-    let pathname = Navigation.usePathname()
+    let pathname = NavigationClient.usePathname()
 
     Html.main [
         prop.className "mx-auto flex min-h-screen max-w-3xl flex-col gap-8 p-8 text-slate-100"
@@ -36,7 +23,7 @@ let Page() =
                     ]
                     Html.p [
                         prop.className "max-w-2xl text-slate-300"
-                        prop.text "The page wrapper is client-side, the layout font comes from next/font in F#, the route handler can mutate cookies, and the project root proxy entry also comes from F#."
+                        prop.text "The page wrapper is client-side, the layout font comes from next/font in F#, and the route handler can mutate cookies from F#."
                     ]
                     Html.code [
                         prop.className "rounded bg-slate-800 px-2 py-1 text-sm"
@@ -55,7 +42,7 @@ let Page() =
                         prop.text "Create a post"
                     ]
                     Form.create [
-                        Form.serverAction savePost
+                        Form.action "/api/posts"
                         prop.className "mt-4 flex flex-col gap-3 sm:flex-row"
                         prop.children [
                             Html.input [

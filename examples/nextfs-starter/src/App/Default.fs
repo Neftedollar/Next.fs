@@ -4,7 +4,6 @@ open Fable.Core
 open Feliz
 open NextFs
 
-[<ExportDefault>]
 let Default(props: DefaultProps<obj>) =
     async {
         let! _ = Async.AwaitPromise props.``params``

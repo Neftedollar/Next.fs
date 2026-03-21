@@ -33,7 +33,7 @@ Examples:
 - `GoogleFont.Roboto`
 - `GoogleFont.Roboto_Mono`
 
-All loaders accept a JavaScript-shaped options object created with `FontOptions.create`.
+For real `next/font` entry modules, prefer anonymous-record or object-literal options so Next.js can statically analyze the loader call.
 
 ### `Link`
 
@@ -42,7 +42,6 @@ Bindings for `next/link`.
 Common members:
 
 - `Link.create`
-- `Link.useLinkStatus`
 - `Link.href`
 - `Link.hrefObject`
 - `Link.replace`
@@ -51,6 +50,14 @@ Common members:
 - `Link.prefetchAuto`
 - `Link.onNavigate`
 - `Link.transitionTypes`
+
+### `LinkClient`
+
+Client-only bindings for `next/link`.
+
+Common members:
+
+- `LinkClient.useLinkStatus`
 
 ### `Image`
 
@@ -118,16 +125,10 @@ Common member:
 
 ### `Navigation`
 
-Bindings for `next/navigation`.
+Server-safe bindings for `next/navigation`.
 
 Common members:
 
-- `Navigation.useRouter`
-- `Navigation.usePathname`
-- `Navigation.useSearchParams`
-- `Navigation.useParams`
-- `Navigation.useSelectedLayoutSegment`
-- `Navigation.useSelectedLayoutSegments`
 - `Navigation.redirect`
 - `Navigation.redirectWith`
 - `Navigation.permanentRedirect`
@@ -152,12 +153,22 @@ These map to the App Router special files:
 - `Navigation.forbidden()` -> `forbidden.js`
 - `Navigation.unauthorized()` -> `unauthorized.js`
 
-Additional helpers:
+### `NavigationClient`
 
-- `Navigation.useSelectedLayoutSegmentFor`
-- `Navigation.useSelectedLayoutSegmentsFor`
-- `Navigation.useServerInsertedHTML`
-- `Navigation.unstableIsUnrecognizedActionError`
+Client-only bindings for App Router hooks.
+
+Common members:
+
+- `NavigationClient.useRouter`
+- `NavigationClient.usePathname`
+- `NavigationClient.useSearchParams`
+- `NavigationClient.useParams`
+- `NavigationClient.useSelectedLayoutSegment`
+- `NavigationClient.useSelectedLayoutSegments`
+- `NavigationClient.useSelectedLayoutSegmentFor`
+- `NavigationClient.useSelectedLayoutSegmentsFor`
+- `NavigationClient.useServerInsertedHTML`
+- `NavigationClient.unstableIsUnrecognizedActionError`
 
 ### `WebVitals`
 

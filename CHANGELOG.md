@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.0 - 2026-03-21
+
+- fixed the starter and the library layout so a real `Fable -> wrappers -> next build` pipeline now succeeds on Next.js 16
+- split `NextFs` into core, component, server, and client files so client entries no longer pull server-only imports and server entries no longer pull client-only hooks
+- moved browser-only App Router hooks to `NavigationClient`, `LinkClient`, and `WebVitals` while keeping server-safe navigation helpers under `Navigation`
+- changed the generated `GoogleFont` catalog to chunked files, which avoids the Fable/FCS stack overflow caused by a single monolithic font binding file
+- expanded the wrapper generator with stale-file pruning, duplicate-output validation, and fallback resolution from dotted Fable paths to nested `.fable/App/...` output paths
+- aligned the starter manifest and wrappers with real Fable output paths, added `package-lock.json`, and wired the starter example into CI with a real `next build`
+- updated the documentation to reflect the working starter pipeline, client/server binding split, and `next/font` literal-object requirement
+
 ## 0.8.0 - 2026-03-21
 
 - added typed Next.js server `fetch()` bindings through `ServerFetch`, `ServerFetchInit`, `NextFetchOptions`, `ServerFetchResponse`, `ServerFetchCache`, and `Revalidate`

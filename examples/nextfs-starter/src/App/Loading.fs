@@ -1,9 +1,7 @@
 module App.Loading
 
-open Fable.Core
 open Feliz
 
-[<ExportDefault>]
 let Loading() =
     Html.main [
         prop.className "mx-auto flex min-h-screen max-w-3xl items-center justify-center px-8 text-slate-300"

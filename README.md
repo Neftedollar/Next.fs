@@ -38,18 +38,18 @@ If you are evaluating the repository for the first time, use this path:
 - metadata, viewport, robots, sitemap, manifest, and image-metadata builders
 - `ImageResponse` bindings for Open Graph and icon generation
 - request/response cookie option builders
-- `useServerInsertedHTML`, `useLinkStatus`, `useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
+- `NavigationClient.useServerInsertedHTML`, `NavigationClient.unstableIsUnrecognizedActionError`, `LinkClient.useLinkStatus`, `WebVitals.useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
 - `Image.getImageProps()` and action-mismatch detection for client-side server-action calls
 - inline `Directive.useServer()` and `Directive.useCache()` support
 - wrapper generation for file-level `'use client'` and `'use server'`
 
 ## Compatibility
 
-- `NextFs`: `0.8.x`
+- `NextFs`: `0.9.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
-- core Fable dependencies in this repo: `Fable.Core 4.5.0`, `Feliz 3.2.0`
+- core Fable dependencies in this repo: `Fable.Core 4.5.0`, `Feliz 2.9.0`
 
 ## Install
 
@@ -251,13 +251,15 @@ Example:
 
 ```fsharp
 let inter =
-    GoogleFont.Inter (
-        FontOptions.create [
-            FontOptions.subsets [ "latin" ]
-            FontOptions.display FontDisplay.Swap
-            FontOptions.variable "--font-inter"
-        ]
+    GoogleFont.Inter(
+        box {|
+            subsets = [| "latin" |]
+            display = "swap"
+            variable = "--font-inter"
+        |}
     )
+
+For production App Router builds, keep `next/font` options as anonymous-record or object-literal expressions in the entry module. Next.js statically analyzes these calls and rejects helper-built objects.
 
 let config =
     ProxyConfig.create [
@@ -269,11 +271,11 @@ let config =
 
 Beyond the baseline router/navigation APIs, `NextFs` now also includes:
 
-- `Link.useLinkStatus()`
+- `LinkClient.useLinkStatus()`
 - `WebVitals.useReportWebVitals(...)`
-- `Navigation.useServerInsertedHTML(...)`
-- `Navigation.useSelectedLayoutSegmentFor(...)`
-- `Navigation.useSelectedLayoutSegmentsFor(...)`
+- `NavigationClient.useServerInsertedHTML(...)`
+- `NavigationClient.useSelectedLayoutSegmentFor(...)`
+- `NavigationClient.useSelectedLayoutSegmentsFor(...)`
 - `Navigation.unstableIsUnrecognizedActionError(...)`
 - `Navigation.forbidden()`
 - `Navigation.unauthorized()`
@@ -357,7 +359,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 
 - `src/NextFs` contains the bindings package
 - `samples/NextFs.Smoke` contains compile-smoke coverage of the package surface
-- `examples/nextfs-starter` contains a minimal end-to-end App Router starter, including `layout`, `route`, and `proxy` entries generated from F#
+- `examples/nextfs-starter` contains a minimal end-to-end App Router starter, including `layout`, `route`, instrumentation, and special-file entries generated from F#
 - `tests/nextfs-entry.test.mjs` covers the wrapper generator
 - `tools/nextfs-entry.mjs` generates directive wrapper files
 - `tools/generate-google-font-bindings.mjs` regenerates the `GoogleFont` binding catalog from official Next.js type definitions
@@ -403,7 +405,7 @@ dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
 node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
-git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/proxy.js examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
+git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
 ```
 
 ## NuGet Publishing

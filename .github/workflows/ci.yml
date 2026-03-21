@@ -45,5 +45,13 @@ jobs:
       - name: Generate starter example Next.js entry wrappers
         run: node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
 
+      - name: Install starter example dependencies
+        working-directory: examples/nextfs-starter
+        run: npm ci
+
+      - name: Build starter example
+        working-directory: examples/nextfs-starter
+        run: npm run sync:app && npm run build
+
       - name: Verify checked-in starter wrappers are up to date
-        run: git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/proxy.js examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
+        run: git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js

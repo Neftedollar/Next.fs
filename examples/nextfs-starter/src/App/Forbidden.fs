@@ -1,9 +1,7 @@
 module App.Forbidden
 
-open Fable.Core
 open Feliz
 
-[<ExportDefault>]
 let Forbidden() =
     Html.main [
         prop.className "mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-4 px-8 text-slate-100"

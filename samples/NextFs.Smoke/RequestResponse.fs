@@ -49,14 +49,14 @@ let imageProps =
     )
 
 let isActionMismatch(error: obj) =
-    Navigation.unstableIsUnrecognizedActionError error
+    NavigationClient.unstableIsUnrecognizedActionError error
 
 [<ReactComponent>]
 let ServerInsertedStyles(parallelRouteKey: string) =
-    let activeSegment = Navigation.useSelectedLayoutSegmentFor parallelRouteKey
-    let activeSegments = Navigation.useSelectedLayoutSegmentsFor parallelRouteKey
+    let activeSegment = NavigationClient.useSelectedLayoutSegmentFor parallelRouteKey
+    let activeSegments = NavigationClient.useSelectedLayoutSegmentsFor parallelRouteKey
 
-    Navigation.useServerInsertedHTML(fun () ->
+    NavigationClient.useServerInsertedHTML(fun () ->
         Html.style [
             prop.text ".nextfs-request-response-smoke{display:block;}"
         ])

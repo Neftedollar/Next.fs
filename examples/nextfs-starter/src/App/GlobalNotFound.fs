@@ -1,15 +1,14 @@
 module App.GlobalNotFound
 
-open Fable.Core
 open Feliz
 open NextFs
 
 let inter =
-    GoogleFont.Inter (
-        FontOptions.create [
-            FontOptions.subsets [ "latin" ]
-            FontOptions.display FontDisplay.Swap
-        ]
+    GoogleFont.Inter(
+        box {|
+            subsets = [| "latin" |]
+            display = "swap"
+        |}
     )
 
 let metadata =
@@ -18,7 +17,6 @@ let metadata =
         Metadata.description "Global not found page rendered directly from F#."
     ]
 
-[<ExportDefault>]
 let GlobalNotFound() =
     Html.html [
         prop.lang "en"

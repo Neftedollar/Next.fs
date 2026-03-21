@@ -1,16 +1,15 @@
 module App.Layout
 
-open Fable.Core
 open Feliz
 open NextFs
 
 let inter =
-    GoogleFont.Inter (
-        FontOptions.create [
-            FontOptions.subsets [ "latin" ]
-            FontOptions.display FontDisplay.Swap
-            FontOptions.variable "--font-inter"
-        ]
+    GoogleFont.Inter(
+        box {|
+            subsets = [| "latin" |]
+            display = "swap"
+            variable = "--font-inter"
+        |}
     )
 
 let metadata =
@@ -54,7 +53,6 @@ let viewport =
         Viewport.viewportFit "cover"
     ]
 
-[<ExportDefault>]
 let Layout(props: LayoutProps<obj>) =
     Html.html [
         prop.lang "en"

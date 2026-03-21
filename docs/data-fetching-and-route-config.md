@@ -90,7 +90,7 @@ If a route handler is wrapped through `nextfs.entries.json`, remember that the g
 
 ```json
 {
-  "from": "./.fable/App.Api.Posts.js",
+  "from": "./.fable/App/Api/Posts.js",
   "to": "./app/api/posts/route.js",
   "named": ["GET", "POST", "runtime", "preferredRegion", "maxDuration"]
 }

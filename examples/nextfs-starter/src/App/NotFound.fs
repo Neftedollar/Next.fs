@@ -1,10 +1,8 @@
 module App.NotFound
 
-open Fable.Core
 open Feliz
 open NextFs
 
-[<ExportDefault>]
 let NotFound() =
     Html.main [
         prop.className "mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-4 px-8 text-slate-100"

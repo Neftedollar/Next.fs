@@ -48,8 +48,8 @@ The main component helpers in the package are:
 
 - `Font.local`, `GoogleFont.Inter`, and other generated `GoogleFont.*` loaders
 - `Link.create`, `Image.create`, `Script.create`, `Form.create`, `Head.create`
-- `Navigation.useRouter`, `Navigation.usePathname`, `Navigation.useSearchParams`, `Navigation.useParams`
-- `Navigation.useServerInsertedHTML`, `Navigation.useSelectedLayoutSegmentFor`, `Navigation.unstableIsUnrecognizedActionError`
+- `NavigationClient.useRouter`, `NavigationClient.usePathname`, `NavigationClient.useSearchParams`, `NavigationClient.useParams`
+- `NavigationClient.useServerInsertedHTML`, `NavigationClient.useSelectedLayoutSegmentFor`, `NavigationClient.unstableIsUnrecognizedActionError`
 - `Server.headers`, `Server.cookies`, `Server.draftMode`, `Server.connection`
 - `ServerFetch.fetch`, `ServerFetchInit.create`, `NextFetchOptions.create`, `Revalidate.seconds`
 - `Cache.cacheLifeProfile`, `Cache.cacheTag`, `Cache.revalidatePath`, `Cache.revalidateTag`, `Cache.updateTag`, `Cache.refresh`
@@ -58,7 +58,7 @@ The main component helpers in the package are:
 - `Image.getImageProps`
 - `ProxyConfig.create`, `ProxyMatcher.create`, `RouteHas.create`, `CookieOptions.create`
 
-If an entry module uses client-only hooks such as `Navigation.usePathname` or `Navigation.useRouter`, generate a `use client` wrapper for that file. See [Directives and wrappers](directives-wrappers.md).
+If an entry module uses client-only hooks such as `NavigationClient.usePathname` or `NavigationClient.useRouter`, generate a `use client` wrapper for that file. See [Directives and wrappers](directives-wrappers.md).
 
 For mixed server/client App Router flows such as route handlers, `useServerInsertedHTML`, request/response construction, or client-side server-action error guards, use [Server and client patterns](server-client-patterns.md).
 
@@ -145,13 +145,15 @@ let saveSearch (_formData: obj) =
 
 ```fsharp
 let inter =
-    GoogleFont.Inter (
-        FontOptions.create [
-            FontOptions.subsets [ "latin" ]
-            FontOptions.display FontDisplay.Swap
-        ]
+    GoogleFont.Inter(
+        box {|
+            subsets = [| "latin" |]
+            display = "swap"
+        |}
     )
 ```
+
+For `next/font` in real App Router entries, prefer anonymous-record or object-literal options. Next.js statically analyzes the loader call and can reject helper-built option objects in production builds.
 
 `proxy.js` can also be driven from F# by exporting a `proxy` function and `config` object through the wrapper generator:
 
@@ -197,12 +199,10 @@ For the full pattern, including `generateSitemaps`, use [Data fetching and route
 If you want to see the intended shape of a real App Router project, start with [Starter app walkthrough](starter-app-walkthrough.md) and then inspect [the starter example](../examples/nextfs-starter/README.md). It includes:
 
 - F# source modules under `src/App/**`
-- a root-level `src/Proxy.fs` entry
 - root-level instrumentation entries outside `app/**`
 - Fable output under `.fable/**`
 - generated wrapper files under `app/**`
 - special-file entries such as `error`, `loading`, `not-found`, `template`, and auth interrupts
-- a generated root `proxy.js`
 - a wrapper manifest
 - a reference F# example project
 - a root layout exported from F# with `metadata`, `viewport`, and `next/font` usage
@@ -217,4 +217,4 @@ npm run sync:app
 npm run dev
 ```
 
-`build:fsharp` only checks .NET compilation. `build:fable` is the real JavaScript emit step.
+`build:fsharp` only checks .NET compilation. `build:fable` is the real JavaScript emit step. The starter example is also validated with a real `next build`.

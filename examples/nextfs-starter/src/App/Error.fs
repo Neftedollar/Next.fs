@@ -1,12 +1,11 @@
 module App.Error
 
-open Fable.Core
 open Feliz
+open Fable.Core
 open NextFs
 
-[<ExportDefault>]
-[<ReactComponent>]
-let Error(props: ErrorBoundaryProps) =
+[<CompiledName("Error")>]
+let errorBoundary(props: ErrorBoundaryProps) =
     Html.main [
         prop.className "mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-4 px-8 text-slate-100"
         prop.children [

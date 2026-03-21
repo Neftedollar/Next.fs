@@ -4,7 +4,7 @@ Next.js file directives are a packaging concern, not just an F# syntax concern.
 
 ## Inline server actions
 
-`Directive.useServer()` emits a `'use server'` statement inside the function body. Use it for inline server actions:
+`Directive.useServer()` emits a `'use server'` statement inside the function body. Use it inside server components, layouts, route handlers, and dedicated action modules:
 
 ```fsharp
 open NextFs
@@ -15,6 +15,8 @@ let saveSearch (_formData: obj) =
 ```
 
 This covers the function-level server-action case.
+
+Do not define inline `Directive.useServer()` actions inside a client entry. Next.js rejects that at build time. For client pages, export the action from a separate server module and wire it through an `app/actions.js` wrapper.
 
 `NextFs` also exposes cache directives for modern App Router caching flows:
 
@@ -56,18 +58,20 @@ Supported entry fields:
 - `to`: wrapper file to generate
 - `directive`: optional, either `"use client"` or `"use server"`
 - `default`: re-export the default export
+- `defaultFromNamed`: emit a default export from a named symbol in the compiled Fable module
 - `named`: re-export the named exports listed in the array
 - `exportAll`: re-export everything from the source module
+- `staticExports`: inline JSON-serializable route config values such as `runtime`, `preferredRegion`, or `config`
 
 Common patterns:
 
 | Case | `directive` | `default` | `named` | Typical `to` |
 | --- | --- | --- | --- | --- |
-| client page | `"use client"` | `true` | none | `app/page.js` |
+| client page | `"use client"` | `defaultFromNamed: "Page"` | none | `app/page.js` |
 | client component | `"use client"` | `true` | none | `app/components/counter.js` |
 | server actions module | `"use server"` | `false` | `["createPost"]` | `app/actions.js` |
-| route handler | omitted | `false` | `["GET", "POST", "runtime", "preferredRegion", "maxDuration"]` | `app/api/posts/route.js` |
-| proxy entry | omitted | `false` | `["proxy", "config"]` | `proxy.js` |
+| route handler | omitted | `false` | `["GET", "POST"]` + `staticExports` | `app/api/posts/route.js` |
+| proxy entry | omitted | `false` | `["proxy"]` + `staticExports.config` | `proxy.js` |
 | server instrumentation | omitted | `false` | `["register", "onRequestError"]` | `instrumentation.js` |
 | client instrumentation | omitted | `false` | none | `instrumentation-client.js` via `exportAll` |
 | segment error | `"use client"` | `true` | none | `app/error.js` |
@@ -79,7 +83,9 @@ Current rules enforced by the generator:
 - `directive` must be omitted, `"use client"`, or `"use server"`
 - `use server` wrappers cannot use `default`
 - `use server` wrappers cannot use `exportAll`
+- output paths must be unique
 - each entry must export at least one symbol
+- stale generated wrappers are pruned automatically
 - generated output is deterministic and covered by `tests/nextfs-entry.test.mjs`
 
 ## Starter Pipeline
@@ -116,25 +122,33 @@ The wrapper generator never compiles F#. It only translates `nextfs.entries.json
   "entries": [
     {
       "directive": "use client",
-      "from": "./.fable/App.Page.js",
+      "from": "./.fable/App/Page.js",
       "to": "./app/page.js",
-      "default": true
+      "defaultFromNamed": "Page"
     },
     {
       "directive": "use server",
-      "from": "./.fable/App.Actions.js",
+      "from": "./.fable/App/Actions.js",
       "to": "./app/actions.js",
       "named": ["createPost", "deletePost"]
     },
     {
-      "from": "./.fable/App.Api.Posts.js",
+      "from": "./.fable/App/Api/Posts.js",
       "to": "./app/api/posts/route.js",
-      "named": ["GET", "POST"]
+      "named": ["GET", "POST"],
+      "staticExports": {
+        "runtime": "nodejs"
+      }
     },
     {
       "from": "./.fable/Proxy.js",
       "to": "./proxy.js",
-      "named": ["proxy", "config"]
+      "named": ["proxy"],
+      "staticExports": {
+        "config": {
+          "matcher": ["/dashboard/:path*"]
+        }
+      }
     },
     {
       "from": "./.fable/Instrumentation.js",
