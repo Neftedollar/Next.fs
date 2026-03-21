@@ -197,3 +197,7 @@ node tools/nextfs-entry.mjs samples/nextfs.entries.json
 - automate wrapper generation in the consumer workflow
 - expand `next/server` coverage beyond the current `NextResponse` baseline
 - add stronger typing for metadata, route config, and server action conventions
+
+## Contributing
+
+Contribution workflow and commit conventions are documented in [CONTRIBUTING.md](/Users/roman/Documents/dev/Next_fs/CONTRIBUTING.md).

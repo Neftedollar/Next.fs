@@ -1,0 +1,12 @@
+# <type>(<scope>): <summary>
+#
+# Why:
+# - ...
+#
+# What:
+# - ...
+#
+# Validation:
+# - dotnet build NextFs.slnx -v minimal
+# - dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
+# - node tools/nextfs-entry.mjs samples/nextfs.entries.json

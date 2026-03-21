@@ -1,0 +1,35 @@
+name: Question
+description: Ask about usage, integration, or repository conventions
+title: "[Question]: "
+labels:
+  - question
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - usage
+        - bindings
+        - routing
+        - server actions
+        - directives
+        - repository workflow
+        - docs
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Ask the concrete question.
+      placeholder: What is the recommended pattern for mapping app/api route handlers to F# modules?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Include the code or workflow context needed to answer well.

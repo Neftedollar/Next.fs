@@ -1,0 +1,73 @@
+name: Bug report
+description: Report a defect, regression, or incorrect binding behavior
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Where does the issue appear?
+      options:
+        - bindings
+        - navigation
+        - server
+        - directives
+        - tooling
+        - samples
+        - docs
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the problem in one or two sentences.
+      placeholder: Calling NextResponse.redirect from F# produces the wrong JS shape.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal repro
+      description: Include the smallest relevant F# snippet or usage example.
+      render: fsharp
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: What should happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: What actually happens?
+    validations:
+      required: true
+
+  - type: input
+    id: next_version
+    attributes:
+      label: Next.js version
+      placeholder: 16.2.0
+
+  - type: input
+    id: fable_version
+    attributes:
+      label: Fable version
+      placeholder: 4.x
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra context
+      description: Links, stack traces, generated JS, screenshots, or related issues.
