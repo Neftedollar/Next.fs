@@ -17,9 +17,11 @@ let rethrow(error: obj) =
 
 let proxyLike (request: NextRequest) =
     let agent = Server.userAgent request
+    let parsedAgent = Server.userAgentFromString "Mozilla/5.0 (NextFs Smoke)"
 
     Server.after(fun () ->
         ignore agent.isBot
+        ignore parsedAgent.browser.name
         ignore request.nextUrl.basePath)
 
     if agent.isBot then

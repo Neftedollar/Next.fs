@@ -1,6 +1,11 @@
 {
   "entries": [
     {
+      "from": "./.fable/Proxy.js",
+      "to": "./proxy.js",
+      "named": ["proxy", "config"]
+    },
+    {
       "from": "./.fable/App.Layout.js",
       "to": "./app/layout.js",
       "default": true,

@@ -36,7 +36,7 @@ let Page() =
                     ]
                     Html.p [
                         prop.className "max-w-2xl text-slate-300"
-                        prop.text "The page wrapper is client-side, the form action stays inline in the page source, and the route handler stays a normal Next.js route module."
+                        prop.text "The page wrapper is client-side, the layout font comes from next/font in F#, the route handler can mutate cookies, and the project root proxy entry also comes from F#."
                     ]
                     Html.code [
                         prop.className "rounded bg-slate-800 px-2 py-1 text-sm"

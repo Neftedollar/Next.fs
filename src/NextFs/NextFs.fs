@@ -92,6 +92,33 @@ type ImageResponseFontStyle =
     | [<CompiledName("normal")>] Normal
     | [<CompiledName("italic")>] Italic
 
+[<StringEnum; RequireQualifiedAccess>]
+type FontDisplay =
+    | [<CompiledName("auto")>] Auto
+    | [<CompiledName("block")>] Block
+    | [<CompiledName("swap")>] Swap
+    | [<CompiledName("fallback")>] Fallback
+    | [<CompiledName("optional")>] Optional
+
+[<StringEnum; RequireQualifiedAccess>]
+type CookiePriority =
+    | [<CompiledName("low")>] Low
+    | [<CompiledName("medium")>] Medium
+    | [<CompiledName("high")>] High
+
+[<StringEnum; RequireQualifiedAccess>]
+type CookieSameSite =
+    | [<CompiledName("lax")>] Lax
+    | [<CompiledName("strict")>] Strict
+    | [<CompiledName("none")>] None
+
+[<StringEnum; RequireQualifiedAccess>]
+type RouteHasType =
+    | [<CompiledName("header")>] Header
+    | [<CompiledName("cookie")>] Cookie
+    | [<CompiledName("query")>] Query
+    | [<CompiledName("host")>] Host
+
 type NavigationEvent =
     abstract preventDefault: unit -> unit
 
@@ -102,6 +129,15 @@ type ReadonlyURLSearchParams =
     abstract get: name: string -> string option
     abstract getAll: name: string -> string array
     abstract has: name: string -> bool
+    abstract toString: unit -> string
+
+type URLSearchParamsCollection =
+    abstract append: name: string * value: string -> unit
+    abstract delete: name: string -> unit
+    abstract get: name: string -> string option
+    abstract getAll: name: string -> string array
+    abstract has: name: string -> bool
+    abstract set: name: string * value: string -> unit
     abstract toString: unit -> string
 
 type HeadersCollection =
@@ -134,14 +170,28 @@ type RequestCookie =
 type ResponseCookie =
     abstract name: string
     abstract value: string
+    abstract domain: string option
+    abstract path: string option
+    abstract secure: bool option
+    abstract sameSite: obj option
+    abstract partitioned: bool option
+    abstract expires: obj option
+    abstract httpOnly: bool option
+    abstract maxAge: int option
+    abstract priority: CookiePriority option
 
 type RequestCookieStore =
     abstract get: name: string -> RequestCookie option
+    abstract get: cookie: RequestCookie -> RequestCookie option
+    abstract getAll: unit -> RequestCookie array
     abstract getAll: ?name: string -> RequestCookie array
+    abstract getAll: cookie: RequestCookie -> RequestCookie array
     abstract has: name: string -> bool
-    abstract set: name: string * value: string -> unit
-    abstract delete: name: string -> unit
-    abstract clear: unit -> unit
+    abstract set: name: string * value: string -> RequestCookieStore
+    abstract set: cookie: RequestCookie -> RequestCookieStore
+    abstract delete: name: string -> bool
+    abstract delete: names: string array -> bool array
+    abstract clear: unit -> RequestCookieStore
     abstract toString: unit -> string
 
 type DraftModeState =
@@ -186,6 +236,16 @@ type WebVitalMetric =
     abstract rating: WebVitalMetricRating
     abstract value: float
 
+type FontStyleObject =
+    abstract fontFamily: string
+    abstract fontWeight: int option
+    abstract fontStyle: string option
+
+type LoadedFont =
+    abstract className: string
+    abstract style: FontStyleObject
+    abstract variable: string option
+
 type PageProps<'routeParams, 'searchParams> =
     abstract ``params``: JS.Promise<'routeParams>
     abstract searchParams: JS.Promise<'searchParams>
@@ -226,12 +286,24 @@ type FormDataCollection =
     abstract set: name: string * value: obj -> unit
 
 type NextUrl =
-    abstract basePath: string
-    abstract buildId: string option
-    abstract href: string
-    abstract pathname: string
-    abstract search: string
-    abstract searchParams: ReadonlyURLSearchParams
+    abstract basePath: string with get, set
+    abstract buildId: string option with get, set
+    abstract locale: string with get, set
+    abstract defaultLocale: string option
+    abstract domainLocale: obj option
+    abstract host: string with get, set
+    abstract hostname: string with get, set
+    abstract port: string with get, set
+    abstract protocol: string with get, set
+    abstract href: string with get, set
+    abstract origin: string
+    abstract pathname: string with get, set
+    abstract hash: string with get, set
+    abstract search: string with get, set
+    abstract password: string with get, set
+    abstract username: string with get, set
+    abstract searchParams: URLSearchParamsCollection
+    abstract clone: unit -> NextUrl
 
 type NextRequest =
     abstract cookies: RequestCookieStore
@@ -246,12 +318,21 @@ type NextRequest =
 type RouteHandlerContext<'routeParams> =
     abstract ``params``: JS.Promise<'routeParams>
 
+type NextFetchEvent =
+    abstract waitUntil<'T>: promise: JS.Promise<'T> -> unit
+    abstract passThroughOnException: unit -> unit
+
 type ResponseCookieStore =
     abstract get: name: string -> ResponseCookie option
+    abstract get: cookie: ResponseCookie -> ResponseCookie option
+    abstract getAll: unit -> ResponseCookie array
     abstract getAll: ?name: string -> ResponseCookie array
+    abstract getAll: cookie: ResponseCookie -> ResponseCookie array
     abstract has: name: string -> bool
-    abstract set: name: string * value: string -> unit
-    abstract delete: name: string -> bool
+    abstract set: name: string * value: string * ?cookie: obj -> ResponseCookieStore
+    abstract set: cookie: ResponseCookie -> ResponseCookieStore
+    abstract delete: name: string -> ResponseCookieStore
+    abstract delete: cookie: obj -> ResponseCookieStore
 
 type NextResponse =
     abstract cookies: ResponseCookieStore
@@ -292,6 +373,172 @@ module NextResponseInit =
 
     let requestHeaders(value: HeadersCollection) : string * obj =
         "request" ==> createObj [ "headers" ==> value ]
+
+module CookieOptions =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let name(value: string) : string * obj =
+        "name" ==> value
+
+    let value(value: string) : string * obj =
+        "value" ==> value
+
+    let domain(value: string) : string * obj =
+        "domain" ==> value
+
+    let path(value: string) : string * obj =
+        "path" ==> value
+
+    let secure(value: bool) : string * obj =
+        "secure" ==> value
+
+    let sameSite(value: CookieSameSite) : string * obj =
+        "sameSite" ==> value
+
+    let sameSiteMode(value: bool) : string * obj =
+        "sameSite" ==> value
+
+    let partitioned(value: bool) : string * obj =
+        "partitioned" ==> value
+
+    let expires(value: obj) : string * obj =
+        "expires" ==> value
+
+    let httpOnly(value: bool) : string * obj =
+        "httpOnly" ==> value
+
+    let maxAge(value: int) : string * obj =
+        "maxAge" ==> value
+
+    let priority(value: CookiePriority) : string * obj =
+        "priority" ==> value
+
+module LocalFontSource =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let path(value: string) : string * obj =
+        "path" ==> value
+
+    let weight(value: string) : string * obj =
+        "weight" ==> value
+
+    let style(value: string) : string * obj =
+        "style" ==> value
+
+module FontDeclaration =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let prop(value: string) : string * obj =
+        "prop" ==> value
+
+    let value(value: string) : string * obj =
+        "value" ==> value
+
+module FontOptions =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let src(value: string) : string * obj =
+        "src" ==> value
+
+    let sources(values: seq<obj>) : string * obj =
+        "src" ==> Seq.toArray values
+
+    let weight(value: string) : string * obj =
+        "weight" ==> value
+
+    let weights(values: seq<string>) : string * obj =
+        "weight" ==> Seq.toArray values
+
+    let style(value: string) : string * obj =
+        "style" ==> value
+
+    let styles(values: seq<string>) : string * obj =
+        "style" ==> Seq.toArray values
+
+    let subsets(values: seq<string>) : string * obj =
+        "subsets" ==> Seq.toArray values
+
+    let axes(values: seq<string>) : string * obj =
+        "axes" ==> Seq.toArray values
+
+    let display(value: FontDisplay) : string * obj =
+        "display" ==> value
+
+    let preload(value: bool) : string * obj =
+        "preload" ==> value
+
+    let fallback(values: seq<string>) : string * obj =
+        "fallback" ==> Seq.toArray values
+
+    let adjustFontFallback(value: bool) : string * obj =
+        "adjustFontFallback" ==> value
+
+    let adjustFontFallbackFamily(value: string) : string * obj =
+        "adjustFontFallback" ==> value
+
+    let variable(value: string) : string * obj =
+        "variable" ==> value
+
+    let declarations(values: seq<obj>) : string * obj =
+        "declarations" ==> Seq.toArray values
+
+module RouteHas =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let type'(value: RouteHasType) : string * obj =
+        "type" ==> value
+
+    let key(value: string) : string * obj =
+        "key" ==> value
+
+    let value(value: string) : string * obj =
+        "value" ==> value
+
+module ProxyMatcher =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let source(value: string) : string * obj =
+        "source" ==> value
+
+    let localeFalse : string * obj =
+        "locale" ==> false
+
+    let has(values: seq<obj>) : string * obj =
+        "has" ==> Seq.toArray values
+
+    let missing(values: seq<obj>) : string * obj =
+        "missing" ==> Seq.toArray values
+
+module ProxyConfig =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let matcher(value: string) : string * obj =
+        "matcher" ==> value
+
+    let matchers(values: seq<string>) : string * obj =
+        "matcher" ==> Seq.toArray values
+
+    let matchersMany(values: seq<obj>) : string * obj =
+        "matcher" ==> Seq.toArray values
+
+    let regions(value: string) : string * obj =
+        "regions" ==> value
+
+    let regionsMany(values: seq<string>) : string * obj =
+        "regions" ==> Seq.toArray values
+
+    let allowDynamic(value: string) : string * obj =
+        "unstable_allowDynamic" ==> value
+
+    let allowDynamicMany(values: seq<string>) : string * obj =
+        "unstable_allowDynamic" ==> Seq.toArray values
 
 module CacheLife =
     let create(fields: (string * obj) list) : obj =
@@ -775,6 +1022,13 @@ module ImageResponse =
     let createWithOptions(element: ReactElement) (options: obj) : obj =
         createWithOptionsImport(imageResponseImport, element, options)
 
+module Font =
+    [<ImportDefault("next/font/local")>]
+    let private localImport: obj -> LoadedFont = jsNative
+
+    let local(options: obj) : LoadedFont =
+        localImport options
+
 module Link =
     [<ImportDefault("next/link")>]
     let private componentImport: obj = jsNative
@@ -1102,6 +1356,9 @@ module Server =
     [<Import("userAgent", "next/server")>]
     let private userAgentImport: NextRequest -> UserAgentInfo = jsNative
 
+    [<Import("userAgentFromString", "next/server")>]
+    let private userAgentFromStringImport: string -> UserAgentInfo = jsNative
+
     let after(callback: unit -> unit) : unit =
         afterImport callback
 
@@ -1122,6 +1379,9 @@ module Server =
 
     let userAgent(request: NextRequest) : UserAgentInfo =
         userAgentImport request
+
+    let userAgentFromString(userAgentValue: string) : UserAgentInfo =
+        userAgentFromStringImport userAgentValue
 
 module ServerResponse =
     [<Import("NextResponse", "next/server")>]

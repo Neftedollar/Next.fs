@@ -4,6 +4,15 @@ open Fable.Core
 open Feliz
 open NextFs
 
+let inter =
+    GoogleFont.Inter (
+        FontOptions.create [
+            FontOptions.subsets [ "latin" ]
+            FontOptions.display FontDisplay.Swap
+            FontOptions.variable "--font-inter"
+        ]
+    )
+
 let metadata =
     Metadata.create [
         Metadata.titleTemplate (
@@ -49,9 +58,18 @@ let viewport =
 let Layout(props: LayoutProps<obj>) =
     Html.html [
         prop.lang "en"
+        prop.className (inter.variable |> Option.defaultValue "")
         prop.children [
             Html.body [
-                prop.className "min-h-screen bg-slate-950 text-slate-100"
+                prop.className (
+                    System.String.Join(
+                        " ",
+                        [|
+                            inter.className
+                            "min-h-screen bg-slate-950 text-slate-100"
+                        |]
+                    )
+                )
                 prop.children [ props.children ]
             ]
         ]

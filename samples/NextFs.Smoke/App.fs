@@ -5,6 +5,30 @@ open Fable.Core.JsInterop
 open Feliz
 open NextFs
 
+let inter =
+    GoogleFont.Inter (
+        FontOptions.create [
+            FontOptions.subsets [ "latin" ]
+            FontOptions.display FontDisplay.Swap
+            FontOptions.variable "--font-inter"
+        ]
+    )
+
+let brandFont =
+    Font.local (
+        FontOptions.create [
+            FontOptions.src "./fonts/brand.woff2"
+            FontOptions.weight "400"
+            FontOptions.variable "--font-brand"
+            FontOptions.declarations [
+                FontDeclaration.create [
+                    FontDeclaration.prop "ascent-override"
+                    FontDeclaration.value "90%"
+                ]
+            ]
+        ]
+    )
+
 let saveSearch (_formData: obj) =
     Directive.useServer()
     Cache.updateTag "searches"
@@ -72,7 +96,20 @@ let SearchForm() =
 
 [<ExportDefault>]
 let Page() =
+    ignore inter.style.fontFamily
+    ignore brandFont.style.fontFamily
+
     Html.main [
+        prop.className (
+            System.String.Join(
+                " ",
+                [|
+                    inter.className
+                    inter.variable |> Option.defaultValue ""
+                    brandFont.variable |> Option.defaultValue ""
+                |]
+            )
+        )
         prop.children [
             Html.h1 "NextFs smoke test"
             NavigationMenu()

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 - 2026-03-21
+
+- added `next/font/local` bindings plus a generated `GoogleFont` catalog sourced from official Next.js type definitions
+- added font option builders, local font source/declaration helpers, and typed font results
+- added `proxy.js` helpers: `ProxyConfig`, `ProxyMatcher`, `RouteHas`, and `NextFetchEvent`
+- expanded request/response cookie support with `CookieOptions`, richer cookie shapes, and proxy-style mutation flows
+- expanded compile-smoke coverage for fonts, cookies, and proxy behavior
+- updated the starter example to include F#-driven `next/font`, cookie-aware route handling, and a root `proxy.js` entry
+- added wrapper-generator regression coverage for root-level `.fable` re-export paths
+
 ## 0.3.0 - 2026-03-21
 
 - added metadata, viewport, robots, sitemap, manifest, and image-metadata builders

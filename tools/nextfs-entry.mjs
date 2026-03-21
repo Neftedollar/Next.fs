@@ -22,7 +22,7 @@ function ensureArray(value, fieldName) {
 
 function toModuleSpecifier(relativePath) {
   const normalized = relativePath.split(path.sep).join("/");
-  return normalized.startsWith(".") ? normalized : `./${normalized}`;
+  return normalized.startsWith("./") || normalized.startsWith("../") ? normalized : `./${normalized}`;
 }
 
 function buildWrapper(entry, sourceSpecifier) {

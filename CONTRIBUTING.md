@@ -78,6 +78,12 @@ Restore local tools before running validation commands:
 dotnet tool restore
 ```
 
+If the generated `GoogleFont` catalog needs to be refreshed against a newer Next.js release, regenerate it from official type definitions with:
+
+```bash
+node tools/generate-google-font-bindings.mjs
+```
+
 ## Pull Requests
 
 Before opening a PR:

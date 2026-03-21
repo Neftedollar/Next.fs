@@ -6,6 +6,35 @@ It is not intended to replace the source file. Its purpose is to help you find t
 
 ## Components
 
+### `Font`
+
+Bindings for `next/font/local`.
+
+Common members:
+
+- `Font.local`
+
+Related helpers and types:
+
+- `FontOptions`
+- `LocalFontSource`
+- `FontDeclaration`
+- `LoadedFont`
+- `FontStyleObject`
+- `FontDisplay`
+
+### `GoogleFont`
+
+Generated named bindings for `next/font/google`.
+
+Examples:
+
+- `GoogleFont.Inter`
+- `GoogleFont.Roboto`
+- `GoogleFont.Roboto_Mono`
+
+All loaders accept a JavaScript-shaped options object created with `FontOptions.create`.
+
 ### `Link`
 
 Bindings for `next/link`.
@@ -109,6 +138,7 @@ Related types:
 - `NavigateOptions`
 - `PrefetchOptions`
 - `ReadonlyURLSearchParams`
+- `URLSearchParamsCollection`
 - `RedirectType`
 
 ### `WebVitals`
@@ -140,11 +170,15 @@ Common members:
 - `Server.draftMode`
 - `Server.connection`
 - `Server.userAgent`
+- `Server.userAgentFromString`
 
 Related types:
 
 - `HeadersCollection`
 - `RequestCookieStore`
+- `CookieOptions`
+- `CookiePriority`
+- `CookieSameSite`
 - `DraftModeState`
 - `UserAgentInfo`
 - `UserAgentBrowser`
@@ -177,6 +211,35 @@ Related types:
 - `ResponseInit`
 - `NextResponseInit`
 - `ResponseCookieStore`
+
+### `Proxy`
+
+Bindings used for `proxy.js`.
+
+Common members:
+
+- `ProxyConfig.create`
+- `ProxyConfig.matcher`
+- `ProxyConfig.matchers`
+- `ProxyConfig.matchersMany`
+- `ProxyConfig.regions`
+- `ProxyConfig.regionsMany`
+- `ProxyConfig.allowDynamic`
+- `ProxyConfig.allowDynamicMany`
+- `ProxyMatcher.create`
+- `ProxyMatcher.source`
+- `ProxyMatcher.localeFalse`
+- `ProxyMatcher.has`
+- `ProxyMatcher.missing`
+- `RouteHas.create`
+- `RouteHas.type'`
+- `RouteHas.key`
+- `RouteHas.value`
+
+Related types:
+
+- `NextFetchEvent`
+- `RouteHasType`
 
 ### Route handlers
 
@@ -336,6 +399,7 @@ Utility interfaces for async App Router props:
 - `PreferredRegion.region`
 - `PreferredRegion.regions`
 - `RouteRuntime`
+- `LoadedFont`
 - `ScriptStrategy`
 - `ImageLoading`
 - `ImagePlaceholder`

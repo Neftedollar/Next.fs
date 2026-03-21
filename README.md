@@ -9,22 +9,34 @@
 
 The package stays close to native Next.js concepts instead of introducing a separate framework. If you already understand how a feature works in Next.js, the goal is that you can express the same shape in F# with minimal translation.
 
+## Start Here
+
+If you are evaluating the repository for the first time, use this path:
+
+1. read [Quickstart](docs/quickstart.md)
+2. inspect [the starter example](examples/nextfs-starter/README.md)
+3. learn the wrapper rules in [Directives and wrappers](docs/directives-wrappers.md)
+4. use [API reference](docs/api-reference.md) as the lookup table
+
 ## What It Covers
 
 - `next/link`, `next/image`, `next/script`, `next/form`, `next/head`
+- `next/font/local` and a generated `next/font/google` catalog
 - App Router hooks and helpers from `next/navigation`
 - request helpers from `next/headers`
 - `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
+- `proxy.js` config builders and `NextFetchEvent`
 - cache invalidation and cache directives from `next/cache`
 - metadata, viewport, robots, sitemap, manifest, and image-metadata builders
 - `ImageResponse` bindings for Open Graph and icon generation
+- request/response cookie option builders
 - `useLinkStatus`, `useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
 - inline `Directive.useServer()` and `Directive.useCache()` support
 - wrapper generation for file-level `'use client'` and `'use server'`
 
 ## Compatibility
 
-- `NextFs`: `0.3.x`
+- `NextFs`: `0.4.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -214,6 +226,34 @@ let generateImageMetadata() =
     |]
 ```
 
+## Fonts, Proxy, And Cookies
+
+The package now also covers the main App Router surfaces that typically force people back to handwritten JavaScript:
+
+- `Font.local`
+- `GoogleFont.Inter`, `GoogleFont.Roboto`, and the rest of the generated `next/font/google` catalog
+- `FontOptions`, `LocalFontSource`, and `FontDeclaration`
+- `ProxyConfig`, `ProxyMatcher`, `RouteHas`, and `NextFetchEvent`
+- `CookieOptions` for request/response cookie mutation
+
+Example:
+
+```fsharp
+let inter =
+    GoogleFont.Inter (
+        FontOptions.create [
+            FontOptions.subsets [ "latin" ]
+            FontOptions.display FontDisplay.Swap
+            FontOptions.variable "--font-inter"
+        ]
+    )
+
+let config =
+    ProxyConfig.create [
+        ProxyConfig.matcher "/dashboard/:path*"
+    ]
+```
+
 ## More App Router Helpers
 
 Beyond the baseline router/navigation APIs, `NextFs` now also includes:
@@ -251,9 +291,10 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 
 - `src/NextFs` contains the bindings package
 - `samples/NextFs.Smoke` contains compile-smoke coverage of the package surface
-- `examples/nextfs-starter` contains a minimal end-to-end App Router starter
+- `examples/nextfs-starter` contains a minimal end-to-end App Router starter, including `layout`, `route`, and `proxy` entries generated from F#
 - `tests/nextfs-entry.test.mjs` covers the wrapper generator
 - `tools/nextfs-entry.mjs` generates directive wrapper files
+- `tools/generate-google-font-bindings.mjs` regenerates the `GoogleFont` binding catalog from official Next.js type definitions
 
 ## Examples And Docs
 

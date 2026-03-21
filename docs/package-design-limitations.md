@@ -7,9 +7,11 @@
 The package mirrors the current Next.js App Router surface in a small set of modules and types:
 
 - component helpers: `Link`, `Image`, `Script`, `Form`, `Head`
+- font helpers: `Font`, `GoogleFont`, `FontOptions`, `LocalFontSource`, `FontDeclaration`
 - navigation helpers: `Navigation`
 - client reporting helpers: `WebVitals`
 - server helpers: `Server`
+- proxy helpers: `ProxyConfig`, `ProxyMatcher`, `RouteHas`
 - cache helpers: `Cache`, `CacheLife`
 - metadata helpers: `Metadata`, `MetadataOpenGraph`, `MetadataTwitter`, `Viewport`, `MetadataRoute`, `ImageResponse`, `ImageMetadata`
 - response helpers: `ServerResponse`, `ResponseInit`, `NextResponseInit`
@@ -49,6 +51,12 @@ That means:
 The package surface is intentionally small and does not try to cover every Next.js feature.
 
 What is covered today is the set of bindings already present in `src/NextFs/NextFs.fs`. If you need an API that is not there, treat that as unsupported rather than inferred.
+
+The package also keeps most configuration values JavaScript-shaped on purpose:
+
+- metadata, proxy, cookie, and font option objects are built with `createObj`-style helper modules
+- `GoogleFont` is generated from official Next.js type declarations, but the option objects are still intentionally loose
+- this keeps the bindings maintainable as Next.js evolves, at the cost of not encoding every per-font constraint in the F# type system
 
 The wrapper generator is also deliberately narrow:
 

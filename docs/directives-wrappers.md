@@ -59,6 +59,16 @@ Supported entry fields:
 - `named`: re-export the named exports listed in the array
 - `exportAll`: re-export everything from the source module
 
+Common patterns:
+
+| Case | `directive` | `default` | `named` | Typical `to` |
+| --- | --- | --- | --- | --- |
+| client page | `"use client"` | `true` | none | `app/page.js` |
+| client component | `"use client"` | `true` | none | `app/components/counter.js` |
+| server actions module | `"use server"` | `false` | `["createPost"]` | `app/actions.js` |
+| route handler | omitted | `false` | `["GET", "POST"]` | `app/api/posts/route.js` |
+| proxy entry | omitted | `false` | `["proxy", "config"]` | `proxy.js` |
+
 Current rules enforced by the generator:
 
 - `directive` must be omitted, `"use client"`, or `"use server"`
@@ -88,6 +98,11 @@ Current rules enforced by the generator:
       "from": "./.fable/App.Api.Posts.js",
       "to": "./app/api/posts/route.js",
       "named": ["GET", "POST"]
+    },
+    {
+      "from": "./.fable/Proxy.js",
+      "to": "./proxy.js",
+      "named": ["proxy", "config"]
     }
   ]
 }
@@ -98,3 +113,4 @@ That example shows the three common cases:
 - a client entry page with a default export
 - a server-actions module with named exports only
 - a route-handler module that does not need a directive
+- a root-level `proxy.js` entry exported from F#
