@@ -1,5 +1,8 @@
 # NextFs
 
+[![CI](https://github.com/Neftedollar/Next.fs/actions/workflows/ci.yml/badge.svg)](https://github.com/Neftedollar/Next.fs/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 `NextFs` is a Fable-first binding layer for building Next.js applications with F#.
 
 Status: experimental, but already usable as a bootstrap layer for App Router projects.
