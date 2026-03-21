@@ -9,6 +9,7 @@
     <Compile Include="App/Actions.fs" />
     <Compile Include="App/ClientCounter.fs" />
     <Compile Include="App/Api/Posts.fs" />
+    <Compile Include="App/Layout.fs" />
     <Compile Include="App/Page.fs" />
   </ItemGroup>
 

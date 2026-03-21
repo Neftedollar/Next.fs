@@ -60,8 +60,43 @@ type CacheProfile =
 type RevalidateTagProfile =
     | [<CompiledName("max")>] Max
 
+[<StringEnum; RequireQualifiedAccess>]
+type RouteRuntime =
+    | [<CompiledName("nodejs")>] NodeJs
+    | [<CompiledName("edge")>] Edge
+
+[<StringEnum; RequireQualifiedAccess>]
+type WebVitalMetricRating =
+    | [<CompiledName("good")>] Good
+    | [<CompiledName("needs-improvement")>] NeedsImprovement
+    | [<CompiledName("poor")>] Poor
+
+[<StringEnum; RequireQualifiedAccess>]
+type WebVitalNavigationType =
+    | [<CompiledName("navigate")>] Navigate
+    | [<CompiledName("reload")>] Reload
+    | [<CompiledName("prerender")>] Prerender
+    | [<CompiledName("back-forward")>] BackForward
+    | [<CompiledName("back-forward-cache")>] BackForwardCache
+    | [<CompiledName("restore")>] Restore
+
+[<StringEnum; RequireQualifiedAccess>]
+type ImageResponseEmoji =
+    | [<CompiledName("twemoji")>] Twemoji
+    | [<CompiledName("blobmoji")>] Blobmoji
+    | [<CompiledName("noto")>] Noto
+    | [<CompiledName("openmoji")>] Openmoji
+
+[<StringEnum; RequireQualifiedAccess>]
+type ImageResponseFontStyle =
+    | [<CompiledName("normal")>] Normal
+    | [<CompiledName("italic")>] Italic
+
 type NavigationEvent =
     abstract preventDefault: unit -> unit
+
+type LinkStatus =
+    abstract pending: bool
 
 type ReadonlyURLSearchParams =
     abstract get: name: string -> string option
@@ -114,6 +149,61 @@ type DraftModeState =
     abstract enable: unit -> unit
     abstract disable: unit -> unit
 
+type UserAgentBrowser =
+    abstract name: string option
+    abstract version: string option
+
+type UserAgentDevice =
+    abstract model: string option
+    abstract ``type``: string option
+    abstract vendor: string option
+
+type UserAgentEngine =
+    abstract name: string option
+    abstract version: string option
+
+type UserAgentOperatingSystem =
+    abstract name: string option
+    abstract version: string option
+
+type UserAgentCpu =
+    abstract architecture: string option
+
+type UserAgentInfo =
+    abstract isBot: bool
+    abstract browser: UserAgentBrowser
+    abstract device: UserAgentDevice
+    abstract engine: UserAgentEngine
+    abstract os: UserAgentOperatingSystem
+    abstract cpu: UserAgentCpu
+
+type WebVitalMetric =
+    abstract id: string
+    abstract name: string
+    abstract delta: float
+    abstract entries: obj array
+    abstract navigationType: WebVitalNavigationType
+    abstract rating: WebVitalMetricRating
+    abstract value: float
+
+type PageProps<'routeParams, 'searchParams> =
+    abstract ``params``: JS.Promise<'routeParams>
+    abstract searchParams: JS.Promise<'searchParams>
+
+type LayoutProps<'routeParams> =
+    abstract ``params``: JS.Promise<'routeParams>
+    abstract children: ReactElement
+
+type ResolvingMetadata = JS.Promise<obj>
+type ResolvingViewport = JS.Promise<obj>
+
+type SitemapProps =
+    abstract id: JS.Promise<string>
+
+type ImageGenerationProps<'routeParams, 'id> =
+    abstract ``params``: JS.Promise<'routeParams>
+    abstract id: JS.Promise<'id>
+
 module Directive =
     [<Emit("'use server'", isStatement = true)>]
     let inline useServer () : unit = jsNative
@@ -136,6 +226,8 @@ type FormDataCollection =
     abstract set: name: string * value: obj -> unit
 
 type NextUrl =
+    abstract basePath: string
+    abstract buildId: string option
     abstract href: string
     abstract pathname: string
     abstract search: string
@@ -214,9 +306,481 @@ module CacheLife =
     let expire(value: int) : string * obj =
         "expire" ==> value
 
+module ImageResponseFont =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let name(value: string) : string * obj =
+        "name" ==> value
+
+    let data(value: obj) : string * obj =
+        "data" ==> value
+
+    let weight(value: int) : string * obj =
+        "weight" ==> value
+
+    let style(value: ImageResponseFontStyle) : string * obj =
+        "style" ==> value
+
+module ImageResponseOptions =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let width(value: int) : string * obj =
+        "width" ==> value
+
+    let height(value: int) : string * obj =
+        "height" ==> value
+
+    let emoji(value: ImageResponseEmoji) : string * obj =
+        "emoji" ==> value
+
+    let fonts(values: seq<obj>) : string * obj =
+        "fonts" ==> Seq.toArray values
+
+    let debug(value: bool) : string * obj =
+        "debug" ==> value
+
+    let status(value: int) : string * obj =
+        "status" ==> value
+
+    let statusText(value: string) : string * obj =
+        "statusText" ==> value
+
+    let headersObject(value: obj) : string * obj =
+        "headers" ==> value
+
+module ImageMetadataSize =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let width(value: int) : string * obj =
+        "width" ==> value
+
+    let height(value: int) : string * obj =
+        "height" ==> value
+
+module ImageMetadata =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let id(value: obj) : string * obj =
+        "id" ==> value
+
+    let alt(value: string) : string * obj =
+        "alt" ==> value
+
+    let size(value: obj) : string * obj =
+        "size" ==> value
+
+    let contentType(value: string) : string * obj =
+        "contentType" ==> value
+
+module MetadataTitle =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let defaultValue(value: string) : string * obj =
+        "default" ==> value
+
+    let template(value: string) : string * obj =
+        "template" ==> value
+
+    let absolute(value: string) : string * obj =
+        "absolute" ==> value
+
+module MetadataImage =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let url(value: string) : string * obj =
+        "url" ==> value
+
+    let urlObject(value: obj) : string * obj =
+        "url" ==> value
+
+    let secureUrl(value: string) : string * obj =
+        "secureUrl" ==> value
+
+    let width(value: int) : string * obj =
+        "width" ==> value
+
+    let height(value: int) : string * obj =
+        "height" ==> value
+
+    let alt(value: string) : string * obj =
+        "alt" ==> value
+
+    let type'(value: string) : string * obj =
+        "type" ==> value
+
+module MetadataAlternates =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let canonical(value: string) : string * obj =
+        "canonical" ==> value
+
+    let languages(value: obj) : string * obj =
+        "languages" ==> value
+
+    let media(value: obj) : string * obj =
+        "media" ==> value
+
+    let types(value: obj) : string * obj =
+        "types" ==> value
+
+module MetadataOpenGraph =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let title(value: string) : string * obj =
+        "title" ==> value
+
+    let description(value: string) : string * obj =
+        "description" ==> value
+
+    let url(value: string) : string * obj =
+        "url" ==> value
+
+    let siteName(value: string) : string * obj =
+        "siteName" ==> value
+
+    let locale(value: string) : string * obj =
+        "locale" ==> value
+
+    let type'(value: string) : string * obj =
+        "type" ==> value
+
+    let images(value: obj) : string * obj =
+        "images" ==> value
+
+    let imagesMany(values: seq<obj>) : string * obj =
+        "images" ==> Seq.toArray values
+
+module TwitterAppValues =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let iphone(value: string) : string * obj =
+        "iphone" ==> value
+
+    let ipad(value: string) : string * obj =
+        "ipad" ==> value
+
+    let googlePlay(value: string) : string * obj =
+        "googleplay" ==> value
+
+module TwitterApp =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let name(value: string) : string * obj =
+        "name" ==> value
+
+    let id(value: obj) : string * obj =
+        "id" ==> value
+
+    let url(value: obj) : string * obj =
+        "url" ==> value
+
+module MetadataTwitter =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let card(value: string) : string * obj =
+        "card" ==> value
+
+    let title(value: string) : string * obj =
+        "title" ==> value
+
+    let description(value: string) : string * obj =
+        "description" ==> value
+
+    let site(value: string) : string * obj =
+        "site" ==> value
+
+    let siteId(value: string) : string * obj =
+        "siteId" ==> value
+
+    let creator(value: string) : string * obj =
+        "creator" ==> value
+
+    let creatorId(value: string) : string * obj =
+        "creatorId" ==> value
+
+    let images(value: obj) : string * obj =
+        "images" ==> value
+
+    let imagesMany(values: seq<obj>) : string * obj =
+        "images" ==> Seq.toArray values
+
+    let app(value: obj) : string * obj =
+        "app" ==> value
+
+module MetadataVerification =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let google(value: string) : string * obj =
+        "google" ==> value
+
+    let yandex(value: string) : string * obj =
+        "yandex" ==> value
+
+    let yahoo(value: string) : string * obj =
+        "yahoo" ==> value
+
+    let other(value: obj) : string * obj =
+        "other" ==> value
+
+module ThemeColor =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let color(value: string) : string * obj =
+        "color" ==> value
+
+    let media(value: string) : string * obj =
+        "media" ==> value
+
+module Viewport =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let themeColor(value: string) : string * obj =
+        "themeColor" ==> value
+
+    let themeColorObject(value: obj) : string * obj =
+        "themeColor" ==> value
+
+    let themeColors(values: seq<obj>) : string * obj =
+        "themeColor" ==> Seq.toArray values
+
+    let width(value: string) : string * obj =
+        "width" ==> value
+
+    let initialScale(value: float) : string * obj =
+        "initialScale" ==> value
+
+    let maximumScale(value: float) : string * obj =
+        "maximumScale" ==> value
+
+    let userScalable(value: bool) : string * obj =
+        "userScalable" ==> value
+
+    let colorScheme(value: string) : string * obj =
+        "colorScheme" ==> value
+
+    let viewportFit(value: string) : string * obj =
+        "viewportFit" ==> value
+
+module Metadata =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let title(value: string) : string * obj =
+        "title" ==> value
+
+    let titleTemplate(value: obj) : string * obj =
+        "title" ==> value
+
+    let description(value: string) : string * obj =
+        "description" ==> value
+
+    let applicationName(value: string) : string * obj =
+        "applicationName" ==> value
+
+    let generator(value: string) : string * obj =
+        "generator" ==> value
+
+    let keywords(values: seq<string>) : string * obj =
+        "keywords" ==> Seq.toArray values
+
+    let creator(value: string) : string * obj =
+        "creator" ==> value
+
+    let publisher(value: string) : string * obj =
+        "publisher" ==> value
+
+    let metadataBase(value: obj) : string * obj =
+        "metadataBase" ==> value
+
+    let alternates(value: obj) : string * obj =
+        "alternates" ==> value
+
+    let openGraph(value: obj) : string * obj =
+        "openGraph" ==> value
+
+    let twitter(value: obj) : string * obj =
+        "twitter" ==> value
+
+    let robots(value: obj) : string * obj =
+        "robots" ==> value
+
+    let manifest(value: string) : string * obj =
+        "manifest" ==> value
+
+    let icons(value: obj) : string * obj =
+        "icons" ==> value
+
+    let verification(value: obj) : string * obj =
+        "verification" ==> value
+
+    let other(value: obj) : string * obj =
+        "other" ==> value
+
+module PreferredRegion =
+    let auto: string = "auto"
+    let globalRegion: string = "global"
+    let home: string = "home"
+
+    let region(value: string) : string =
+        value
+
+    let regions(values: seq<string>) : string array =
+        Seq.toArray values
+
+module MetadataRoute =
+    [<StringEnum; RequireQualifiedAccess>]
+    type SitemapChangeFrequency =
+        | [<CompiledName("always")>] Always
+        | [<CompiledName("hourly")>] Hourly
+        | [<CompiledName("daily")>] Daily
+        | [<CompiledName("weekly")>] Weekly
+        | [<CompiledName("monthly")>] Monthly
+        | [<CompiledName("yearly")>] Yearly
+        | [<CompiledName("never")>] Never
+
+    module RobotsRule =
+        let create(fields: (string * obj) list) : obj =
+            createObj fields
+
+        let userAgent(value: string) : string * obj =
+            "userAgent" ==> value
+
+        let userAgents(values: seq<string>) : string * obj =
+            "userAgent" ==> Seq.toArray values
+
+        let allow(value: string) : string * obj =
+            "allow" ==> value
+
+        let disallow(value: string) : string * obj =
+            "disallow" ==> value
+
+        let crawlDelay(value: int) : string * obj =
+            "crawlDelay" ==> value
+
+    module Robots =
+        let create(fields: (string * obj) list) : obj =
+            createObj fields
+
+        let rules(value: obj) : string * obj =
+            "rules" ==> value
+
+        let rulesMany(values: seq<obj>) : string * obj =
+            "rules" ==> Seq.toArray values
+
+        let sitemap(value: string) : string * obj =
+            "sitemap" ==> value
+
+        let sitemaps(values: seq<string>) : string * obj =
+            "sitemap" ==> Seq.toArray values
+
+        let host(value: string) : string * obj =
+            "host" ==> value
+
+    module SitemapEntry =
+        let create(fields: (string * obj) list) : obj =
+            createObj fields
+
+        let url(value: string) : string * obj =
+            "url" ==> value
+
+        let lastModified(value: obj) : string * obj =
+            "lastModified" ==> value
+
+        let changeFrequency(value: SitemapChangeFrequency) : string * obj =
+            "changeFrequency" ==> value
+
+        let priority(value: float) : string * obj =
+            "priority" ==> value
+
+        let images(values: seq<string>) : string * obj =
+            "images" ==> Seq.toArray values
+
+    module ManifestIcon =
+        let create(fields: (string * obj) list) : obj =
+            createObj fields
+
+        let src(value: string) : string * obj =
+            "src" ==> value
+
+        let sizes(value: string) : string * obj =
+            "sizes" ==> value
+
+        let type'(value: string) : string * obj =
+            "type" ==> value
+
+        let purpose(value: string) : string * obj =
+            "purpose" ==> value
+
+    module Manifest =
+        let create(fields: (string * obj) list) : obj =
+            createObj fields
+
+        let name(value: string) : string * obj =
+            "name" ==> value
+
+        let shortName(value: string) : string * obj =
+            "short_name" ==> value
+
+        let description(value: string) : string * obj =
+            "description" ==> value
+
+        let startUrl(value: string) : string * obj =
+            "start_url" ==> value
+
+        let display(value: string) : string * obj =
+            "display" ==> value
+
+        let backgroundColor(value: string) : string * obj =
+            "background_color" ==> value
+
+        let themeColor(value: string) : string * obj =
+            "theme_color" ==> value
+
+        let icons(values: seq<obj>) : string * obj =
+            "icons" ==> Seq.toArray values
+
+        let id(value: string) : string * obj =
+            "id" ==> value
+
+        let orientation(value: string) : string * obj =
+            "orientation" ==> value
+
+module ImageResponse =
+    [<Import("ImageResponse", "next/og")>]
+    let private imageResponseImport: obj = jsNative
+
+    [<Emit("new $0($1)")>]
+    let private createImport(imageResponseType: obj, element: ReactElement) : obj = jsNative
+
+    [<Emit("new $0($1, $2)")>]
+    let private createWithOptionsImport(imageResponseType: obj, element: ReactElement, options: obj) : obj = jsNative
+
+    let create(element: ReactElement) : obj =
+        createImport(imageResponseImport, element)
+
+    let createWithOptions(element: ReactElement) (options: obj) : obj =
+        createWithOptionsImport(imageResponseImport, element, options)
+
 module Link =
     [<ImportDefault("next/link")>]
     let private componentImport: obj = jsNative
+
+    [<Import("useLinkStatus", "next/link")>]
+    let private useLinkStatusImport: unit -> LinkStatus = jsNative
 
     let create(props: IReactProperty list) : ReactElement =
         ReactInterop.createElement componentImport props
@@ -244,6 +808,9 @@ module Link =
 
     let transitionTypes(values: seq<string>) : IReactProperty =
         Props.mkAttr "transitionTypes" (Seq.toArray values)
+
+    let useLinkStatus() : LinkStatus =
+        useLinkStatusImport()
 
 module Image =
     [<ImportDefault("next/image")>]
@@ -357,6 +924,13 @@ module Head =
     let create(props: IReactProperty list) : ReactElement =
         ReactInterop.createElement componentImport props
 
+module WebVitals =
+    [<Import("useReportWebVitals", "next/web-vitals")>]
+    let private useReportWebVitalsImport: (WebVitalMetric -> unit) -> unit = jsNative
+
+    let useReportWebVitals(handler: WebVitalMetric -> unit) : unit =
+        useReportWebVitalsImport handler
+
 module Navigation =
     [<Import("useRouter", "next/navigation")>]
     let private useRouterImport: unit -> AppRouterInstance = jsNative
@@ -384,6 +958,15 @@ module Navigation =
 
     [<Import("notFound", "next/navigation")>]
     let private notFoundImport: unit -> unit = jsNative
+
+    [<Import("forbidden", "next/navigation")>]
+    let private forbiddenImport: unit -> unit = jsNative
+
+    [<Import("unauthorized", "next/navigation")>]
+    let private unauthorizedImport: unit -> unit = jsNative
+
+    [<Import("unstable_rethrow", "next/navigation")>]
+    let private unstableRethrowImport: obj -> unit = jsNative
 
     let useRouter() : AppRouterInstance =
         useRouterImport()
@@ -414,6 +997,15 @@ module Navigation =
 
     let notFound() : unit =
         notFoundImport()
+
+    let forbidden() : unit =
+        forbiddenImport()
+
+    let unauthorized() : unit =
+        unauthorizedImport()
+
+    let unstableRethrow(error: obj) : unit =
+        unstableRethrowImport error
 
 module Cache =
     [<Import("cacheLife", "next/cache")>]
@@ -492,6 +1084,9 @@ module Cache =
         noStoreImport()
 
 module Server =
+    [<Import("after", "next/server")>]
+    let private afterImport: obj -> unit = jsNative
+
     [<Import("headers", "next/headers")>]
     let private headersImport: unit -> JS.Promise<HeadersCollection> = jsNative
 
@@ -504,6 +1099,15 @@ module Server =
     [<Import("connection", "next/server")>]
     let private connectionImport: unit -> JS.Promise<unit> = jsNative
 
+    [<Import("userAgent", "next/server")>]
+    let private userAgentImport: NextRequest -> UserAgentInfo = jsNative
+
+    let after(callback: unit -> unit) : unit =
+        afterImport callback
+
+    let afterAsync(callback: unit -> JS.Promise<unit>) : unit =
+        afterImport callback
+
     let headers() : JS.Promise<HeadersCollection> =
         headersImport()
 
@@ -515,6 +1119,9 @@ module Server =
 
     let connection() : JS.Promise<unit> =
         connectionImport()
+
+    let userAgent(request: NextRequest) : UserAgentInfo =
+        userAgentImport request
 
 module ServerResponse =
     [<Import("NextResponse", "next/server")>]

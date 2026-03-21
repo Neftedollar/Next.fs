@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Advanced.fs" />
     <Compile Include="App.fs" />
+    <Compile Include="Metadata.fs" />
     <Compile Include="Route.fs" />
   </ItemGroup>
 

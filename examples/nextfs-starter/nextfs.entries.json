@@ -1,6 +1,12 @@
 {
   "entries": [
     {
+      "from": "./.fable/App.Layout.js",
+      "to": "./app/layout.js",
+      "default": true,
+      "named": ["metadata", "viewport"]
+    },
+    {
       "directive": "use client",
       "from": "./.fable/App.Page.js",
       "to": "./app/page.js",
