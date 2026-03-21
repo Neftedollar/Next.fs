@@ -28,8 +28,12 @@ examples/nextfs-starter/
 │   ├── template.js             # generated
 │   └── unauthorized.js         # generated
 ├── next.config.mjs             # source
+├── instrumentation-client.js   # generated
+├── instrumentation.js          # generated
 ├── proxy.js                    # generated
 ├── src/
+│   ├── Instrumentation.fs      # source
+│   ├── InstrumentationClient.fs # source
 │   ├── Proxy.fs                # source
 │   ├── NextFs.Starter.fsproj   # source
 │   └── App/
@@ -53,6 +57,8 @@ examples/nextfs-starter/
 ## Files
 
 - `src/NextFs.Starter.fsproj` - F# project for the example modules
+- `src/Instrumentation.fs` - root `instrumentation.js` entry from F#
+- `src/InstrumentationClient.fs` - root `instrumentation-client.js` entry with client transition hooks
 - `src/Proxy.fs` - root-level `proxy.js` entry exported from F#
 - `next.config.mjs` - enables `experimental.authInterrupts` and `experimental.globalNotFound`
 - `src/App/Layout.fs` - root layout plus `metadata` and `viewport` exports
@@ -65,6 +71,8 @@ examples/nextfs-starter/
 - `src/App/Template.fs` and `src/App/Default.fs` - special-file component conventions
 - `src/App/Forbidden.fs` and `src/App/Unauthorized.fs` - auth interrupt UIs
 - `proxy.js` - generated wrapper for the proxy entry
+- `instrumentation.js` - generated wrapper for server instrumentation exports
+- `instrumentation-client.js` - generated wrapper for client instrumentation side effects
 - `app/error.js` and `app/global-error.js` - generated client wrappers for error boundaries
 - `app/global-not-found.js` - generated root not-found entry
 - `app/layout.js` - generated wrapper for the root layout plus metadata exports

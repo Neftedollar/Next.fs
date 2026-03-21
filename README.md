@@ -29,6 +29,7 @@ If you are evaluating the repository for the first time, use this path:
 - `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
 - `NextRequest` / `NextResponse` constructors and init builders
 - `proxy.js` config builders and `NextFetchEvent`
+- root instrumentation entry patterns for `instrumentation.js` and `instrumentation-client.js`
 - App Router special-file helpers and documented patterns for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js`, and `unauthorized.js`
 - cache invalidation and cache directives from `next/cache`
 - metadata, viewport, robots, sitemap, manifest, and image-metadata builders
@@ -41,7 +42,7 @@ If you are evaluating the repository for the first time, use this path:
 
 ## Compatibility
 
-- `NextFs`: `0.6.x`
+- `NextFs`: `0.7.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -323,6 +324,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 
 - [Quickstart](docs/quickstart.md)
 - [Server and client patterns](docs/server-client-patterns.md)
+- [Instrumentation](docs/instrumentation.md)
 - [API reference](docs/api-reference.md)
 - [Directives and wrappers](docs/directives-wrappers.md)
 - [Special files](docs/special-files.md)

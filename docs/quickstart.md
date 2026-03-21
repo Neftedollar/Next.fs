@@ -167,6 +167,7 @@ If you want to see the intended shape of a real App Router project, use [the sta
 
 - F# source modules under `src/App/**`
 - a root-level `src/Proxy.fs` entry
+- root-level instrumentation entries outside `app/**`
 - generated wrapper files under `app/**`
 - special-file entries such as `error`, `loading`, `not-found`, `template`, and auth interrupts
 - a generated root `proxy.js`

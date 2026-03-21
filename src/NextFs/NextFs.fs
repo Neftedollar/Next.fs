@@ -66,6 +66,40 @@ type RouteRuntime =
     | [<CompiledName("edge")>] Edge
 
 [<StringEnum; RequireQualifiedAccess>]
+type RouterTransitionType =
+    | [<CompiledName("push")>] Push
+    | [<CompiledName("replace")>] Replace
+    | [<CompiledName("traverse")>] Traverse
+
+[<StringEnum; RequireQualifiedAccess>]
+type InstrumentationRouterKind =
+    | [<CompiledName("Pages Router")>] PagesRouter
+    | [<CompiledName("App Router")>] AppRouter
+
+[<StringEnum; RequireQualifiedAccess>]
+type InstrumentationRouteType =
+    | [<CompiledName("render")>] Render
+    | [<CompiledName("route")>] Route
+    | [<CompiledName("action")>] Action
+    | [<CompiledName("proxy")>] Proxy
+
+[<StringEnum; RequireQualifiedAccess>]
+type InstrumentationRenderSource =
+    | [<CompiledName("react-server-components")>] ReactServerComponents
+    | [<CompiledName("react-server-components-payload")>] ReactServerComponentsPayload
+    | [<CompiledName("server-rendering")>] ServerRendering
+
+[<StringEnum; RequireQualifiedAccess>]
+type InstrumentationRevalidateReason =
+    | [<CompiledName("on-demand")>] OnDemand
+    | [<CompiledName("stale")>] Stale
+
+[<StringEnum; RequireQualifiedAccess>]
+type InstrumentationRenderType =
+    | [<CompiledName("dynamic")>] Dynamic
+    | [<CompiledName("dynamic-resume")>] DynamicResume
+
+[<StringEnum; RequireQualifiedAccess>]
 type WebVitalMetricRating =
     | [<CompiledName("good")>] Good
     | [<CompiledName("needs-improvement")>] NeedsImprovement
@@ -273,6 +307,25 @@ type ErrorBoundaryProps =
     abstract error: ErrorWithDigest
     abstract ``unstable_retry``: unit -> unit
     abstract reset: unit -> unit
+
+type InstrumentationError =
+    abstract name: string option
+    abstract message: string
+    abstract stack: string option
+    abstract digest: string
+
+type InstrumentationRequest =
+    abstract path: string
+    abstract method: string
+    abstract headers: obj
+
+type InstrumentationContext =
+    abstract routerKind: InstrumentationRouterKind
+    abstract routePath: string
+    abstract routeType: InstrumentationRouteType
+    abstract renderSource: InstrumentationRenderSource option
+    abstract revalidateReason: InstrumentationRevalidateReason option
+    abstract renderType: InstrumentationRenderType option
 
 type ResolvingMetadata = JS.Promise<obj>
 type ResolvingViewport = JS.Promise<obj>

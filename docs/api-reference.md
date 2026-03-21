@@ -286,6 +286,22 @@ Related types:
 - `NextFetchEvent`
 - `RouteHasType`
 
+### `Instrumentation`
+
+Types intended for root `instrumentation.js` and `instrumentation-client.js` files.
+
+Common types:
+
+- `InstrumentationError`
+- `InstrumentationRequest`
+- `InstrumentationContext`
+- `InstrumentationRouterKind`
+- `InstrumentationRouteType`
+- `InstrumentationRenderSource`
+- `InstrumentationRevalidateReason`
+- `InstrumentationRenderType`
+- `RouterTransitionType`
+
 ## Special Files
 
 Types intended for App Router special files:

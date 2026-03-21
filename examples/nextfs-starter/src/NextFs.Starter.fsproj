@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <Compile Include="Proxy.fs" />
+    <Compile Include="Instrumentation.fs" />
+    <Compile Include="InstrumentationClient.fs" />
     <Compile Include="App/Actions.fs" />
     <Compile Include="App/ClientCounter.fs" />
     <Compile Include="App/Api/Posts.fs" />

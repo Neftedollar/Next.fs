@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 - 2026-03-21
+
+- added instrumentation types for root `instrumentation.js` and `instrumentation-client.js` flows
+- expanded the starter example with F#-driven server and client instrumentation entries plus generated root wrappers
+- added compile-smoke coverage for instrumentation export shapes
+- added `docs/instrumentation.md` and linked instrumentation flows from the wrapper and starter docs
+- expanded wrapper-generator tests for root instrumentation entries
+
 ## 0.6.0 - 2026-03-21
 
 - added `ServerRequest` constructors plus `NextRequestInit` and `NextConfig` builders for lower-level request interop

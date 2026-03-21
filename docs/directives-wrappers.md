@@ -68,6 +68,8 @@ Common patterns:
 | server actions module | `"use server"` | `false` | `["createPost"]` | `app/actions.js` |
 | route handler | omitted | `false` | `["GET", "POST"]` | `app/api/posts/route.js` |
 | proxy entry | omitted | `false` | `["proxy", "config"]` | `proxy.js` |
+| server instrumentation | omitted | `false` | `["register", "onRequestError"]` | `instrumentation.js` |
+| client instrumentation | omitted | `false` | none | `instrumentation-client.js` via `exportAll` |
 | segment error | `"use client"` | `true` | none | `app/error.js` |
 | global error | `"use client"` | `true` | none | `app/global-error.js` |
 | global not found | omitted | `true` | `["metadata"]` optional | `app/global-not-found.js` |
@@ -106,6 +108,16 @@ Current rules enforced by the generator:
       "from": "./.fable/Proxy.js",
       "to": "./proxy.js",
       "named": ["proxy", "config"]
+    },
+    {
+      "from": "./.fable/Instrumentation.js",
+      "to": "./instrumentation.js",
+      "named": ["register", "onRequestError"]
+    },
+    {
+      "from": "./.fable/InstrumentationClient.js",
+      "to": "./instrumentation-client.js",
+      "exportAll": true
     }
   ]
 }
@@ -117,3 +129,4 @@ That example shows the three common cases:
 - a server-actions module with named exports only
 - a route-handler module that does not need a directive
 - a root-level `proxy.js` entry exported from F#
+- root instrumentation entries that can stay directive-free

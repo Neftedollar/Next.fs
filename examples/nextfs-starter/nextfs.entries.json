@@ -6,6 +6,16 @@
       "named": ["proxy", "config"]
     },
     {
+      "from": "./.fable/Instrumentation.js",
+      "to": "./instrumentation.js",
+      "named": ["register", "onRequestError"]
+    },
+    {
+      "from": "./.fable/InstrumentationClient.js",
+      "to": "./instrumentation-client.js",
+      "exportAll": true
+    },
+    {
       "from": "./.fable/App.Default.js",
       "to": "./app/default.js",
       "default": true
