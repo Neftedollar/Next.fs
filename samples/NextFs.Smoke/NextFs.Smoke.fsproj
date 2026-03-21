@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="Advanced.fs" />
     <Compile Include="App.fs" />
+    <Compile Include="DataFetching.fs" />
     <Compile Include="Instrumentation.fs" />
     <Compile Include="Metadata.fs" />
     <Compile Include="Proxy.fs" />

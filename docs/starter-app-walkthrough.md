@@ -101,6 +101,7 @@ That issue does not change the intended project layout here, but it can affect w
 ## Where To Go Next
 
 - [Starter example](../examples/nextfs-starter/README.md)
+- [Data fetching and route config](data-fetching-and-route-config.md)
 - [Directives and wrappers](directives-wrappers.md)
 - [Server and client patterns](server-client-patterns.md)
 - [Special files](special-files.md)

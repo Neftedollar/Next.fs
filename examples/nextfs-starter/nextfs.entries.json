@@ -90,7 +90,7 @@
     {
       "from": "./.fable/App.Api.Posts.js",
       "to": "./app/api/posts/route.js",
-      "named": ["GET", "POST"]
+      "named": ["GET", "POST", "runtime", "preferredRegion", "maxDuration"]
     }
   ]
 }

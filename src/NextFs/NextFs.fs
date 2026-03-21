@@ -61,6 +61,11 @@ type RevalidateTagProfile =
     | [<CompiledName("max")>] Max
 
 [<StringEnum; RequireQualifiedAccess>]
+type ServerFetchCache =
+    | [<CompiledName("force-cache")>] ForceCache
+    | [<CompiledName("no-store")>] NoStore
+
+[<StringEnum; RequireQualifiedAccess>]
 type RouteRuntime =
     | [<CompiledName("nodejs")>] NodeJs
     | [<CompiledName("edge")>] Edge
@@ -427,6 +432,21 @@ type NextResponse =
     abstract json<'T>: unit -> JS.Promise<'T>
     abstract text: unit -> JS.Promise<string>
 
+type ServerFetchResponse =
+    abstract headers: HeadersCollection
+    abstract status: int
+    abstract statusText: string
+    abstract ok: bool
+    abstract redirected: bool
+    abstract url: string
+    abstract bodyUsed: bool
+    abstract clone: unit -> obj
+    abstract arrayBuffer: unit -> JS.Promise<obj>
+    abstract blob: unit -> JS.Promise<obj>
+    abstract formData: unit -> JS.Promise<FormDataCollection>
+    abstract json<'T>: unit -> JS.Promise<'T>
+    abstract text: unit -> JS.Promise<string>
+
 module NextConfig =
     let create(fields: (string * obj) list) : obj =
         createObj fields
@@ -502,6 +522,51 @@ module NextResponseInit =
 
     let requestHeaders(value: HeadersCollection) : string * obj =
         "request" ==> createObj [ "headers" ==> value ]
+
+module NextFetchOptions =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let revalidate(value: obj) : string * obj =
+        "revalidate" ==> value
+
+    let tags(values: seq<string>) : string * obj =
+        "tags" ==> Seq.toArray values
+
+    let tag(value: string) : string * obj =
+        "tags" ==> [| value |]
+
+module ServerFetchInit =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let method'(value: string) : string * obj =
+        "method" ==> value
+
+    let headers(value: HeadersCollection) : string * obj =
+        "headers" ==> value
+
+    let headersObject(value: obj) : string * obj =
+        "headers" ==> value
+
+    let body(value: obj) : string * obj =
+        "body" ==> value
+
+    let cache(value: ServerFetchCache) : string * obj =
+        "cache" ==> value
+
+    let next(value: obj) : string * obj =
+        "next" ==> value
+
+    let signal(value: obj) : string * obj =
+        "signal" ==> value
+
+module GenerateSitemapsEntry =
+    let create(fields: (string * obj) list) : obj =
+        createObj fields
+
+    let id(value: obj) : string * obj =
+        "id" ==> value
 
 module CookieOptions =
     let create(fields: (string * obj) list) : obj =
@@ -1016,6 +1081,13 @@ module PreferredRegion =
 
     let regions(values: seq<string>) : string array =
         Seq.toArray values
+
+module Revalidate =
+    let forever: obj = box false
+    let neverCache: obj = box 0
+
+    let seconds(value: int) : obj =
+        box value
 
 module MetadataRoute =
     [<StringEnum; RequireQualifiedAccess>]
@@ -1563,6 +1635,25 @@ module Server =
 
     let userAgentFromString(userAgentValue: string) : UserAgentInfo =
         userAgentFromStringImport userAgentValue
+
+module ServerFetch =
+    [<Emit("fetch($0)")>]
+    let private fetchInput(input: obj) : JS.Promise<ServerFetchResponse> = jsNative
+
+    [<Emit("fetch($0, $1)")>]
+    let private fetchInputWithInit(input: obj, init: obj) : JS.Promise<ServerFetchResponse> = jsNative
+
+    let fetch(url: string) : JS.Promise<ServerFetchResponse> =
+        fetchInput(box url)
+
+    let fetchWithInit(url: string) (init: obj) : JS.Promise<ServerFetchResponse> =
+        fetchInputWithInit(box url, init)
+
+    let fetchFrom(input: obj) : JS.Promise<ServerFetchResponse> =
+        fetchInput input
+
+    let fetchFromWithInit(input: obj) (init: obj) : JS.Promise<ServerFetchResponse> =
+        fetchInputWithInit(input, init)
 
 module ServerResponse =
     [<Import("NextResponse", "next/server")>]

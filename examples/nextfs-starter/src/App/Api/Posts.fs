@@ -4,10 +4,30 @@ open Fable.Core
 open Fable.Core.JsInterop
 open NextFs
 
+let runtime = RouteRuntime.NodeJs
+let preferredRegion = PreferredRegion.home
+let maxDuration = 15
+
 [<CompiledName("GET")>]
 let get (request: NextRequest) =
     async {
         let! cookieStore = Async.AwaitPromise(Server.cookies())
+        let! upstream =
+            Async.AwaitPromise(
+                ServerFetch.fetchWithInit "https://example.com/api/posts" (
+                    ServerFetchInit.create [
+                        ServerFetchInit.cache ServerFetchCache.NoStore
+                        ServerFetchInit.next (
+                            NextFetchOptions.create [
+                                NextFetchOptions.revalidate Revalidate.neverCache
+                                NextFetchOptions.tag "starter-posts"
+                            ]
+                        )
+                    ]
+                )
+            )
+
+        ignore upstream.status
 
         return
             ServerResponse.jsonWithInit

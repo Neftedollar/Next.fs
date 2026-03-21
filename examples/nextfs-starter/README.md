@@ -66,7 +66,7 @@ examples/nextfs-starter/
 - `src/App/Page.fs` - client page component with an inline server action
 - `src/App/ClientCounter.fs` - client component boundary with App Router segment hooks
 - `src/App/Actions.fs` - standalone server action entry
-- `src/App/Api/Posts.fs` - route handler
+- `src/App/Api/Posts.fs` - route handler plus `runtime`, `preferredRegion`, and `maxDuration` exports
 - `src/App/Error.fs` and `src/App/GlobalError.fs` - client error boundaries from F#
 - `src/App/Loading.fs`, `src/App/NotFound.fs`, `src/App/GlobalNotFound.fs` - route fallback UIs
 - `src/App/Template.fs` and `src/App/Default.fs` - special-file component conventions
@@ -81,6 +81,7 @@ examples/nextfs-starter/
 - `app/components/client-counter.js` - generated wrapper for the client component
 - `app/actions.js` - generated wrapper for the server action
 - `app/api/posts/route.js` - generated wrapper for the route handler
+- route-handler wrappers can re-export config values alongside HTTP verbs
 
 ## Local Flow
 
@@ -118,6 +119,8 @@ Command boundaries:
 
 The checked-in `app/**` and `proxy.js` files are generated wrappers. Regenerate them after each Fable emit, or let `watch:fable` do it for you.
 
+The starter route handler also demonstrates typed server `fetch()` options through `ServerFetchInit` and `NextFetchOptions`.
+
 ## Generated vs. Source Files
 
 Edit these files by hand:
@@ -142,4 +145,4 @@ This starter still documents the intended pipeline and keeps the generated wrapp
 
 The special-file entries in this starter intentionally demonstrate a broad App Router surface. `forbidden.js`, `unauthorized.js`, and `global-not-found.js` depend on experimental Next.js flags, so treat them as current-pattern examples rather than frozen APIs.
 
-For the code patterns behind these files, see [the starter walkthrough](../../docs/starter-app-walkthrough.md), [Server and client patterns](../../docs/server-client-patterns.md), [Directives and wrappers](../../docs/directives-wrappers.md), and [Special files](../../docs/special-files.md).
+For the code patterns behind these files, see [the starter walkthrough](../../docs/starter-app-walkthrough.md), [Data fetching and route config](../../docs/data-fetching-and-route-config.md), [Server and client patterns](../../docs/server-client-patterns.md), [Directives and wrappers](../../docs/directives-wrappers.md), and [Special files](../../docs/special-files.md).

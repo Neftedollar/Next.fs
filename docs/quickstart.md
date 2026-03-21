@@ -51,6 +51,7 @@ The main component helpers in the package are:
 - `Navigation.useRouter`, `Navigation.usePathname`, `Navigation.useSearchParams`, `Navigation.useParams`
 - `Navigation.useServerInsertedHTML`, `Navigation.useSelectedLayoutSegmentFor`, `Navigation.unstableIsUnrecognizedActionError`
 - `Server.headers`, `Server.cookies`, `Server.draftMode`, `Server.connection`
+- `ServerFetch.fetch`, `ServerFetchInit.create`, `NextFetchOptions.create`, `Revalidate.seconds`
 - `Cache.cacheLifeProfile`, `Cache.cacheTag`, `Cache.revalidatePath`, `Cache.revalidateTag`, `Cache.updateTag`, `Cache.refresh`
 - `Metadata.create`, `Viewport.create`, `ImageResponse.createWithOptions`
 - `ServerRequest.createWithInit`, `ServerResponse.json`, `ServerResponse.createWithInit`, `ServerResponse.redirect`, `ServerResponse.rewrite`, `ServerResponse.next`
@@ -161,7 +162,37 @@ let config =
     ]
 ```
 
-## 7. Use the starter when you want a full folder layout
+## 7. Use typed server fetch options for cached data
+
+`NextFs` also exposes the Next.js server `fetch()` extensions for `cache`, `next.revalidate`, and `next.tags`:
+
+```fsharp
+let loadPosts() =
+    ServerFetch.fetchWithInit "https://example.com/api/posts" (
+        ServerFetchInit.create [
+            ServerFetchInit.cache ServerFetchCache.ForceCache
+            ServerFetchInit.next (
+                NextFetchOptions.create [
+                    NextFetchOptions.revalidate (Revalidate.seconds 900)
+                    NextFetchOptions.tags [ "posts"; "homepage" ]
+                ]
+            )
+        ]
+    )
+```
+
+If you need route-level config on `layout`, `page`, or `route` files, export plain values from F#:
+
+```fsharp
+let runtime = RouteRuntime.Edge
+let preferredRegion = PreferredRegion.home
+let dynamicParams = true
+let maxDuration = 30
+```
+
+For the full pattern, including `generateSitemaps`, use [Data fetching and route config](data-fetching-and-route-config.md).
+
+## 8. Use the starter when you want a full folder layout
 
 If you want to see the intended shape of a real App Router project, start with [Starter app walkthrough](starter-app-walkthrough.md) and then inspect [the starter example](../examples/nextfs-starter/README.md). It includes:
 

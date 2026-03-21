@@ -17,9 +17,10 @@ If you are evaluating the repository for the first time, use this path:
 2. read [Starter app walkthrough](docs/starter-app-walkthrough.md)
 3. inspect [the starter example](examples/nextfs-starter/README.md)
 4. learn the wrapper rules in [Directives and wrappers](docs/directives-wrappers.md)
-5. use [Server and client patterns](docs/server-client-patterns.md) for route handlers, wrappers, and mixed App Router flows
-6. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
-7. use [API reference](docs/api-reference.md) as the lookup table
+5. use [Data fetching and route config](docs/data-fetching-and-route-config.md) for server `fetch()` and route segment exports
+6. use [Server and client patterns](docs/server-client-patterns.md) for route handlers, wrappers, and mixed App Router flows
+7. use [Special files](docs/special-files.md) for `error.js`, `loading.js`, `not-found.js`, and auth-interrupt conventions
+8. use [API reference](docs/api-reference.md) as the lookup table
 
 ## What It Covers
 
@@ -29,6 +30,7 @@ If you are evaluating the repository for the first time, use this path:
 - request helpers from `next/headers`
 - `NextRequest`, `NextResponse`, and route handler helpers from `next/server`
 - `NextRequest` / `NextResponse` constructors and init builders
+- typed server `fetch()` helpers for `cache`, `next.revalidate`, and `next.tags`
 - `proxy.js` config builders and `NextFetchEvent`
 - root instrumentation entry patterns for `instrumentation.js` and `instrumentation-client.js`
 - App Router special-file helpers and documented patterns for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js`, and `unauthorized.js`
@@ -43,7 +45,7 @@ If you are evaluating the repository for the first time, use this path:
 
 ## Compatibility
 
-- `NextFs`: `0.7.x`
+- `NextFs`: `0.8.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -278,11 +280,48 @@ Beyond the baseline router/navigation APIs, `NextFs` now also includes:
 - `Navigation.unstableRethrow(...)`
 - `Server.after(...)`
 - `Server.userAgent(...)`
+- `ServerFetch.fetch(...)`
+- `ServerFetch.fetchWithInit(...)`
 - `ServerRequest.createWithInit(...)`
 - `ServerResponse.createWithInit(...)`
 - `Image.getImageProps(...)`
 
 These helpers are compile-smoked in `samples/NextFs.Smoke`.
+
+## Server Fetch And Route Config
+
+`NextFs` now includes typed helpers for Next.js server `fetch()` options and route segment exports:
+
+- `ServerFetch.fetch(...)`
+- `ServerFetch.fetchWithInit(...)`
+- `ServerFetchInit`
+- `NextFetchOptions`
+- `ServerFetchCache`
+- `Revalidate.seconds`, `Revalidate.forever`, `Revalidate.neverCache`
+- `RouteRuntime`
+- `PreferredRegion`
+- `GenerateSitemapsEntry`
+
+Example:
+
+```fsharp
+let runtime = RouteRuntime.Edge
+let preferredRegion = PreferredRegion.home
+let maxDuration = 30
+
+let loadPosts() =
+    ServerFetch.fetchWithInit "https://example.com/api/posts" (
+        ServerFetchInit.create [
+            ServerFetchInit.cache ServerFetchCache.ForceCache
+            ServerFetchInit.next (
+                NextFetchOptions.create [
+                    NextFetchOptions.revalidate (Revalidate.seconds 900)
+                    NextFetchOptions.tags [ "posts"; "homepage" ]
+                ]
+            )
+        ]
+    )
+```
 
 ## Special Files
 
@@ -327,6 +366,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 
 - [Quickstart](docs/quickstart.md)
 - [Starter app walkthrough](docs/starter-app-walkthrough.md)
+- [Data fetching and route config](docs/data-fetching-and-route-config.md)
 - [Server and client patterns](docs/server-client-patterns.md)
 - [Instrumentation](docs/instrumentation.md)
 - [API reference](docs/api-reference.md)

@@ -257,6 +257,25 @@ Related types:
 - `formData`
 - `bodyUsed`
 
+### `ServerFetch`
+
+Bindings for Next.js server `fetch()` usage.
+
+Common members:
+
+- `ServerFetch.fetch`
+- `ServerFetch.fetchWithInit`
+- `ServerFetch.fetchFrom`
+- `ServerFetch.fetchFromWithInit`
+
+Related helpers and types:
+
+- `ServerFetchInit`
+- `NextFetchOptions`
+- `ServerFetchResponse`
+- `ServerFetchCache`
+- `Revalidate`
+
 ### `Proxy`
 
 Bindings used for `proxy.js`.
@@ -475,6 +494,11 @@ Utility interfaces for async App Router props:
 - `PreferredRegion.home`
 - `PreferredRegion.region`
 - `PreferredRegion.regions`
+- `GenerateSitemapsEntry.create`
+- `GenerateSitemapsEntry.id`
+- `Revalidate.forever`
+- `Revalidate.neverCache`
+- `Revalidate.seconds`
 - `RouteRuntime`
 - `LoadedFont`
 - `ScriptStrategy`

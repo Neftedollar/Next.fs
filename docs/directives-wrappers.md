@@ -66,7 +66,7 @@ Common patterns:
 | client page | `"use client"` | `true` | none | `app/page.js` |
 | client component | `"use client"` | `true` | none | `app/components/counter.js` |
 | server actions module | `"use server"` | `false` | `["createPost"]` | `app/actions.js` |
-| route handler | omitted | `false` | `["GET", "POST"]` | `app/api/posts/route.js` |
+| route handler | omitted | `false` | `["GET", "POST", "runtime", "preferredRegion", "maxDuration"]` | `app/api/posts/route.js` |
 | proxy entry | omitted | `false` | `["proxy", "config"]` | `proxy.js` |
 | server instrumentation | omitted | `false` | `["register", "onRequestError"]` | `instrumentation.js` |
 | client instrumentation | omitted | `false` | none | `instrumentation-client.js` via `exportAll` |
@@ -155,6 +155,7 @@ That example shows the three common cases:
 - a client entry page with a default export
 - a server-actions module with named exports only
 - a route-handler module that does not need a directive
+- a route-handler module that can also re-export route config constants
 - a root-level `proxy.js` entry exported from F#
 - root instrumentation entries that can stay directive-free
 

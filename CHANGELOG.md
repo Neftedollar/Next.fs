@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0 - 2026-03-21
+
+- added typed Next.js server `fetch()` bindings through `ServerFetch`, `ServerFetchInit`, `NextFetchOptions`, `ServerFetchResponse`, `ServerFetchCache`, and `Revalidate`
+- added `GenerateSitemapsEntry` helpers for multi-sitemap flows and a new compile-smoke file covering server fetch and sitemap generation patterns
+- expanded the starter route handler to export route segment config and demonstrate typed `fetch(..., { next: { revalidate, tags } })`
+- expanded wrapper-generator regression coverage for route-handler config exports
+- added dedicated documentation for server fetch and route segment config flows
+
 ## 0.7.0 - 2026-03-21
 
 - added instrumentation types for root `instrumentation.js` and `instrumentation-client.js` flows
