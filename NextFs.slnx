@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/NextFs.Smoke/NextFs.Smoke.fsproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/NextFs/NextFs.fsproj" />
+  </Folder>
+</Solution>

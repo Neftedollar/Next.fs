@@ -1,0 +1,12 @@
+bin/
+obj/
+fable_modules/
+node_modules/
+.fable/
+.next/
+out/
+artifacts/
+*.nupkg
+*.snupkg
+samples/app/
+.DS_Store
