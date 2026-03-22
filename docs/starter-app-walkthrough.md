@@ -93,10 +93,17 @@ That is why the starter keeps two generated layers:
 
 As of March 21, 2026, some environments still hit an upstream Fable CLI hang during `dotnet fable` runs. The current tracker is [fable-compiler/Fable#4326](https://github.com/fable-compiler/Fable/issues/4326).
 
-That issue does not change the intended project layout here, but it can affect whether the live `.fable/**` emit step completes cleanly on a given machine. The starter therefore serves two purposes today:
+As of March 21, 2026, the starter is validated end-to-end with a real:
+
+```bash
+npm run sync:app
+npm run build
+```
+
+The starter therefore serves as both:
 
 - a real folder-layout reference for Next.js + F#
-- a checked-in wrapper example even when local Fable emit is unstable
+- a checked-in, CI-validated example that completes a real `next build`
 
 ## Where To Go Next
 

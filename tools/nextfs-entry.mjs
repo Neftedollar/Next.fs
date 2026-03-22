@@ -194,6 +194,26 @@ async function pruneGeneratedOutputs(expectedOutputs) {
 
   for (const parentDirectory of parentDirectories) {
     try {
+      const directEntries = await fs.readdir(parentDirectory, { withFileTypes: true });
+
+      for (const directEntry of directEntries) {
+        if (!directEntry.isFile()) {
+          continue;
+        }
+
+        const directEntryPath = path.join(parentDirectory, directEntry.name);
+
+        if (expectedOutputs.has(directEntryPath)) {
+          continue;
+        }
+
+        const directEntryText = await fs.readFile(directEntryPath, "utf8").catch(() => undefined);
+
+        if (typeof directEntryText === "string" && directEntryText.includes(generatedMarker)) {
+          await fs.unlink(directEntryPath);
+        }
+      }
+
       const existingFiles = await collectFiles(parentDirectory);
 
       for (const existingFile of existingFiles) {

@@ -276,7 +276,7 @@ Beyond the baseline router/navigation APIs, `NextFs` now also includes:
 - `NavigationClient.useServerInsertedHTML(...)`
 - `NavigationClient.useSelectedLayoutSegmentFor(...)`
 - `NavigationClient.useSelectedLayoutSegmentsFor(...)`
-- `Navigation.unstableIsUnrecognizedActionError(...)`
+- `NavigationClient.unstableIsUnrecognizedActionError(...)`
 - `Navigation.forbidden()`
 - `Navigation.unauthorized()`
 - `Navigation.unstableRethrow(...)`
@@ -359,7 +359,7 @@ For `'use server'` wrappers, only named exports are allowed. The generator rejec
 
 - `src/NextFs` contains the bindings package
 - `samples/NextFs.Smoke` contains compile-smoke coverage of the package surface
-- `examples/nextfs-starter` contains a minimal end-to-end App Router starter, including `layout`, `route`, instrumentation, and special-file entries generated from F#
+- `examples/nextfs-starter` contains a minimal end-to-end App Router starter, including `layout`, `route`, `proxy`, instrumentation, and special-file entries generated from F#
 - `tests/nextfs-entry.test.mjs` covers the wrapper generator
 - `tools/nextfs-entry.mjs` generates directive wrapper files
 - `tools/generate-google-font-bindings.mjs` regenerates the `GoogleFont` binding catalog from official Next.js type definitions
@@ -405,7 +405,7 @@ dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
 node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
-git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
+git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/proxy.js examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
 ```
 
 ## NuGet Publishing

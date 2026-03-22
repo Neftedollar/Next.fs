@@ -3,11 +3,11 @@
 Minimal App Router starter showing the intended NextFs flow:
 
 - F# source lives under `src/App/**`
-- root-level F# entry points can live outside `App/**`, for example `src/Instrumentation.fs`
+- root-level F# entry points can live outside `App/**`, for example `src/Proxy.fs`
 - compiled Fable output lands in `.fable/**`
 - thin Next.js wrapper files live under `app/**`
 - `nextfs.entries.json` tells the wrapper generator where each JS entry should land
-- layout, metadata, viewport, `next/font`, route handlers, and instrumentation can all come from F#
+- layout, metadata, viewport, `next/font`, route handlers, `proxy.js`, and instrumentation can all come from F#
 
 ## Tree
 
@@ -30,6 +30,7 @@ examples/nextfs-starter/
 ├── next.config.mjs             # source
 ├── instrumentation-client.js   # generated
 ├── instrumentation.js          # generated
+├── proxy.js                    # generated
 ├── src/
 │   ├── Instrumentation.fs      # source
 │   ├── InstrumentationClient.fs # source
@@ -58,7 +59,7 @@ examples/nextfs-starter/
 - `src/NextFs.Starter.fsproj` - F# project for the example modules
 - `src/Instrumentation.fs` - root `instrumentation.js` entry from F#
 - `src/InstrumentationClient.fs` - root `instrumentation-client.js` entry with client transition hooks
-- `src/Proxy.fs` - optional root-level proxy example kept in F# source form
+- `src/Proxy.fs` - root-level `proxy.js` entry exported from F#
 - `next.config.mjs` - enables `experimental.authInterrupts` and `experimental.globalNotFound`
 - `src/App/Layout.fs` - root layout plus `metadata` and `viewport` exports
 - `src/App/Page.fs` - client page component that posts to the route handler
@@ -69,6 +70,7 @@ examples/nextfs-starter/
 - `src/App/Loading.fs`, `src/App/NotFound.fs`, `src/App/GlobalNotFound.fs` - route fallback UIs
 - `src/App/Template.fs` and `src/App/Default.fs` - special-file component conventions
 - `src/App/Forbidden.fs` and `src/App/Unauthorized.fs` - auth interrupt UIs
+- `proxy.js` - generated wrapper for the proxy entry
 - `instrumentation.js` - generated wrapper for server instrumentation exports
 - `instrumentation-client.js` - generated wrapper for client instrumentation side effects
 - `app/error.js` and `app/global-error.js` - generated client wrappers for error boundaries
@@ -111,9 +113,9 @@ Command boundaries:
 
 - `npm run build:fsharp` only verifies that the F# project compiles under .NET. It does not emit `.fable/**`.
 - `npm run build:fable` is the actual JavaScript emit step for Next.js entry modules.
-- `npm run gen:wrappers` regenerates the checked-in `app/**` and instrumentation wrappers from `nextfs.entries.json`.
+- `npm run gen:wrappers` regenerates the checked-in `app/**`, `proxy.js`, and instrumentation wrappers from `nextfs.entries.json`.
 
-The checked-in `app/**`, `instrumentation.js`, and `instrumentation-client.js` files are generated wrappers. Regenerate them after each Fable emit, or let `watch:fable` do it for you.
+The checked-in `app/**`, `proxy.js`, `instrumentation.js`, and `instrumentation-client.js` files are generated wrappers. Regenerate them after each Fable emit, or let `watch:fable` do it for you.
 
 The starter route handler also demonstrates typed server `fetch()` options through `ServerFetchInit` and `NextFetchOptions`.
 
@@ -129,6 +131,7 @@ Do not edit these by hand:
 
 - `.fable/**`
 - `app/**`
+- `proxy.js`
 - `instrumentation.js`
 - `instrumentation-client.js`
 
