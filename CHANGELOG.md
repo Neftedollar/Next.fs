@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 - 2026-03-26
+
+- added `NextFs.Templates` NuGet package — `dotnet new nextfs` scaffolds a complete App Router project with NextFs.Dsl
+- added template to release workflow
+- added Dependabot config for GitHub Actions, NuGet, and npm auto-updates
+- added migration guide (0.x → 1.0) to documentation
+- marked experimental APIs in API reference
+
 ## 1.1.0 - 2026-03-26
 
 - added `NextFs.Dsl` package with computation expressions and async helpers for Next.js App Router

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageType>Template</PackageType>
+    <PackageId>NextFs.Templates</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Roman Melnikov</Authors>
+    <Description>dotnet new template for Next.js App Router applications in F# with Fable, NextFs, and NextFs.Dsl computation expressions.</Description>
+    <PackageProjectUrl>https://github.com/Neftedollar/Next.fs</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>fable;fsharp;nextjs;react;template;dotnet-new;app-router</PackageTags>
+    <RepositoryUrl>https://github.com/Neftedollar/Next.fs</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="nextfs-app\**\*" Exclude="nextfs-app\**\bin\**;nextfs-app\**\obj\**;nextfs-app\.fable\**;nextfs-app\.next\**;nextfs-app\node_modules\**" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" Link="README.md" />
+  </ItemGroup>
+
+</Project>

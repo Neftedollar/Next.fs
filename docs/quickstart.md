@@ -8,10 +8,28 @@ nav_order: 1
 
 `NextFs` is a binding package for Fable projects that target the Next.js App Router.
 
-## 1. Add the package
+## Option A: Use the Template
+
+The fastest way to start:
+
+```bash
+dotnet new install NextFs.Templates
+dotnet new nextfs -n MyApp
+cd MyApp
+npm install
+npm run sync:app
+npm run dev
+```
+
+This gives you a working project with layout, page, route handler, and NextFs.Dsl computation expressions.
+
+## Option B: Add to Existing Project
+
+### 1. Add the package
 
 ```bash
 dotnet add package NextFs
+dotnet add package NextFs.Dsl  # optional: computation expressions
 ```
 
 The consuming Next.js app still needs compatible JavaScript dependencies:

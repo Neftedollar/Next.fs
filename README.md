@@ -56,7 +56,23 @@ If you are evaluating the repository for the first time, use this path:
 
 ```bash
 dotnet add package NextFs
+dotnet add package NextFs.Dsl  # optional: computation expressions
 ```
+
+### From Template
+
+Scaffold a complete project with `dotnet new`:
+
+```bash
+dotnet new install NextFs.Templates
+dotnet new nextfs -n MyApp
+cd MyApp
+npm install
+npm run sync:app
+npm run dev
+```
+
+### Manual Setup
 
 Your consuming Next.js app still provides the JavaScript runtime packages:
 
