@@ -40,11 +40,13 @@
       "to": "./app/api/posts/route.js",
       "named": [
         "GET",
-        "POST",
-        "runtime",
-        "preferredRegion",
-        "maxDuration"
-      ]
+        "POST"
+      ],
+      "staticExports": {
+        "runtime": "nodejs",
+        "preferredRegion": "home",
+        "maxDuration": 15
+      }
     },
     {
       "from": "./.fable/App/Default.js",

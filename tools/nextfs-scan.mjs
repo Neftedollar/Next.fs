@@ -97,10 +97,13 @@ function parseStaticExports(source) {
   }
 
   // Regular-quoted JSON: [<NextFsStaticExport("name", "...")>]
-  const singleRegex = /\[<(?:NextFs\.)?NextFsStaticExport\(\s*"([^"]+)"\s*,\s*"([^"]*)"\s*\)>\]/g;
+  // The value may contain F#-escaped quotes (\"), so the regex accepts \\. sequences.
+  const singleRegex = /\[<(?:NextFs\.)?NextFsStaticExport\(\s*"([^"]+)"\s*,\s*"((?:[^"\\]|\\.)*)"\s*\)>\]/g;
   while ((match = singleRegex.exec(source)) !== null) {
     try {
-      results.push({ name: match[1], value: JSON.parse(match[2]) });
+      // Unescape F# string escapes before JSON.parse
+      const rawValue = match[2].replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+      results.push({ name: match[1], value: JSON.parse(rawValue) });
     } catch {
       console.warn(`Warning: Could not parse JSON for static export "${match[1]}"`);
     }

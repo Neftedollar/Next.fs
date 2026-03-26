@@ -1,13 +1,12 @@
-[<NextFs.NextFsEntry("app/api/posts/route.js", Named="GET POST runtime preferredRegion maxDuration")>]
+[<NextFs.NextFsEntry("app/api/posts/route.js", Named="GET POST")>]
+[<NextFs.NextFsStaticExport("runtime", "\"nodejs\"")>]
+[<NextFs.NextFsStaticExport("preferredRegion", "\"home\"")>]
+[<NextFs.NextFsStaticExport("maxDuration", "15")>]
 module App.Api.Posts
 
 open Fable.Core
 open Fable.Core.JsInterop
 open NextFs
-
-let runtime = RouteRuntime.NodeJs
-let preferredRegion = PreferredRegion.home
-let maxDuration = 15
 
 [<CompiledName("GET")>]
 let get (request: NextRequest) =
