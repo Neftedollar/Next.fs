@@ -393,6 +393,7 @@ In practice:
 - [API reference](docs/api-reference.md)
 - [Directives and wrappers](docs/directives-wrappers.md)
 - [Special files](docs/special-files.md)
+- [Migration guide (0.x → 1.0)](docs/migration.md)
 - [Package design and limitations](docs/package-design-limitations.md)
 - [FAQ](docs/faq.md)
 - [Starter example](examples/nextfs-starter/README.md)

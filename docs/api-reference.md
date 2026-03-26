@@ -10,6 +10,8 @@ This page is a compact map of the public surface currently provided by `NextFs`.
 
 It is not intended to replace the source file. Its purpose is to help you find the right module quickly when translating an App Router example from JavaScript or TypeScript into F#.
 
+Items marked **experimental** depend on Next.js `experimental` flags or `unstable_*` upstream functions and may change without a NextFs major bump.
+
 ## Components
 
 ### `Font`
@@ -139,8 +141,8 @@ Common members:
 - `Navigation.redirectWith`
 - `Navigation.permanentRedirect`
 - `Navigation.notFound`
-- `Navigation.forbidden`
-- `Navigation.unauthorized`
+- `Navigation.forbidden` — **experimental**, requires `experimental.authInterrupts: true`
+- `Navigation.unauthorized` — **experimental**, requires `experimental.authInterrupts: true`
 - `Navigation.unstableRethrow`
 
 Related types:
@@ -174,7 +176,7 @@ Common members:
 - `NavigationClient.useSelectedLayoutSegmentFor`
 - `NavigationClient.useSelectedLayoutSegmentsFor`
 - `NavigationClient.useServerInsertedHTML`
-- `NavigationClient.unstableIsUnrecognizedActionError`
+- `NavigationClient.unstableIsUnrecognizedActionError` — **experimental**, wraps upstream `unstable_*` function
 
 ### `WebVitals`
 
@@ -295,7 +297,7 @@ Related helpers and types:
 
 ### `Proxy`
 
-Bindings used for `proxy.js`.
+Bindings used for `proxy.js`. **Experimental** — proxy support varies by Next.js version.
 
 Common members:
 
@@ -370,8 +372,8 @@ Inline directives currently provided:
 
 - `Directive.useServer()`
 - `Directive.useCache()`
-- `Directive.useCachePrivate()`
-- `Directive.useCacheRemote()`
+- `Directive.useCachePrivate()` — **experimental**, requires `experimental.dynamicIO`
+- `Directive.useCacheRemote()` — **experimental**, requires `experimental.dynamicIO`
 
 ### `Cache`
 

@@ -34,6 +34,7 @@ dotnet add package NextFs
 
 - [DSL & Computation Expressions](dsl.md)
 - [Instrumentation](instrumentation.md)
+- [Migration Guide (0.x → 1.0)](migration.md)
 - [Package Design & Limitations](package-design-limitations.md)
 - [FAQ](faq.md)
 

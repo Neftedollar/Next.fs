@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 - 2026-03-26
+
+- added `NextFs.Dsl` package with computation expressions and async helpers for Next.js App Router
+- added DSL & Computation Expressions documentation page
+- updated release workflow to publish `NextFs.Dsl` alongside `NextFs`
+
 ## 1.0.0 - 2026-03-24
 
 ### Eliminated manual nextfs.entries.json
