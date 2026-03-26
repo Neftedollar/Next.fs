@@ -12,22 +12,26 @@ open NextFs
 let get (request: NextRequest) =
     async {
         let! cookieStore = Async.AwaitPromise(Server.cookies())
-        let! upstream =
-            Async.AwaitPromise(
-                ServerFetch.fetchWithInit "https://example.com/api/posts" (
-                    ServerFetchInit.create [
-                        ServerFetchInit.cache ServerFetchCache.NoStore
-                        ServerFetchInit.next (
-                            NextFetchOptions.create [
-                                NextFetchOptions.revalidate Revalidate.neverCache
-                                NextFetchOptions.tag "starter-posts"
-                            ]
+        let! _upstreamStatus =
+            async {
+                try
+                    let! upstream =
+                        Async.AwaitPromise(
+                            ServerFetch.fetchWithInit "https://example.com/api/posts" (
+                                ServerFetchInit.create [
+                                    ServerFetchInit.cache ServerFetchCache.NoStore
+                                    ServerFetchInit.next (
+                                        NextFetchOptions.create [
+                                            NextFetchOptions.revalidate Revalidate.neverCache
+                                            NextFetchOptions.tag "starter-posts"
+                                        ]
+                                    )
+                                ]
+                            )
                         )
-                    ]
-                )
-            )
-
-        ignore upstream.status
+                    return upstream.status
+                with _ -> return 0
+            }
 
         return
             ServerResponse.jsonWithInit
