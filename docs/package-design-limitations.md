@@ -1,3 +1,9 @@
+---
+title: Package Design & Limitations
+layout: default
+nav_order: 9
+---
+
 # Package Design and Limitations
 
 `NextFs` is a binding package, not a framework layer.

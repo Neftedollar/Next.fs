@@ -1,3 +1,9 @@
+---
+title: API Reference
+layout: default
+nav_order: 7
+---
+
 # API Reference
 
 This page is a compact map of the public surface currently provided by `NextFs`.
@@ -557,4 +563,4 @@ Parameters:
 - Keep route handlers and multi-argument server actions uncurried.
 - Annotate entry modules with `[<NextFs.NextFsEntry>]` and run `npm run scan` instead of writing `nextfs.entries.json` by hand.
 - Use wrapper files for file-level `'use client'` and `'use server'`.
-- For a full project layout, see [the starter example](../examples/nextfs-starter/README.md).
+- For a full project layout, see [the starter example](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-starter).

@@ -1,3 +1,9 @@
+---
+title: Directives & Wrappers
+layout: default
+nav_order: 5
+---
+
 # Directives and Wrappers
 
 Next.js file directives are a packaging concern, not just an F# syntax concern.

@@ -1,3 +1,9 @@
+---
+title: Quickstart
+layout: default
+nav_order: 1
+---
+
 # Quickstart
 
 `NextFs` is a binding package for Fable projects that target the Next.js App Router.
@@ -196,7 +202,7 @@ For the full pattern, including `generateSitemaps`, use [Data fetching and route
 
 ## 8. Use the starter when you want a full folder layout
 
-If you want to see the intended shape of a real App Router project, start with [Starter app walkthrough](starter-app-walkthrough.md) and then inspect [the starter example](../examples/nextfs-starter/README.md). It includes:
+If you want to see the intended shape of a real App Router project, start with [Starter app walkthrough](starter-app-walkthrough.md) and then inspect [the starter example](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-starter). It includes:
 
 - F# source modules under `src/App/**`
 - a root-level `src/Proxy.fs` entry

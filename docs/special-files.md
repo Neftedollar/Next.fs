@@ -1,3 +1,9 @@
+---
+title: Special Files
+layout: default
+nav_order: 6
+---
+
 # Special Files
 
 `NextFs` can drive App Router special files from F# source modules, but the rules are not identical for every file.
@@ -116,4 +122,4 @@ These APIs are version-sensitive. `authInterrupts`, `forbidden.js`, and `unautho
 }
 ```
 
-For the exact generator rules, see [Directives and wrappers](directives-wrappers.md). For a concrete layout of these files in a real project, see [the starter example](../examples/nextfs-starter/README.md).
+For the exact generator rules, see [Directives and wrappers](directives-wrappers.md). For a concrete layout of these files in a real project, see [the starter example](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-starter).

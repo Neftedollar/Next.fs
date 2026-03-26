@@ -1,3 +1,9 @@
+---
+title: Instrumentation
+layout: default
+nav_order: 8
+---
+
 # Instrumentation
 
 `NextFs` can also drive the root Next.js instrumentation entry files from F#:
@@ -93,4 +99,4 @@ Client instrumentation helper:
 
 - root request interception: [proxy.js / Proxy](directives-wrappers.md)
 - mixed App Router flows: [Server and client patterns](server-client-patterns.md)
-- example layout: [Starter example](../examples/nextfs-starter/README.md)
+- example layout: [Starter example](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-starter)

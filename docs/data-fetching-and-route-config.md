@@ -1,3 +1,9 @@
+---
+title: Data Fetching & Route Config
+layout: default
+nav_order: 3
+---
+
 # Data Fetching And Route Config
 
 This page covers two parts of App Router work that are easy to lose when translating examples from TypeScript to F#:

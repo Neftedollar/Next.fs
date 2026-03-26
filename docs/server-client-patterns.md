@@ -1,3 +1,9 @@
+---
+title: Server & Client Patterns
+layout: default
+nav_order: 4
+---
+
 # Server And Client Patterns
 
 This guide collects the App Router patterns that usually matter first when moving a Next.js app from JavaScript or TypeScript to F#.
@@ -195,5 +201,5 @@ let heroImage =
 
 - wrapper rules: [Directives and wrappers](directives-wrappers.md)
 - App Router conventions: [Special files](special-files.md)
-- project structure reference: [Starter example](../examples/nextfs-starter/README.md)
+- project structure reference: [Starter example](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-starter)
 - lookup table: [API reference](api-reference.md)

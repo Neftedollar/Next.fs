@@ -1,3 +1,9 @@
+---
+title: FAQ
+layout: default
+nav_order: 10
+---
+
 # FAQ
 
 Common questions about using `NextFs`.
@@ -178,7 +184,7 @@ The component must sit inside (or be) a `'use client'` entry. It does not need i
 
 `Program.withReactSynchronous` and `Program.withReactBatched` do **not** work with App Router. Next.js owns the React root, so mounting Elmish directly to a DOM node is not supported. `React.useElmish` is the correct replacement.
 
-For a complete working example, see [examples/nextfs-elmish](../examples/nextfs-elmish/README.md).
+For a complete working example, see [examples/nextfs-elmish](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-elmish).
 
 ---
 

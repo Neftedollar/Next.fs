@@ -1,3 +1,9 @@
+---
+title: Starter App Walkthrough
+layout: default
+nav_order: 2
+---
+
 # Starter App Walkthrough
 
 This page is the shortest explanation of how the `examples/nextfs-starter` app is meant to work.
@@ -106,7 +112,7 @@ The starter therefore serves as both:
 
 ## Where To Go Next
 
-- [Starter example](../examples/nextfs-starter/README.md)
+- [Starter example](https://github.com/Neftedollar/Next.fs/tree/main/examples/nextfs-starter)
 - [Data fetching and route config](data-fetching-and-route-config.md)
 - [Directives and wrappers](directives-wrappers.md)
 - [Server and client patterns](server-client-patterns.md)
