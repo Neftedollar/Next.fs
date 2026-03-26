@@ -32,6 +32,7 @@ dotnet add package NextFs
 
 ## Other Guides
 
+- [DSL & Computation Expressions](dsl.md)
 - [Instrumentation](instrumentation.md)
 - [Package Design & Limitations](package-design-limitations.md)
 - [FAQ](faq.md)

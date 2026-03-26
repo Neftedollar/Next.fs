@@ -14,6 +14,7 @@ Recommended reading order:
 
 Other guides:
 
+- [DSL & Computation Expressions](dsl.md)
 - [Instrumentation](instrumentation.md)
 - [Package design and limitations](package-design-limitations.md)
 - [FAQ](faq.md)
