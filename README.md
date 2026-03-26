@@ -153,7 +153,7 @@ let Page() =
 
 ## Cache And Server Actions
 
-`NextFs` now includes a baseline `next/cache` surface for App Router workflows:
+`NextFs` includes a `next/cache` surface for App Router workflows:
 
 - `Directive.useCache()`
 - `Directive.useCachePrivate()`
@@ -187,7 +187,7 @@ let saveSearch (_formData: obj) =
 
 ## Metadata And Special Files
 
-`NextFs` now covers the parts of App Router you need to export from layouts and metadata files:
+`NextFs` covers the parts of App Router you need to export from layouts and metadata files:
 
 - `Metadata`
 - `MetadataOpenGraph`
@@ -240,7 +240,7 @@ let generateImageMetadata() =
 
 ## Fonts, Proxy, And Cookies
 
-The package now also covers the main App Router surfaces that typically force people back to handwritten JavaScript:
+The package also covers the App Router surfaces that typically force people back to handwritten JavaScript:
 
 - `Font.local`
 - `GoogleFont.Inter`, `GoogleFont.Roboto`, and the rest of the generated `next/font/google` catalog
@@ -270,7 +270,7 @@ let config =
 
 ## More App Router Helpers
 
-Beyond the baseline router/navigation APIs, `NextFs` now also includes:
+Beyond the baseline router/navigation APIs, `NextFs` also includes:
 
 - `LinkClient.useLinkStatus()`
 - `WebVitals.useReportWebVitals(...)`
@@ -293,7 +293,7 @@ These helpers are compile-smoked in `samples/NextFs.Smoke`.
 
 ## Server Fetch And Route Config
 
-`NextFs` now includes typed helpers for Next.js server `fetch()` options and route segment exports:
+`NextFs` includes typed helpers for Next.js server `fetch()` options and route segment exports:
 
 - `ServerFetch.fetch(...)`
 - `ServerFetch.fetchWithInit(...)`
@@ -328,7 +328,7 @@ let loadPosts() =
 
 ## Special Files
 
-The repository now also documents and demonstrates the App Router special-file flow from F#:
+The repository documents and demonstrates the App Router special-file flow from F#:
 
 - `error.js` and `global-error.js` via `ErrorBoundaryProps`
 - `template.js` via `TemplateProps`
