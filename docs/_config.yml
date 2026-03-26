@@ -1,6 +1,6 @@
 title: NextFs
 description: Next.js App Router bindings for F#
-url: https://stei.photo
+url: https://neftedollar.github.io
 baseurl: /Next.fs
 
 remote_theme: just-the-docs/just-the-docs@v0.10.1

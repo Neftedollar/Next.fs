@@ -4,7 +4,7 @@
 [![NuGet Publish](https://github.com/Neftedollar/Next.fs/actions/workflows/publish-nuget.yml/badge.svg)](https://github.com/Neftedollar/Next.fs/actions/workflows/publish-nuget.yml)
 [![NuGet](https://img.shields.io/nuget/v/NextFs.svg)](https://www.nuget.org/packages/NextFs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Docs](https://img.shields.io/badge/docs-stei.photo%2FNext.fs-blue)](https://stei.photo/Next.fs/)
+[![Docs](https://img.shields.io/badge/docs-neftedollar.github.io%2FNext.fs-blue)](https://neftedollar.github.io/Next.fs/)
 
 `NextFs` is a thin Fable binding layer for writing Next.js App Router applications in F#.
 
