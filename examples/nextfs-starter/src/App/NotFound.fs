@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/not-found.js", Default="NotFound")>]
 module App.NotFound
 
 open Feliz

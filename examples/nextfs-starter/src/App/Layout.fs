@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/layout.js", Default="Layout", Named="metadata viewport")>]
 module App.Layout
 
 open Feliz

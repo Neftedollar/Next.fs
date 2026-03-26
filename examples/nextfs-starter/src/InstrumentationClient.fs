@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("instrumentation-client.js", ExportAll=true)>]
 module InstrumentationClient
 
 open Fable.Core

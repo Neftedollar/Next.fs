@@ -83,5 +83,11 @@ module NavigationClient =
     let useServerInsertedHTML(render: unit -> ReactElement) : unit =
         useServerInsertedHTMLImport render
 
+    /// Checks whether an error thrown during a client-side server-action call is an
+    /// "unrecognized action" error — i.e. the server rejected the request because it
+    /// could not find the action in its action manifest.
+    ///
+    /// This is an unstable Next.js API (next/navigation unstable_isUnrecognizedActionError)
+    /// and may change or be removed in a future Next.js release.
     let unstableIsUnrecognizedActionError(error: obj) : bool =
         unstableIsUnrecognizedActionErrorImport error

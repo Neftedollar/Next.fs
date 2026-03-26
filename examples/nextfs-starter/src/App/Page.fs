@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/page.js", Directive="use client", Default="Page")>]
 module App.Page
 
 open Feliz

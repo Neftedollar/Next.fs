@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/default.js", Default="Default")>]
 module App.Default
 
 open Fable.Core

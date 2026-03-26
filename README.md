@@ -33,19 +33,19 @@ If you are evaluating the repository for the first time, use this path:
 - typed server `fetch()` helpers for `cache`, `next.revalidate`, and `next.tags`
 - `proxy.js` config builders and `NextFetchEvent`
 - root instrumentation entry patterns for `instrumentation.js` and `instrumentation-client.js`
-- App Router special-file helpers and documented patterns for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js`, and `unauthorized.js`
+- App Router special-file helpers and documented patterns for `error.js`, `global-error.js`, `loading.js`, `not-found.js`, `global-not-found.js`, `template.js`, `default.js`, `forbidden.js` *(experimental)*, and `unauthorized.js` *(experimental)*
 - cache invalidation and cache directives from `next/cache`
 - metadata, viewport, robots, sitemap, manifest, and image-metadata builders
 - `ImageResponse` bindings for Open Graph and icon generation
 - request/response cookie option builders
-- `NavigationClient.useServerInsertedHTML`, `NavigationClient.unstableIsUnrecognizedActionError`, `LinkClient.useLinkStatus`, `WebVitals.useReportWebVitals`, `after`, `userAgent`, `forbidden`, and `unauthorized`
+- `NavigationClient.useServerInsertedHTML`, `NavigationClient.unstableIsUnrecognizedActionError`, `LinkClient.useLinkStatus`, `WebVitals.useReportWebVitals`, `after`, `userAgent`, `forbidden` *(experimental)*, and `unauthorized` *(experimental)*
 - `Image.getImageProps()` and action-mismatch detection for client-side server-action calls
 - inline `Directive.useServer()` and `Directive.useCache()` support
 - wrapper generation for file-level `'use client'` and `'use server'`
 
 ## Compatibility
 
-- `NextFs`: `0.9.x`
+- `NextFs`: `1.0.x`
 - `next`: `>= 15.0.0 < 17.0.0`
 - `react`: `>= 18.2.0 < 20.0.0`
 - `react-dom`: `>= 18.2.0 < 20.0.0`
@@ -244,7 +244,7 @@ The package now also covers the main App Router surfaces that typically force pe
 - `Font.local`
 - `GoogleFont.Inter`, `GoogleFont.Roboto`, and the rest of the generated `next/font/google` catalog
 - `FontOptions`, `LocalFontSource`, and `FontDeclaration`
-- `ProxyConfig`, `ProxyMatcher`, `RouteHas`, and `NextFetchEvent`
+- `ProxyConfig`, `ProxyMatcher`, `RouteHas`, and `NextFetchEvent` *(proxy config is experimental)*
 - `CookieOptions` for request/response cookie mutation
 
 Example:
@@ -393,6 +393,7 @@ In practice:
 - [Directives and wrappers](docs/directives-wrappers.md)
 - [Special files](docs/special-files.md)
 - [Package design and limitations](docs/package-design-limitations.md)
+- [FAQ](docs/faq.md)
 - [Starter example](examples/nextfs-starter/README.md)
 
 ## Validation
@@ -403,8 +404,10 @@ dotnet femto --validate src/NextFs/NextFs.fsproj
 node --test tests/*.mjs
 dotnet build NextFs.slnx -v minimal
 dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts
+node tools/nextfs-scan.mjs examples/nextfs-starter/src/NextFs.Starter.fsproj
 node tools/nextfs-entry.mjs samples/nextfs.entries.json
 node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
+git diff --exit-code -- examples/nextfs-starter/nextfs.entries.json
 git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/proxy.js examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
 ```
 

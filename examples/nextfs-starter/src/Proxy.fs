@@ -1,3 +1,5 @@
+[<NextFs.NextFsEntry("proxy.js", Named="proxy")>]
+[<NextFs.NextFsStaticExport("config", """{"matcher":["/((?!_next/static|_next/image|favicon.ico).*)"]}""")>]
 module Proxy
 
 open Fable.Core

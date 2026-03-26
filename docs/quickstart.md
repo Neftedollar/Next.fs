@@ -215,8 +215,11 @@ The practical loop is:
 dotnet tool restore
 cd examples/nextfs-starter
 npm install
-npm run sync:app
+npm run sync:app   # build:fable → scan → gen:wrappers
 npm run dev
 ```
 
-`build:fsharp` only checks .NET compilation. `build:fable` is the real JavaScript emit step. The starter example is also validated with a real `next build`.
+`build:fsharp` only checks .NET compilation. `build:fable` is the real JavaScript emit step.
+`sync:app` also runs `scan` which regenerates `nextfs.entries.json` from `[<NextFs.NextFsEntry>]`
+attributes on each module, so you never have to edit that file by hand.
+The starter example is also validated with a real `next build`.

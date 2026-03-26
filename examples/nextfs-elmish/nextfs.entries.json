@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "from": "./.fable/App/Layout.js",
+      "to": "./app/layout.js",
+      "defaultFromNamed": "Layout",
+      "named": [
+        "metadata"
+      ]
+    },
+    {
+      "from": "./.fable/App/Page.js",
+      "to": "./app/page.js",
+      "directive": "use client",
+      "defaultFromNamed": "Page"
+    }
+  ]
+}

@@ -42,6 +42,12 @@ jobs:
       - name: Generate sample Next.js entry wrappers
         run: node tools/nextfs-entry.mjs samples/nextfs.entries.json
 
+      - name: Scan starter F# attributes into entries manifest
+        run: node tools/nextfs-scan.mjs examples/nextfs-starter/src/NextFs.Starter.fsproj
+
+      - name: Verify checked-in entries manifest is up to date
+        run: git diff --exit-code -- examples/nextfs-starter/nextfs.entries.json
+
       - name: Generate starter example Next.js entry wrappers
         run: node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json
 
@@ -55,3 +61,16 @@ jobs:
 
       - name: Verify checked-in starter wrappers are up to date
         run: git diff --exit-code -- examples/nextfs-starter/app examples/nextfs-starter/proxy.js examples/nextfs-starter/instrumentation.js examples/nextfs-starter/instrumentation-client.js
+
+      - name: E2E smoke - start and check routes
+        working-directory: examples/nextfs-starter
+        run: |
+          npx next start &
+          SERVER_PID=$!
+          for i in $(seq 1 10); do
+            curl -sf http://localhost:3000/ && break
+            sleep 1
+          done
+          curl -sf http://localhost:3000/ || (kill $SERVER_PID; exit 1)
+          curl -sf http://localhost:3000/api/posts || (kill $SERVER_PID; exit 1)
+          kill $SERVER_PID

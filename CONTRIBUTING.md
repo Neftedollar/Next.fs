@@ -2,6 +2,28 @@
 
 Thanks for contributing to `NextFs`.
 
+## Zero to Running in 5 Minutes
+
+```bash
+# 1. Clone and restore tools
+git clone https://github.com/Neftedollar/Next.fs.git
+cd Next.fs
+dotnet tool restore
+
+# 2. Build the solution
+dotnet build NextFs.slnx -v minimal
+
+# 3. Generate entry wrappers and run the starter
+cd examples/nextfs-starter
+npm ci
+npm run sync:app          # Fable: F# → JavaScript
+node ../../tools/nextfs-entry.mjs nextfs.entries.json
+npm run build             # next build
+npx next start            # open http://localhost:3000
+```
+
+That's it. The starter is a minimal but complete App Router project generated entirely from F#.
+
 ## Ground Rules
 
 - Keep changes focused. Split unrelated work into separate PRs.
@@ -60,7 +82,7 @@ Guidelines:
 
 ## Optional Local Commit Template
 
-The repository includes [.gitmessage.txt](/Users/roman/Documents/dev/Next_fs/.gitmessage.txt).
+The repository includes [.gitmessage.txt](.gitmessage.txt).
 
 To enable it locally:
 
@@ -70,7 +92,7 @@ git config commit.template .gitmessage.txt
 
 ## Local Tools
 
-The repository pins `femto` as a local .NET tool in [.config/dotnet-tools.json](/Users/roman/Documents/dev/Next_fs/.config/dotnet-tools.json).
+The repository pins `femto` as a local .NET tool in [.config/dotnet-tools.json](.config/dotnet-tools.json).
 
 Restore local tools before running validation commands:
 
@@ -93,6 +115,7 @@ Before opening a PR:
 - run `node --test tests/*.mjs`
 - run `dotnet build NextFs.slnx -v minimal`
 - run `dotnet pack src/NextFs/NextFs.fsproj -c Release -o artifacts`
+- run `node tools/nextfs-scan.mjs examples/nextfs-starter/src/NextFs.Starter.fsproj`
 - run `node tools/nextfs-entry.mjs samples/nextfs.entries.json`
 - run `node tools/nextfs-entry.mjs examples/nextfs-starter/nextfs.entries.json`
 

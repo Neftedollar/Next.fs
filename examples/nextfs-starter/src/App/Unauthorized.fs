@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/unauthorized.js", Default="Unauthorized")>]
 module App.Unauthorized
 
 open Feliz

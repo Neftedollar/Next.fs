@@ -77,9 +77,14 @@ module Image =
     let placeholder(value: ImagePlaceholder) : IReactProperty =
         Props.mkAttr "placeholder" value
 
+    /// Sets `placeholder` directly to an inline data URL (e.g. `"data:image/png;base64,..."`).
+    /// This is the self-contained form: no separate blur source is needed.
+    /// To use Next.js blur effect instead, combine `placeholder ImagePlaceholder.Blur` with `blurDataUrl`.
     let placeholderDataUrl(value: string) : IReactProperty =
         Props.mkAttr "placeholder" value
 
+    /// Sets `blurDataURL` — the low-resolution source image used when `placeholder` is `ImagePlaceholder.Blur`.
+    /// Always pair this with `placeholder ImagePlaceholder.Blur`.
     let blurDataUrl(value: string) : IReactProperty =
         Props.mkAttr "blurDataURL" value
 

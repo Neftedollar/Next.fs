@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/forbidden.js", Default="Forbidden")>]
 module App.Forbidden
 
 open Feliz

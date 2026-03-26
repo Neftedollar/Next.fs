@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/actions.js", Directive="use server", Named="createPost")>]
 module App.Actions
 
 open System

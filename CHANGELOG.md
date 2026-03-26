@@ -1,5 +1,54 @@
 # Changelog
 
+## 1.0.0 - 2026-03-24
+
+### Eliminated manual nextfs.entries.json
+
+- added `[<NextFs.NextFsEntry>]` and `[<NextFs.NextFsStaticExport>]` F# attribute types so entry modules can declare their own wrapper shape directly in source
+- added `tools/nextfs-scan.mjs` that reads a `.fsproj`, scans `[<NextFsEntry>]`-annotated F# files, and writes `nextfs.entries.json` automatically — no handwritten JSON
+- annotated all 16 starter entry modules with `[<NextFs.NextFsEntry>]` attributes covering `Default`, `Named`, `Directive`, `ExportAll`, and `StaticExport` scenarios
+- added `scan` npm script and wired it into `sync:app` and `watch:fable` so the manifest stays current during development
+- added 11 automated tests for the scanner in `tests/nextfs-scan.test.mjs`
+
+### CI and E2E coverage
+
+- added a "scan + manifest diff" CI step that regenerates `nextfs.entries.json` from F# attributes and fails the build if the committed file is out of date
+- added an E2E smoke step: `next start` in the background, `curl /` and `curl /api/posts` must return HTTP 200
+
+### Repository formalities
+
+- added `CODE_OF_CONDUCT.md`
+- added `ARCHITECTURE.md` with an ASCII pipeline diagram (F# → Fable → nextfs-scan → nextfs-entry → Next.js)
+- added "Zero to running in 5 minutes" quickstart to `CONTRIBUTING.md`
+- improved NuGet package tags to include `app-router`, `nextjs-app-router`, `fable-binding`, `binding`, `dotnet`
+- added doc comment to `NavigationClient.unstableIsUnrecognizedActionError` explaining its experimental status
+
+### Stability notes for 1.0
+
+The following APIs are **stable** and covered by compile-smoke and the E2E starter build:
+
+- `Link`, `Image`, `Script`, `Form`, `Head` component builders
+- `NavigationClient` hooks (`useRouter`, `usePathname`, `useSearchParams`, `useParams`, `useSelectedLayoutSegment*`, `useServerInsertedHTML`)
+- `Navigation` helpers (`redirect`, `notFound`, `forbidden`, `unauthorized`, `unstableRethrow`)
+- `Server` helpers (`headers`, `cookies`, `draftMode`, `connection`, `after`, `userAgent`)
+- `ServerFetch` and `ServerFetchInit` typed `fetch()` extensions
+- `Cache` invalidation APIs (`cacheTag`, `cacheTags`, `cacheLife*`, `revalidatePath`, `revalidateTag*`, `refresh`, `noStore`, `updateTag`)
+- `Directive` inline directives (`useServer`, `useCache`, `useCachePrivate`, `useCacheRemote`)
+- `Metadata`, `Viewport`, `MetadataOpenGraph`, `MetadataTwitter`, `MetadataRoute.*`, `ImageMetadata`, `ImageResponse`
+- `ServerRequest`, `ServerResponse`, `ResponseInit`, `RouteHandlerContext`
+- `Font.local` and the generated `GoogleFont.*` catalog
+- `ProxyConfig`, `ProxyMatcher`, `RouteHas`, `NextFetchEvent`
+- `CookieOptions`, `ErrorBoundaryProps`, `TemplateProps`, `DefaultProps`
+- `RouteRuntime`, `PreferredRegion`, `GenerateSitemapsEntry`, `Revalidate`
+- `[<NextFsEntry>]` / `[<NextFsStaticExport>]` attributes and `nextfs-scan.mjs`
+
+The following APIs are **experimental** — they depend on Next.js `experimental` flags or `unstable_*` upstream functions and may change without a NextFs major bump if Next.js changes or removes them:
+
+- `Navigation.forbidden()` and `Navigation.unauthorized()` — require `experimental.authInterrupts: true`
+- `ProxyConfig` / middleware config — `next.config.mjs` proxy support is still marked experimental in some Next.js builds
+- `NavigationClient.unstableIsUnrecognizedActionError` — wraps `next/navigation unstable_isUnrecognizedActionError`
+- `Directive.useCachePrivate()` and `Directive.useCacheRemote()` — require `experimental.dynamicIO` or equivalent flags
+
 ## 0.9.0 - 2026-03-21
 
 - fixed the starter and the library layout so a real `Fable -> wrappers -> next build` pipeline now succeeds on Next.js 16

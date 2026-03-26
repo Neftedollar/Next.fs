@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/global-error.js", Directive="use client", Default="GlobalError")>]
 module App.GlobalError
 
 open Feliz

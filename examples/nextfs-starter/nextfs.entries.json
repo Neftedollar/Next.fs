@@ -3,7 +3,9 @@
     {
       "from": "./.fable/Proxy.js",
       "to": "./proxy.js",
-      "named": ["proxy"],
+      "named": [
+        "proxy"
+      ],
       "staticExports": {
         "config": {
           "matcher": [
@@ -15,7 +17,10 @@
     {
       "from": "./.fable/Instrumentation.js",
       "to": "./instrumentation.js",
-      "named": ["register", "onRequestError"]
+      "named": [
+        "register",
+        "onRequestError"
+      ]
     },
     {
       "from": "./.fable/InstrumentationClient.js",
@@ -23,27 +28,62 @@
       "exportAll": true
     },
     {
+      "from": "./.fable/App/Actions.js",
+      "to": "./app/actions.js",
+      "directive": "use server",
+      "named": [
+        "createPost"
+      ]
+    },
+    {
+      "from": "./.fable/App/Api/Posts.js",
+      "to": "./app/api/posts/route.js",
+      "named": [
+        "GET",
+        "POST",
+        "runtime",
+        "preferredRegion",
+        "maxDuration"
+      ]
+    },
+    {
       "from": "./.fable/App/Default.js",
       "to": "./app/default.js",
       "defaultFromNamed": "Default"
     },
     {
-      "directive": "use client",
       "from": "./.fable/App/Error.js",
       "to": "./app/error.js",
+      "directive": "use client",
       "defaultFromNamed": "Error$"
     },
     {
-      "directive": "use client",
+      "from": "./.fable/App/Forbidden.js",
+      "to": "./app/forbidden.js",
+      "defaultFromNamed": "Forbidden"
+    },
+    {
       "from": "./.fable/App/GlobalError.js",
       "to": "./app/global-error.js",
+      "directive": "use client",
       "defaultFromNamed": "GlobalError"
     },
     {
       "from": "./.fable/App/GlobalNotFound.js",
       "to": "./app/global-not-found.js",
       "defaultFromNamed": "GlobalNotFound",
-      "named": ["metadata"]
+      "named": [
+        "metadata"
+      ]
+    },
+    {
+      "from": "./.fable/App/Layout.js",
+      "to": "./app/layout.js",
+      "defaultFromNamed": "Layout",
+      "named": [
+        "metadata",
+        "viewport"
+      ]
     },
     {
       "from": "./.fable/App/Loading.js",
@@ -51,20 +91,14 @@
       "defaultFromNamed": "Loading"
     },
     {
-      "from": "./.fable/App/Layout.js",
-      "to": "./app/layout.js",
-      "defaultFromNamed": "Layout",
-      "named": ["metadata", "viewport"]
-    },
-    {
       "from": "./.fable/App/NotFound.js",
       "to": "./app/not-found.js",
       "defaultFromNamed": "NotFound"
     },
     {
-      "directive": "use client",
       "from": "./.fable/App/Page.js",
       "to": "./app/page.js",
+      "directive": "use client",
       "defaultFromNamed": "Page"
     },
     {
@@ -73,30 +107,9 @@
       "defaultFromNamed": "Template"
     },
     {
-      "from": "./.fable/App/Forbidden.js",
-      "to": "./app/forbidden.js",
-      "defaultFromNamed": "Forbidden"
-    },
-    {
       "from": "./.fable/App/Unauthorized.js",
       "to": "./app/unauthorized.js",
       "defaultFromNamed": "Unauthorized"
-    },
-    {
-      "directive": "use server",
-      "from": "./.fable/App/Actions.js",
-      "to": "./app/actions.js",
-      "named": ["createPost"]
-    },
-    {
-      "from": "./.fable/App/Api/Posts.js",
-      "to": "./app/api/posts/route.js",
-      "named": ["GET", "POST"],
-      "staticExports": {
-        "runtime": "nodejs",
-        "preferredRegion": "home",
-        "maxDuration": 15
-      }
     }
   ]
 }

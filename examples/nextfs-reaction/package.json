@@ -1,0 +1,21 @@
+{
+  "name": "nextfs-reaction",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:fsharp": "dotnet build src/NextFs.Reaction.Example.fsproj",
+    "build:fable": "dotnet fable src/NextFs.Reaction.Example.fsproj -o .fable -e .js",
+    "watch:fable": "dotnet fable watch src/NextFs.Reaction.Example.fsproj -o .fable -e .js --runWatch \"npm run scan && npm run gen:wrappers\"",
+    "scan": "node ../../tools/nextfs-scan.mjs src/NextFs.Reaction.Example.fsproj",
+    "sync:app": "npm run build:fable && npm run scan && npm run gen:wrappers",
+    "gen:wrappers": "node ../../tools/nextfs-entry.mjs nextfs.entries.json",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^16.2.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

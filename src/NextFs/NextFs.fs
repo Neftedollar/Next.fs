@@ -1206,3 +1206,39 @@ module MetadataRoute =
 
         let orientation(value: string) : string * obj =
             "orientation" ==> value
+
+/// Marks an F# module as a Next.js App Router entry point.
+/// The wrapper scanner (tools/nextfs-scan.mjs) reads this attribute to
+/// auto-generate nextfs.entries.json instead of requiring manual JSON authoring.
+///
+/// Example:
+///   [<NextFsEntry("app/layout.js", Default="Layout", Named="metadata viewport")>]
+///   module App.Layout
+///
+/// output: wrapper output path relative to the project root, e.g. "app/layout.js"
+[<System.AttributeUsage(System.AttributeTargets.Class)>]
+type NextFsEntryAttribute(output: string) =
+    inherit System.Attribute()
+    member _.Output = output
+    /// Optional directive to prepend: "use client" or "use server"
+    member val Directive : string = "" with get, set
+    /// Named F# binding to re-export as the JavaScript default export
+    member val Default : string = "" with get, set
+    /// Space-separated named exports to re-export, e.g. "metadata viewport"
+    member val Named : string = "" with get, set
+    /// When true, re-exports all named exports (export *)
+    member val ExportAll : bool = false with get, set
+
+/// Adds a static literal export to a Next.js entry wrapper,
+/// bypassing the Fable output entirely.
+/// Use when Next.js requires a statically-analyzable literal that Fable
+/// cannot guarantee to produce (e.g. middleware config objects).
+///
+/// Example:
+///   [<NextFsStaticExport("config", """{"matcher":["/((?!_next).*)"]}""")>]
+///   module Proxy
+[<System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)>]
+type NextFsStaticExportAttribute(name: string, json: string) =
+    inherit System.Attribute()
+    member _.Name = name
+    member _.Json = json

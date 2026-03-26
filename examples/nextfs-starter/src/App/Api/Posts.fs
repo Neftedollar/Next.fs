@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/api/posts/route.js", Named="GET POST runtime preferredRegion maxDuration")>]
 module App.Api.Posts
 
 open Fable.Core

@@ -16,5 +16,6 @@ Other guides:
 
 - [Instrumentation](instrumentation.md)
 - [Package design and limitations](package-design-limitations.md)
+- [FAQ](faq.md)
 
 Use this folder when you want conceptual guidance, API lookup, and project-structure documentation. For runnable code, go to [examples](../examples/README.md). For compile-smoke coverage, go to [samples](../samples/README.md).

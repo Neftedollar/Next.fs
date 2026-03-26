@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/template.js", Default="Template")>]
 module App.Template
 
 open Feliz

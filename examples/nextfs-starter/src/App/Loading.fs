@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/loading.js", Default="Loading")>]
 module App.Loading
 
 open Feliz

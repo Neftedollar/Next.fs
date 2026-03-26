@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("app/global-not-found.js", Default="GlobalNotFound", Named="metadata")>]
 module App.GlobalNotFound
 
 open Feliz

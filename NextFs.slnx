@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/examples/">
     <Project Path="examples/nextfs-starter/src/NextFs.Starter.fsproj" />
+    <Project Path="examples/nextfs-elmish/src/NextFs.Elmish.Example.fsproj" />
+    <Project Path="examples/nextfs-reaction/src/NextFs.Reaction.Example.fsproj" />
   </Folder>
   <Folder Name="/samples/">
     <Project Path="samples/NextFs.Smoke/NextFs.Smoke.fsproj" />

@@ -516,8 +516,45 @@ Utility interfaces for async App Router props:
 - `ImageLoading`
 - `ImagePlaceholder`
 
+## Tooling Attributes
+
+### `NextFsEntryAttribute`
+
+Marks an F# module as a Next.js App Router entry point. The scanner (`tools/nextfs-scan.mjs`) reads this attribute to auto-generate `nextfs.entries.json`.
+
+Must be placed immediately before the `module` declaration, before any `open` statements. Use the fully-qualified form `[<NextFs.NextFsEntry(...)>]`.
+
+```fsharp
+[<NextFs.NextFsEntry("app/page.js", Directive="use client", Default="Page")>]
+module App.Page
+```
+
+Parameters:
+
+- `output` (positional): wrapper output path, e.g. `"app/page.js"`
+- `Directive`: `"use client"` or `"use server"` (optional)
+- `Default`: named F# binding to re-export as the JavaScript default
+- `Named`: space-separated list of named exports, e.g. `"metadata viewport"`
+- `ExportAll`: `true` to emit `export * from ...`
+
+### `NextFsStaticExportAttribute`
+
+Adds a static literal export to the generated wrapper. Use when Next.js needs a statically-analyzable literal that Fable cannot guarantee to produce.
+
+```fsharp
+[<NextFs.NextFsEntry("proxy.js", Named="proxy")>]
+[<NextFs.NextFsStaticExport("config", """{"matcher":["/((?!_next).*)"]}""")>]
+module Proxy
+```
+
+Parameters:
+
+- `name` (positional): export name, e.g. `"config"`
+- `json` (positional): JSON string to inline as the exported value
+
 ## Notes
 
 - Keep route handlers and multi-argument server actions uncurried.
+- Annotate entry modules with `[<NextFs.NextFsEntry>]` and run `npm run scan` instead of writing `nextfs.entries.json` by hand.
 - Use wrapper files for file-level `'use client'` and `'use server'`.
 - For a full project layout, see [the starter example](../examples/nextfs-starter/README.md).

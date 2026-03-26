@@ -1,3 +1,4 @@
+[<NextFs.NextFsEntry("instrumentation.js", Named="register onRequestError")>]
 module Instrumentation
 
 open NextFs

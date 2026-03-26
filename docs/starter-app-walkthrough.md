@@ -19,17 +19,14 @@ Edit by hand:
 
 - `src/**`
 - `next.config.mjs`
-- `nextfs.entries.json`
 
-Generated files:
+Generated files (do not edit directly):
 
-- `.fable/**`
-- `app/**`
-- `proxy.js`
-- `instrumentation.js`
-- `instrumentation-client.js`
+- `nextfs.entries.json` — regenerated from `[<NextFs.NextFsEntry>]` attributes by `npm run scan`
+- `.fable/**` — emitted by Fable
+- `app/**`, `proxy.js`, `instrumentation.js`, `instrumentation-client.js` — emitted by `gen:wrappers`
 
-If a generated file looks wrong, fix the F# source or the wrapper manifest and regenerate it. Do not patch the generated wrapper directly.
+If a generated file looks wrong, fix the F# source or its `[<NextFsEntry>]` annotation and re-run `npm run sync:app`. Do not patch generated files directly.
 
 ## Command Loop
 
@@ -58,16 +55,18 @@ Command meaning:
 
 - `build:fsharp`: compile-only .NET check for the F# project
 - `build:fable`: emit `.fable/**` JavaScript from F#
+- `scan`: regenerate `nextfs.entries.json` from `[<NextFs.NextFsEntry>]` attributes in the `.fsproj`
 - `gen:wrappers`: rewrite `app/**` and root wrapper files from `nextfs.entries.json`
-- `sync:app`: run `build:fable` and then `gen:wrappers`
+- `sync:app`: run `build:fable`, then `scan`, then `gen:wrappers`
 
 ## Mapping Example
 
 Typical flow:
 
-1. `src/App/Page.fs` is compiled by Fable into `.fable/App/Page.js`
-2. `nextfs.entries.json` maps that file to `app/page.js`
-3. `tools/nextfs-entry.mjs` writes a wrapper like:
+1. `src/App/Page.fs` carries a `[<NextFs.NextFsEntry("app/page.js", ...)>]` attribute
+2. `npm run scan` reads the `.fsproj`, finds the attribute, and writes `nextfs.entries.json`
+3. `npm run build:fable` compiles `src/App/Page.fs` into `.fable/App/Page.js`
+4. `tools/nextfs-entry.mjs` reads `nextfs.entries.json` and writes a wrapper like:
 
 ```js
 'use client'
