@@ -23,11 +23,15 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Build package
-        run: dotnet build src/NextFs/NextFs.fsproj -c Release -v minimal
+      - name: Build packages
+        run: |
+          dotnet build src/NextFs/NextFs.fsproj -c Release -v minimal
+          dotnet build src/NextFs.Dsl/NextFs.Dsl.fsproj -c Release -v minimal
 
-      - name: Pack package
-        run: dotnet pack src/NextFs/NextFs.fsproj -c Release --no-build -o artifacts
+      - name: Pack packages
+        run: |
+          dotnet pack src/NextFs/NextFs.fsproj -c Release --no-build -o artifacts
+          dotnet pack src/NextFs.Dsl/NextFs.Dsl.fsproj -c Release --no-build -o artifacts
 
       - name: Upload package artifacts
         uses: actions/upload-artifact@v7
