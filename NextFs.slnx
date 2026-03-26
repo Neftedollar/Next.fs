@@ -6,8 +6,10 @@
   </Folder>
   <Folder Name="/samples/">
     <Project Path="samples/NextFs.Smoke/NextFs.Smoke.fsproj" />
+    <Project Path="samples/NextFs.Dsl.Smoke/NextFs.Dsl.Smoke.fsproj" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/NextFs/NextFs.fsproj" />
+    <Project Path="src/NextFs.Dsl/NextFs.Dsl.fsproj" />
   </Folder>
 </Solution>

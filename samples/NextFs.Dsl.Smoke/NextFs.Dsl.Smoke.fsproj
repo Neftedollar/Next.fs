@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="AsyncSmoke.fs" />
+    <Compile Include="RouteSmoke.fs" />
+    <Compile Include="FetchSmoke.fs" />
+    <Compile Include="MetadataSmoke.fs" />
+    <Compile Include="PageSmoke.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NextFs.Dsl\NextFs.Dsl.fsproj" />
+    <PackageReference Include="Fable.Core" Version="4.5.0" />
+    <PackageReference Include="Feliz" Version="2.9.0" />
+  </ItemGroup>
+
+</Project>
