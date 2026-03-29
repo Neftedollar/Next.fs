@@ -159,8 +159,9 @@ let Counter () =
 
     // Cleanup final subscription on unmount.
     React.useEffectOnce(fun () ->
-        React.createDisposable(fun () ->
-            subRef.current |> Option.iter (fun d -> d.Dispose())))
+        { new System.IDisposable with
+            member _.Dispose() =
+                subRef.current |> Option.iter (fun d -> d.Dispose()) })
 
     // Reactive dispatch: push message into the subject.
     let send msg =

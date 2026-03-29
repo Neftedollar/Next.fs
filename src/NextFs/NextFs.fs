@@ -10,7 +10,7 @@ module internal ReactInterop =
 
 module internal Props =
     let inline mkAttr (key: string) (value: obj) : IReactProperty =
-        Interop.mkAttr key value
+        unbox (key, value)
 
 [<Erase>]
 type Href =
