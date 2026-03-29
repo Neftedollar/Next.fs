@@ -98,6 +98,16 @@
       "defaultFromNamed": "NotFound"
     },
     {
+      "from": "./.fable/App/Robots.js",
+      "to": "./app/robots.js",
+      "defaultFromNamed": "robots"
+    },
+    {
+      "from": "./.fable/App/Sitemap.js",
+      "to": "./app/sitemap.js",
+      "defaultFromNamed": "sitemap"
+    },
+    {
       "from": "./.fable/App/Page.js",
       "to": "./app/page.js",
       "directive": "use client",

@@ -20,6 +20,8 @@
     <Compile Include="App/Layout.fs" />
     <Compile Include="App/Loading.fs" />
     <Compile Include="App/NotFound.fs" />
+    <Compile Include="App/Robots.fs" />
+    <Compile Include="App/Sitemap.fs" />
     <Compile Include="App/Page.fs" />
     <Compile Include="App/Template.fs" />
     <Compile Include="App/Unauthorized.fs" />
