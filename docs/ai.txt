@@ -1,0 +1,5 @@
+AI discovery file for Next.fs docs.
+
+Primary: https://neftedollar.com/Next.fs/llms.txt
+Extended: https://neftedollar.com/Next.fs/llms-full.txt
+Actions: https://neftedollar.com/Next.fs/mcp-actions.json

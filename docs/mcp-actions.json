@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "site": "https://neftedollar.com/Next.fs/",
+  "project": "Next.fs",
+  "actions": [
+    {
+      "id": "nextfs-open-docs",
+      "name": "Open Documentation",
+      "description": "Open Next.fs documentation homepage.",
+      "method": "link",
+      "href": "https://neftedollar.com/Next.fs/",
+      "priority": "high"
+    },
+    {
+      "id": "nextfs-open-quickstart",
+      "name": "Open Quickstart",
+      "description": "Open Next.fs quickstart guide.",
+      "method": "link",
+      "href": "https://neftedollar.com/Next.fs/quickstart.html",
+      "priority": "high"
+    },
+    {
+      "id": "nextfs-open-api-reference",
+      "name": "Open API Reference",
+      "description": "Open Next.fs API reference.",
+      "method": "link",
+      "href": "https://neftedollar.com/Next.fs/api-reference.html",
+      "priority": "medium"
+    },
+    {
+      "id": "nextfs-open-repository",
+      "name": "Read Source Code",
+      "description": "Open Next.fs GitHub repository and read source code.",
+      "method": "link",
+      "href": "https://github.com/Neftedollar/Next.fs",
+      "priority": "high"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+<link rel="mcp-actions" href="{{ '/mcp-actions.json' | relative_url }}">
+<link rel="alternate" type="text/plain" href="{{ '/llms.txt' | relative_url }}" title="LLMs.txt">
+<script>
+(function () {
+  if (typeof navigator === 'undefined') return;
+  var mcp = navigator.mcpActions;
+  if (!mcp || typeof mcp.register !== 'function') return;
+
+  function register(action) {
+    try { mcp.register(action); } catch (_) {}
+  }
+
+  register({
+    id: 'nextfs-open-docs',
+    name: 'Open Next.fs Docs',
+    description: 'Open Next.fs documentation homepage.',
+    parameters: { type: 'object', properties: {} },
+    handler: async function () {
+      window.location.assign('https://neftedollar.com/Next.fs/');
+      return { success: true, url: 'https://neftedollar.com/Next.fs/' };
+    }
+  });
+
+  register({
+    id: 'nextfs-open-quickstart',
+    name: 'Open Quickstart',
+    description: 'Open Next.fs quickstart guide.',
+    parameters: { type: 'object', properties: {} },
+    handler: async function () {
+      window.location.assign('https://neftedollar.com/Next.fs/quickstart.html');
+      return { success: true, url: 'https://neftedollar.com/Next.fs/quickstart.html' };
+    }
+  });
+
+  register({
+    id: 'nextfs-open-repository',
+    name: 'Read Next.fs Source Code',
+    description: 'Open Next.fs GitHub repository to read implementation code.',
+    parameters: { type: 'object', properties: {} },
+    handler: async function () {
+      window.location.assign('https://github.com/Neftedollar/Next.fs');
+      return { success: true, url: 'https://github.com/Neftedollar/Next.fs' };
+    }
+  });
+})();
+</script>

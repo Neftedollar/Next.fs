@@ -1,0 +1,26 @@
+# Next.fs
+
+> F# bindings for Next.js App Router patterns.
+
+Canonical: https://neftedollar.com/Next.fs/
+Repository: https://github.com/Neftedollar/Next.fs
+Languages: en, ru
+
+## Primary AI tasks
+- Study documentation: https://neftedollar.com/Next.fs/
+- Read source code: https://github.com/Neftedollar/Next.fs
+
+## Key docs
+- Quickstart: https://neftedollar.com/Next.fs/quickstart.html
+- Starter Walkthrough: https://neftedollar.com/Next.fs/starter-app-walkthrough.html
+- Data Fetching & Route Config: https://neftedollar.com/Next.fs/data-fetching-and-route-config.html
+- Server & Client Patterns: https://neftedollar.com/Next.fs/server-client-patterns.html
+- Directives & Wrappers: https://neftedollar.com/Next.fs/directives-wrappers.html
+- Special Files: https://neftedollar.com/Next.fs/special-files.html
+- API Reference: https://neftedollar.com/Next.fs/api-reference.html
+
+## Actions
+- Docs actions: https://neftedollar.com/Next.fs/mcp-actions.json
+
+## RU
+Next.fs: документация и исходный код для интеграции F# с Next.js App Router.

@@ -1,0 +1,2 @@
+See canonical llms descriptor:
+https://neftedollar.com/Next.fs/llms.txt

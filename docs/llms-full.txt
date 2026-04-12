@@ -1,0 +1,28 @@
+# Next.fs — Full LLM Context
+
+## What is Next.fs
+Next.fs is a thin Fable binding layer for writing Next.js App Router applications in F#.
+It stays close to native Next.js concepts and avoids introducing a parallel framework.
+
+## Canonical links
+- Docs home: https://neftedollar.com/Next.fs/
+- Repository: https://github.com/Neftedollar/Next.fs
+- NuGet: https://www.nuget.org/packages/NextFs
+
+## Recommended learning path
+1. Quickstart: https://neftedollar.com/Next.fs/quickstart.html
+2. Starter App Walkthrough: https://neftedollar.com/Next.fs/starter-app-walkthrough.html
+3. Data Fetching & Route Config: https://neftedollar.com/Next.fs/data-fetching-and-route-config.html
+4. Server & Client Patterns: https://neftedollar.com/Next.fs/server-client-patterns.html
+5. Directives & Wrappers: https://neftedollar.com/Next.fs/directives-wrappers.html
+6. Special Files: https://neftedollar.com/Next.fs/special-files.html
+7. API Reference: https://neftedollar.com/Next.fs/api-reference.html
+
+## High-value AI actions
+- Study docs: https://neftedollar.com/Next.fs/
+- Read code in repository: https://github.com/Neftedollar/Next.fs
+- Open mcp-actions descriptor: https://neftedollar.com/Next.fs/mcp-actions.json
+
+## RU summary
+Next.fs — тонкая F#-прослойка для Next.js App Router.
+Для AI-агентов приоритет: сначала документация, затем чтение исходного кода в репозитории.
