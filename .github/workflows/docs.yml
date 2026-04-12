@@ -30,7 +30,21 @@ jobs:
           source: ./docs
           destination: ./_site
 
-      - uses: actions/upload-pages-artifact@v4
+      - name: Archive pages artifact (keep hidden files like .well-known)
+        run: |
+          tar \
+            --dereference --hard-dereference \
+            --directory "./_site" \
+            -cvf "$RUNNER_TEMP/artifact.tar" \
+            .
+
+      - name: Upload pages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: build
