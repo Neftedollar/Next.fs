@@ -6,6 +6,10 @@ Canonical: https://neftedollar.com/Next.fs/
 Repository: https://github.com/Neftedollar/Next.fs
 Languages: en, ru
 
+## Author
+
+- [Roman Melnikov (Neftedollar)](https://neftedollar.com/)
+
 ## Primary AI tasks
 - Study documentation: https://neftedollar.com/Next.fs/
 - Read source code: https://github.com/Neftedollar/Next.fs
